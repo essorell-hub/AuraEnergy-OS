@@ -103,16 +103,11 @@
                         </fluent:Button.LargeIcon>
                     </fluent:Button>
                 </fluent:RibbonGroupBox>
-                <fluent:RibbonGroupBox Header="Energetické audity">
-                    <fluent:Button Header="Osvětlení &amp; LED" Click="BtnAuditLighting_Click">
-                        <fluent:Button.Icon>
-                            <iconPacks:PackIconMaterial Kind="LightbulbOn" Width="16" Height="16" Foreground="#FFBA08" />
-                        </fluent:Button.Icon>
-                    </fluent:Button>
-                    <fluent:Button Header="Zateplení obálky" Click="BtnAuditEnvelope_Click">
-                        <fluent:Button.Icon>
-                            <iconPacks:PackIconMaterial Kind="HomeThermometer" Width="16" Height="16" Foreground="#005A9E" />
-                        </fluent:Button.Icon>
+                <fluent:RibbonGroupBox Header="Databáze produktů (10 187)">
+                    <fluent:Button Header="Procházet katalog" Click="BtnBrowseProducts_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="DatabaseSearch" Width="32" Height="32" Foreground="#005A9E" />
+                        </fluent:Button.LargeIcon>
                     </fluent:Button>
                 </fluent:RibbonGroupBox>
             </fluent:RibbonTabItem>
@@ -120,21 +115,9 @@
             <!-- TAB 3: COST (NÁKLADY & ROZPOČET WBS) -->
             <fluent:RibbonTabItem Header="3. Náklady (Cost WBS)">
                 <fluent:RibbonGroupBox Header="Položkový rozpočet">
-                    <fluent:Button Header="Přidat WBS položku" Click="BtnAddWbsItem_Click">
+                    <fluent:Button Header="Přejít na rozpočet" Click="BtnShowWbs_Click">
                         <fluent:Button.LargeIcon>
                             <iconPacks:PackIconMaterial Kind="PlaylistPlus" Width="32" Height="32" Foreground="#0078D4" />
-                        </fluent:Button.LargeIcon>
-                    </fluent:Button>
-                    <fluent:Button Header="Přepočet DPH a rezerv" Click="BtnRecalcWbs_Click">
-                        <fluent:Button.Icon>
-                            <iconPacks:PackIconMaterial Kind="Calculator" Width="16" Height="16" Foreground="#107C10" />
-                        </fluent:Button.Icon>
-                    </fluent:Button>
-                </fluent:RibbonGroupBox>
-                <fluent:RibbonGroupBox Header="Dotace &amp; Podpora">
-                    <fluent:Button Header="Uplatnit NZÚ / OP TAK" Click="BtnGrants_Click">
-                        <fluent:Button.LargeIcon>
-                            <iconPacks:PackIconMaterial Kind="Handshake" Width="32" Height="32" Foreground="#107C10" />
                         </fluent:Button.LargeIcon>
                     </fluent:Button>
                 </fluent:RibbonGroupBox>
@@ -196,7 +179,7 @@
             </fluent:RibbonTabItem>
         </fluent:Ribbon>
 
-        <!-- ================= MAIN WORKSPACE (TREEVIEW + SPREADSHEET + CHARTS) ================= -->
+        <!-- ================= MAIN WORKSPACE (TREEVIEW + DYNAMIC VIEW SWITCHER + CHARTS) ================= -->
         <Grid Grid.Row="1" Margin="6">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="280" MinWidth="220" MaxWidth="400" />
@@ -212,18 +195,18 @@
                     </Border>
                     <TreeView x:Name="treeProject" BorderThickness="0" Margin="4" SelectedItemChanged="TreeProject_SelectedItemChanged">
                         <TreeViewItem Header="Nemocnice s poliklinikou (Facility)" IsExpanded="True">
-                            <TreeViewItem Header="Lokalita a klima (Praha NASA POWER)" IsSelected="True" />
+                            <TreeViewItem x:Name="itemClimate" Header="Lokalita a klima (Praha NASA POWER)" IsSelected="True" />
                             <TreeViewItem Header="Zatížení areálu (End-Use Loads)" IsExpanded="True">
                                 <TreeViewItem Header="Osvětlení &amp; LPD" />
                                 <TreeViewItem Header="Vytápění &amp; VZT" />
                                 <TreeViewItem Header="Chlazení &amp; Klimatizace" />
                             </TreeViewItem>
                             <TreeViewItem Header="Navržená energetická soustava" IsExpanded="True">
-                                <TreeViewItem Header="FVE Elektrárna (monoSi 250 kWp)" />
-                                <TreeViewItem Header="Tepelné čerpadlo (Země-Voda 120 kWt)" />
+                                <TreeViewItem x:Name="itemPv" Header="FVE Elektrárna (monoSi 250 kWp)" />
+                                <TreeViewItem x:Name="itemHp" Header="Tepelné čerpadlo (Země-Voda 120 kWt)" />
                                 <TreeViewItem Header="BESS Bateriové úložiště (300 kWh)" />
                             </TreeViewItem>
-                            <TreeViewItem Header="Položkový rozpočet (WBS CAPEX)" />
+                            <TreeViewItem x:Name="itemWbs" Header="Položkový rozpočet (WBS CAPEX)" />
                             <TreeViewItem Header="Emisní bilance skleníkových plynů" />
                             <TreeViewItem Header="Finanční model (25leté cash flows)" />
                         </TreeViewItem>
@@ -239,7 +222,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="300" />
+                    <RowDefinition Height="260" />
                 </Grid.RowDefinitions>
 
                 <!-- HEADER LIŠTA ZVOLENÉHO FORMULÁŘE -->
@@ -258,23 +241,32 @@
                     </Grid>
                 </Border>
 
-                <!-- STŘED: RETScreen SPREADSHEET (DATA GRID S BAREVNÝMI BUŇKAMI) -->
-                <Border Grid.Row="1" Background="White" BorderBrush="#D4D4D4" BorderThickness="1" CornerRadius="3">
-                    <DataGrid x:Name="gridData" AutoGenerateColumns="False" CanUserAddRows="False" GridLinesVisibility="All"
-                              HeadersVisibility="Column" HorizontalGridLinesBrush="#E0E0E0" VerticalGridLinesBrush="#E0E0E0"
-                              BorderThickness="0" SelectionMode="Single" SelectionUnit="Cell">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Měsíc" Binding="{Binding Month}" Width="100" IsReadOnly="True" />
-                            <DataGridTextColumn Header="Teplota vzduchu (°C)" Binding="{Binding Temperature}" Width="140" />
-                            <DataGridTextColumn Header="Relativní vlhkost (%)" Binding="{Binding Humidity}" Width="140" />
-                            <DataGridTextColumn Header="GHI Ozáření (kWh/m²/d)" Binding="{Binding DailyGhi}" Width="160" />
-                            <DataGridTextColumn Header="Rychlost větru (m/s)" Binding="{Binding WindSpeed}" Width="140" />
-                            <DataGridTextColumn Header="Teplota půdy 1m (°C)" Binding="{Binding GroundTemp}" Width="140" />
-                            <DataGridTextColumn Header="HDD (18.3°C)" Binding="{Binding HeatingDegreeDays}" Width="120" IsReadOnly="True" />
-                            <DataGridTextColumn Header="CDD (18.3°C)" Binding="{Binding CoolingDegreeDays}" Width="120" IsReadOnly="True" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Border>
+                <!-- STŘED: DYNAMICKÝ KONTEJNER PRO ZVOLENÉ ZOBRAZENÍ -->
+                <Grid Grid.Row="1">
+                    <!-- VIEW 1: KLIMATICKÁ TABULKA -->
+                    <Border x:Name="viewClimate" Background="White" BorderBrush="#D4D4D4" BorderThickness="1" CornerRadius="3" Visibility="Visible">
+                        <DataGrid x:Name="gridData" AutoGenerateColumns="False" CanUserAddRows="False" GridLinesVisibility="All"
+                                  HeadersVisibility="Column" HorizontalGridLinesBrush="#E0E0E0" VerticalGridLinesBrush="#E0E0E0"
+                                  BorderThickness="0" SelectionMode="Single" SelectionUnit="Cell">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Měsíc" Binding="{Binding Month}" Width="100" IsReadOnly="True" />
+                                <DataGridTextColumn Header="Teplota vzduchu (°C)" Binding="{Binding Temperature}" Width="140" />
+                                <DataGridTextColumn Header="Relativní vlhkost (%)" Binding="{Binding Humidity}" Width="140" />
+                                <DataGridTextColumn Header="GHI Ozáření (kWh/m²/d)" Binding="{Binding DailyGhi}" Width="160" />
+                                <DataGridTextColumn Header="Rychlost větru (m/s)" Binding="{Binding WindSpeed}" Width="140" />
+                                <DataGridTextColumn Header="Teplota půdy 1m (°C)" Binding="{Binding GroundTemp}" Width="140" />
+                                <DataGridTextColumn Header="HDD (18.3°C)" Binding="{Binding HeatingDegreeDays}" Width="120" IsReadOnly="True" />
+                                <DataGridTextColumn Header="CDD (18.3°C)" Binding="{Binding CoolingDegreeDays}" Width="120" IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+
+                    <!-- VIEW 2: FVE SUBSYSTÉM -->
+                    <local:PvSystemView x:Name="viewPv" Visibility="Collapsed" />
+
+                    <!-- VIEW 3: WBS ROZPOČET -->
+                    <local:CostWbsView x:Name="viewWbs" Visibility="Collapsed" />
+                </Grid>
 
                 <!-- DOLE: NATIVNÍ GRAF KUMULATIVNÍCH TOKŮ A TORNADO GRAF (LiveCharts) -->
                 <Grid Grid.Row="2" Margin="0,6,0,0">
@@ -286,7 +278,7 @@
                     <!-- Graf 1: Kumulativní peněžní toky (25 let) -->
                     <Border Grid.Column="0" Background="White" BorderBrush="#D4D4D4" BorderThickness="1" CornerRadius="3" Margin="0,0,3,0">
                         <DockPanel Margin="8">
-                            <TextBlock DockPanel.Dock="Top" Text="RETScreen Cumulative Cash Flows Graph (25 let)" FontWeight="Bold" Foreground="#003366" Margin="0,0,0,6" />
+                            <TextBlock DockPanel.Dock="Top" Text="RETScreen Cumulative Cash Flows Graph (25 let)" FontWeight="Bold" Foreground="#003366" Margin="0,0,0,4" />
                             <lvc:CartesianChart x:Name="chartCashFlows" />
                         </DockPanel>
                     </Border>
@@ -294,7 +286,7 @@
                     <!-- Graf 2: Tornado Analýza Rizik (±20 %) -->
                     <Border Grid.Column="1" Background="White" BorderBrush="#D4D4D4" BorderThickness="1" CornerRadius="3" Margin="3,0,0,0">
                         <DockPanel Margin="8">
-                            <TextBlock DockPanel.Dock="Top" Text="Tornado Citlivostní Analýza na NPV (±20 % parametrů)" FontWeight="Bold" Foreground="#003366" Margin="0,0,0,6" />
+                            <TextBlock DockPanel.Dock="Top" Text="Tornado Citlivostní Analýza na NPV (±20 % parametrů)" FontWeight="Bold" Foreground="#003366" Margin="0,0,0,4" />
                             <lvc:CartesianChart x:Name="chartTornado" />
                         </DockPanel>
                     </Border>

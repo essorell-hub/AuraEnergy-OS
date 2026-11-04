@@ -119,7 +119,46 @@ namespace AuraEnergy.RETScreen.Wpf
         {
             if (txtViewTitle != null && e.NewValue is TreeViewItem item && item.Header != null)
             {
-                txtViewTitle.Text = item.Header.ToString();
+                string header = item.Header.ToString() ?? "";
+                txtViewTitle.Text = header;
+
+                // Dynamické přepínání kontejnerů formulářů
+                if (viewClimate != null && viewPv != null && viewWbs != null)
+                {
+                    viewClimate.Visibility = Visibility.Collapsed;
+                    viewPv.Visibility = Visibility.Collapsed;
+                    viewWbs.Visibility = Visibility.Collapsed;
+
+                    if (header.Contains("FVE") || header.Contains("Fotovoltaika"))
+                    {
+                        viewPv.Visibility = Visibility.Visible;
+                    }
+                    else if (header.Contains("WBS") || header.Contains("rozpočet") || header.Contains("Rozpočet"))
+                    {
+                        viewWbs.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        viewClimate.Visibility = Visibility.Visible;
+                    }
+                }
+            }
+        }
+
+        private void BtnBrowseProducts_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new ProductBrowserDialog() { Owner = this };
+            dlg.ShowDialog();
+        }
+
+        private void BtnShowWbs_Click(object sender, RoutedEventArgs e)
+        {
+            if (viewClimate != null && viewPv != null && viewWbs != null)
+            {
+                viewClimate.Visibility = Visibility.Collapsed;
+                viewPv.Visibility = Visibility.Collapsed;
+                viewWbs.Visibility = Visibility.Visible;
+                txtViewTitle.Text = "Položkový rozpočet (WBS CAPEX)";
             }
         }
 

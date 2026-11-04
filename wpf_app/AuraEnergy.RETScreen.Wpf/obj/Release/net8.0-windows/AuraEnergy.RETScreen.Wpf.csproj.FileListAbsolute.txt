@@ -50,3 +50,10 @@ d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\AuraEnergy.R
 d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\ref\AuraEnergy.RETScreen.Wpf.dll
 d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\bin\Release\net8.0-windows\MahApps.Metro.IconPacks.Core.dll
 d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\bin\Release\net8.0-windows\MahApps.Metro.IconPacks.Material.dll
+d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\CostWbsView.baml
+d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\ProductBrowserDialog.baml
+d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\PvSystemView.baml
+d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\CostWbsView.g.cs
+d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\ProductBrowserDialog.g.cs
+d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\PvSystemView.g.cs
+d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\GeneratedInternalTypeHelper.g.cs
