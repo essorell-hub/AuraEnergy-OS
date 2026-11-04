@@ -36,6 +36,7 @@ from backend.core.nis2_cybersecurity_engine import evaluate_nis2_cybersecurity_p
 from backend.core.retscreen_full_engine import calculate_retscreen_complete_feasibility
 from backend.core.retscreen_suite_advanced import run_virtual_energy_analyzer, calculate_performance_cusum, aggregate_enterprise_portfolio
 from backend.core.nasa_gis_location_engine import fetch_nasa_power_climate_data, geocode_address_location
+from backend.core.retscreen_end_use_loads import calculate_detailed_end_use_loads, generate_cumulative_cash_flow_series
 
 PORT = 8080
 FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "frontend")
@@ -422,6 +423,31 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retscreen/end-use-loads":
+            area = float(payload.get("floor_area_m2", 4500.0))
+            occ = int(payload.get("occupancy_persons", 180))
+            lpd = float(payload.get("lighting_power_density_w_m2", 10.5))
+            led_sav = float(payload.get("lighting_led_retrofit_savings_pct", 55.0))
+            u_val = float(payload.get("envelope_u_value_w_m2k", 0.85))
+            res = calculate_detailed_end_use_loads(
+                floor_area_m2=area, occupancy_persons=occ, lighting_power_density_w_m2=lpd,
+                lighting_led_retrofit_savings_pct=led_sav, envelope_u_value_w_m2k=u_val
+            )
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/cumulative-cash-flows":
+            equity = float(payload.get("initial_equity_eur", 35000.0))
+            savings = float(payload.get("year1_net_savings_eur", 14500.0))
+            debt_pay = float(payload.get("debt_payment_eur", 5800.0))
+            debt_y = int(payload.get("debt_term_years", 15))
+            res = generate_cumulative_cash_flow_series(
+                initial_equity_eur=equity, year1_net_savings_eur=savings,
+                debt_payment_eur=debt_pay, debt_term_years=debt_y
+            )
+            self._send_json(res)
+            return
+
         elif parsed.path == "/api/climate/nasa-power":
             lat = float(payload.get("latitude", 50.08))
             lon = float(payload.get("longitude", 14.43))
@@ -646,6 +672,31 @@ class SamServerHandler(BaseHTTPRequestHandler):
         elif parsed.path == "/api/retscreen/portfolio-rollup":
             fac_list = payload.get("facility_projects", None)
             res = aggregate_enterprise_portfolio(facility_projects=fac_list)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/end-use-loads":
+            area = float(payload.get("floor_area_m2", 4500.0))
+            occ = int(payload.get("occupancy_persons", 180))
+            lpd = float(payload.get("lighting_power_density_w_m2", 10.5))
+            led_sav = float(payload.get("lighting_led_retrofit_savings_pct", 55.0))
+            u_val = float(payload.get("envelope_u_value_w_m2k", 0.85))
+            res = calculate_detailed_end_use_loads(
+                floor_area_m2=area, occupancy_persons=occ, lighting_power_density_w_m2=lpd,
+                lighting_led_retrofit_savings_pct=led_sav, envelope_u_value_w_m2k=u_val
+            )
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/cumulative-cash-flows":
+            equity = float(payload.get("initial_equity_eur", 35000.0))
+            savings = float(payload.get("year1_net_savings_eur", 14500.0))
+            debt_pay = float(payload.get("debt_payment_eur", 5800.0))
+            debt_y = int(payload.get("debt_term_years", 15))
+            res = generate_cumulative_cash_flow_series(
+                initial_equity_eur=equity, year1_net_savings_eur=savings,
+                debt_payment_eur=debt_pay, debt_term_years=debt_y
+            )
             self._send_json(res)
             return
 
@@ -905,6 +956,31 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retscreen/end-use-loads":
+            area = float(payload.get("floor_area_m2", 4500.0))
+            occ = int(payload.get("occupancy_persons", 180))
+            lpd = float(payload.get("lighting_power_density_w_m2", 10.5))
+            led_sav = float(payload.get("lighting_led_retrofit_savings_pct", 55.0))
+            u_val = float(payload.get("envelope_u_value_w_m2k", 0.85))
+            res = calculate_detailed_end_use_loads(
+                floor_area_m2=area, occupancy_persons=occ, lighting_power_density_w_m2=lpd,
+                lighting_led_retrofit_savings_pct=led_sav, envelope_u_value_w_m2k=u_val
+            )
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/cumulative-cash-flows":
+            equity = float(payload.get("initial_equity_eur", 35000.0))
+            savings = float(payload.get("year1_net_savings_eur", 14500.0))
+            debt_pay = float(payload.get("debt_payment_eur", 5800.0))
+            debt_y = int(payload.get("debt_term_years", 15))
+            res = generate_cumulative_cash_flow_series(
+                initial_equity_eur=equity, year1_net_savings_eur=savings,
+                debt_payment_eur=debt_pay, debt_term_years=debt_y
+            )
+            self._send_json(res)
+            return
+
         elif parsed.path == "/api/climate/nasa-power":
             lat = float(payload.get("latitude", 50.08))
             lon = float(payload.get("longitude", 14.43))
@@ -1119,6 +1195,31 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retscreen/end-use-loads":
+            area = float(payload.get("floor_area_m2", 4500.0))
+            occ = int(payload.get("occupancy_persons", 180))
+            lpd = float(payload.get("lighting_power_density_w_m2", 10.5))
+            led_sav = float(payload.get("lighting_led_retrofit_savings_pct", 55.0))
+            u_val = float(payload.get("envelope_u_value_w_m2k", 0.85))
+            res = calculate_detailed_end_use_loads(
+                floor_area_m2=area, occupancy_persons=occ, lighting_power_density_w_m2=lpd,
+                lighting_led_retrofit_savings_pct=led_sav, envelope_u_value_w_m2k=u_val
+            )
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/cumulative-cash-flows":
+            equity = float(payload.get("initial_equity_eur", 35000.0))
+            savings = float(payload.get("year1_net_savings_eur", 14500.0))
+            debt_pay = float(payload.get("debt_payment_eur", 5800.0))
+            debt_y = int(payload.get("debt_term_years", 15))
+            res = generate_cumulative_cash_flow_series(
+                initial_equity_eur=equity, year1_net_savings_eur=savings,
+                debt_payment_eur=debt_pay, debt_term_years=debt_y
+            )
+            self._send_json(res)
+            return
+
         elif parsed.path == "/api/climate/nasa-power":
             lat = float(payload.get("latitude", 50.08))
             lon = float(payload.get("longitude", 14.43))
@@ -1329,6 +1430,31 @@ class SamServerHandler(BaseHTTPRequestHandler):
         elif parsed.path == "/api/retscreen/portfolio-rollup":
             fac_list = payload.get("facility_projects", None)
             res = aggregate_enterprise_portfolio(facility_projects=fac_list)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/end-use-loads":
+            area = float(payload.get("floor_area_m2", 4500.0))
+            occ = int(payload.get("occupancy_persons", 180))
+            lpd = float(payload.get("lighting_power_density_w_m2", 10.5))
+            led_sav = float(payload.get("lighting_led_retrofit_savings_pct", 55.0))
+            u_val = float(payload.get("envelope_u_value_w_m2k", 0.85))
+            res = calculate_detailed_end_use_loads(
+                floor_area_m2=area, occupancy_persons=occ, lighting_power_density_w_m2=lpd,
+                lighting_led_retrofit_savings_pct=led_sav, envelope_u_value_w_m2k=u_val
+            )
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/cumulative-cash-flows":
+            equity = float(payload.get("initial_equity_eur", 35000.0))
+            savings = float(payload.get("year1_net_savings_eur", 14500.0))
+            debt_pay = float(payload.get("debt_payment_eur", 5800.0))
+            debt_y = int(payload.get("debt_term_years", 15))
+            res = generate_cumulative_cash_flow_series(
+                initial_equity_eur=equity, year1_net_savings_eur=savings,
+                debt_payment_eur=debt_pay, debt_term_years=debt_y
+            )
             self._send_json(res)
             return
 
@@ -1596,6 +1722,31 @@ class SamServerHandler(BaseHTTPRequestHandler):
         elif parsed.path == "/api/retscreen/portfolio-rollup":
             fac_list = payload.get("facility_projects", None)
             res = aggregate_enterprise_portfolio(facility_projects=fac_list)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/end-use-loads":
+            area = float(payload.get("floor_area_m2", 4500.0))
+            occ = int(payload.get("occupancy_persons", 180))
+            lpd = float(payload.get("lighting_power_density_w_m2", 10.5))
+            led_sav = float(payload.get("lighting_led_retrofit_savings_pct", 55.0))
+            u_val = float(payload.get("envelope_u_value_w_m2k", 0.85))
+            res = calculate_detailed_end_use_loads(
+                floor_area_m2=area, occupancy_persons=occ, lighting_power_density_w_m2=lpd,
+                lighting_led_retrofit_savings_pct=led_sav, envelope_u_value_w_m2k=u_val
+            )
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/cumulative-cash-flows":
+            equity = float(payload.get("initial_equity_eur", 35000.0))
+            savings = float(payload.get("year1_net_savings_eur", 14500.0))
+            debt_pay = float(payload.get("debt_payment_eur", 5800.0))
+            debt_y = int(payload.get("debt_term_years", 15))
+            res = generate_cumulative_cash_flow_series(
+                initial_equity_eur=equity, year1_net_savings_eur=savings,
+                debt_payment_eur=debt_pay, debt_term_years=debt_y
+            )
             self._send_json(res)
             return
 
@@ -1882,6 +2033,31 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retscreen/end-use-loads":
+            area = float(payload.get("floor_area_m2", 4500.0))
+            occ = int(payload.get("occupancy_persons", 180))
+            lpd = float(payload.get("lighting_power_density_w_m2", 10.5))
+            led_sav = float(payload.get("lighting_led_retrofit_savings_pct", 55.0))
+            u_val = float(payload.get("envelope_u_value_w_m2k", 0.85))
+            res = calculate_detailed_end_use_loads(
+                floor_area_m2=area, occupancy_persons=occ, lighting_power_density_w_m2=lpd,
+                lighting_led_retrofit_savings_pct=led_sav, envelope_u_value_w_m2k=u_val
+            )
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/cumulative-cash-flows":
+            equity = float(payload.get("initial_equity_eur", 35000.0))
+            savings = float(payload.get("year1_net_savings_eur", 14500.0))
+            debt_pay = float(payload.get("debt_payment_eur", 5800.0))
+            debt_y = int(payload.get("debt_term_years", 15))
+            res = generate_cumulative_cash_flow_series(
+                initial_equity_eur=equity, year1_net_savings_eur=savings,
+                debt_payment_eur=debt_pay, debt_term_years=debt_y
+            )
+            self._send_json(res)
+            return
+
         elif parsed.path == "/api/climate/nasa-power":
             lat = float(payload.get("latitude", 50.08))
             lon = float(payload.get("longitude", 14.43))
@@ -2145,6 +2321,31 @@ class SamServerHandler(BaseHTTPRequestHandler):
         elif parsed.path == "/api/retscreen/portfolio-rollup":
             fac_list = payload.get("facility_projects", None)
             res = aggregate_enterprise_portfolio(facility_projects=fac_list)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/end-use-loads":
+            area = float(payload.get("floor_area_m2", 4500.0))
+            occ = int(payload.get("occupancy_persons", 180))
+            lpd = float(payload.get("lighting_power_density_w_m2", 10.5))
+            led_sav = float(payload.get("lighting_led_retrofit_savings_pct", 55.0))
+            u_val = float(payload.get("envelope_u_value_w_m2k", 0.85))
+            res = calculate_detailed_end_use_loads(
+                floor_area_m2=area, occupancy_persons=occ, lighting_power_density_w_m2=lpd,
+                lighting_led_retrofit_savings_pct=led_sav, envelope_u_value_w_m2k=u_val
+            )
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/cumulative-cash-flows":
+            equity = float(payload.get("initial_equity_eur", 35000.0))
+            savings = float(payload.get("year1_net_savings_eur", 14500.0))
+            debt_pay = float(payload.get("debt_payment_eur", 5800.0))
+            debt_y = int(payload.get("debt_term_years", 15))
+            res = generate_cumulative_cash_flow_series(
+                initial_equity_eur=equity, year1_net_savings_eur=savings,
+                debt_payment_eur=debt_pay, debt_term_years=debt_y
+            )
             self._send_json(res)
             return
 
