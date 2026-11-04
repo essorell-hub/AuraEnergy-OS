@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<FinancialAnalysisHub c:Assembly.Version="9.1.0.53" xmlns="http://schemas.retscreen.net/dotret/v5/financial" xmlns:c="http://schemas.retscreen.net/dotret/v5/core" cuid="4784" FType="0" SNotes="false" TotalInitialCost="11030018.260000002" SimplePayback="8.2235164234709046" SimplePaybackSign="7" PreTaxIrrEquity="0.11059772803362504" PreTaxIrrEquitySign="7" NetPresentValue="14302555.184596976" GHGReductionCost="6.1645069627316609" Active="0">
+  <FinancialAnalysisHub.Level1>
+    <Financial cuid="4785" Level="1" fuelRate="0.02" infRate="0.02" debtRatio="0" debt="0" equity="0" debtRate="0.07" debtTerm="15" hasTax="false" taxlcf="0" taxh="false" taxDeprec="0" taxHalfYear="false" taxDeprecP="15" electricityExportRateUnit="EnergyRate./KiloWattHour" eleExRate="0.02" hasOtherIncome="false" oiRateEnergyUnit="EnergyRate./KiloWattHour" oiRatePowerUnit="PowerRate./KiloWatt" CEPreferedActiveSetting="false" CEProductionRevenue="0" CEProductionCreditRateUnit="EnergyRate./KiloWattHour" hasCPI="false" IsGraphDisplayed="true">
+      <Financial.CleanEnergyDeliveryFuelTypes>
+        <c:XList seed="542589975" absCount="0" />
+      </Financial.CleanEnergyDeliveryFuelTypes>
+    </Financial>
+  </FinancialAnalysisHub.Level1>
+  <FinancialAnalysisHub.Level2>
+    <Financial cuid="4809" Level="2" initialCost="11030018.260000002" fuelRate="0.02" infRate="0.02" discounRate="0.03" reinvestmentRate="0.09" debtRatio="0" debt="0" equity="11030018.260000002" debtRate="15" hasTax="false" taxRate="0.3" taxlcf="1" taxh="false" taxDeprec="1" taxHalfYear="false" taxDeprecB="1" taxDeprecR="0.05" taxDeprecP="15" EEEnergyUnit="Energy.KiloWattHour" electricityExportRateUnit="EnergyRate./KiloWattHour" eleExRate="0.02" hasOtherIncome="false" oiUnit="Energy.KiloWattHour" oiRateEnergyUnit="EnergyRate./KiloWattHour" oiRatePowerUnit="PowerRate./KiloWatt" CEEnergyUnit="Energy.MegaWattHour" CEPreferedActiveSetting="false" CEProduction="8226610470089.0186" CEProductionRevenue="0" CEProductionCreditRateUnit="EnergyRate./KiloWattHour" hasCPI="false" IsGraphDisplayed="true" c:id="0">
+      <Financial.CleanEnergyDeliveryFuelTypes>
+        <c:XList seed="542589977" absCount="4">
+          <c:XEntry key="rHyiq">
+            <CleanEnergyDeliveryFuelType cuid="47951" FuelType="{{Solar}}" EnergyDelivered="992943270089.01929" IsCleanEnergy="true" />
+          </c:XEntry>
+          <c:XEntry key="DpfuS">
+            <CleanEnergyDeliveryFuelType cuid="66134" FuelType="{{GreenEnergy}}" EnergyDelivered="7233667200000" IsCleanEnergy="true" />
+          </c:XEntry>
+        </c:XList>
+      </Financial.CleanEnergyDeliveryFuelTypes>
+    </Financial>
+  </FinancialAnalysisHub.Level2>
+</FinancialAnalysisHub>

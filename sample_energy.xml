@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<EnergyModelHub c:Assembly.Version="9.1.0.53" xmlns="http://schemas.retscreen.net/dotret/v5/energyModel" xmlns:c="http://schemas.retscreen.net/dotret/v5/core" cuid="2037" ActiveId="EE" SNotes="true" SImage="true" EEBaseCaseFuelConsumption="52101961592497.156" EEProposedCaseFuelConsumption="10236018601980.7" EEFuelConsumptionSavingRatio="0.80353870969313546" EEBaseCaseFuelCost="1613392.6434269357" EEProposedCaseFuelCost="567549.1806996807" EEFuelCostSavingRatio="0.6482262498146919" PowerProposedCaseFuelConsumption="0" PowerProposedCaseFuelCost="0" CHPBaseCaseFuelConsumption="0" CHPProposedCaseFuelConsumption="0">
+  <EnergyModelHub.AsFiredFuelModel>
+    <AsFiredFuelModel cuid="2041">
+      <AsFiredFuelModel.EnergyEfficiencyContentRow>
+        <c:XList seed="542589166" absCount="2">
+          <c:XEntry key="cCE6E">
+            <AsFiredFuelRow cuid="4638" FuelUid="988e6df3-52a7-4412-a984-7355e20992dd" MoistureContent="0" Description="{{NaturalGas}}" Rate="0.487" FuelCost="28155.661646433447" Consumption="57814.5003006847" ConsumptionAsFired="57814.5003006847" RateAsFired="0.487" />
+          </c:XEntry>
+          <c:XEntry key="iYY12">
+            <AsFiredFuelRow cuid="4640" FuelUid="3fc504f0-6dcf-4e6a-a95f-ac79d9910375" MoistureContent="0" Description="{{xElectricity2}}" Rate="0.242" FuelCost="539393.51905324729" Consumption="2228898.8390630055" ConsumptionAsFired="2228898.8390630055" RateAsFired="0.242" />
+          </c:XEntry>
+        </c:XList>
+      </AsFiredFuelModel.EnergyEfficiencyContentRow>
+      <AsFiredFuelModel.PowerModelContentRows>
+        <c:XList seed="542589167" absCount="2">
+          <c:XEntry key="HYqhc">
+            <AsFiredFuelRow cuid="4899" FuelUid="ba102db4-3390-4e5d-a7e6-301d83f66e7a" Description="{{NaturalGas}}" Rate="0.487" />
+          </c:XEntry>
+          <c:XEntry key="BKb4y">
+            <AsFiredFuelRow cuid="4901" FuelUid="8084d184-8dd3-4490-baea-8cd15179e1f5" MoistureContent="0" Description="{{ElectricityExportRate}} - {{flc:Annual}}" Rate="242" FuelCost="0" Consumption="0" ConsumptionAsFired="0" RateAsFired="NaN" />
+          </c:XEntry>
+        </c:XList>
+      </AsFiredFuelModel.PowerModelContentRows>
+      <AsFiredFuelModel.CHPModelContentRows>
+        <c:XList seed="542589168" absCount="0" />
+      </AsFiredFuelModel.CHPModelContentRows>
+    </AsFiredFuelModel>
+  </EnergyModelHub.AsFiredFuelModel>
+  <EnergyModelHub.Power>
+    <PowerModel cuid="2245" DoDisplayTresholdWarning="false">
+      <PowerModel.AuxSystemCollection>
+        <AuxSystemCollection cuid="2437">
+          <AuxSystemCollection.AuxiliarySystems>
+            <c:XList seed="542589314" absCount="0" />
+          </AuxSystemCollection.AuxiliarySystems>
+        </AuxSystemCollection>
+      </PowerModel.AuxSystemCollection>
+      <PowerModel.ScheduleSummary>
+        <ScheduleSummary cuid="2384" HCChangeoverTemperatureUnit="Temperature.Celsius" SpaceCoolingOccupiedUnit="Temperature.Celsius" SpaceHeatingOccupiedUnit="Temperature.Celsius" SpaceCoolingUnoccupiedUnit="Temperature.Celsius" SpaceHeatingUnoccupiedUnit="Temperature.Celsius">
+          <ScheduleSummary.Schedules>
+            <c:XList seed="542589262" absCount="1">
+              <c:XEntry key="ujA3B">
+                <Schedule cuid="2386" Id="aa56eb95-f556-4329-a352-97448d4a523c" Description="{{x247}}" Monday="24" Tuesday="24" Wednesday="24" Thursday="24" Friday="24" Saturday="24" Sunday="24" Permanent="true" />
+              </c:XEntry>
+            </c:XList>
+          </ScheduleSummary.Schedules>
+          <ScheduleSummary.Notes>
+            <c:resource uid="d917aa25-bf73-4894-9ea8-b1b15bad0aad" />
+          </ScheduleSummary.Notes>
+          <ScheduleSummary.EnergyConnectModel>
+            <EnergyConnectModel cuid="2385">
+              <EnergyConnectModel.EnergyConnectLinks>
+                <c:XList seed="542589261" absCount="0" />
+              </EnergyConnectModel.EnergyConnectLinks>
+            </EnergyConnectModel>
+          </ScheduleSummary.EnergyConnectModel>
+        </ScheduleSummary>
+      </PowerModel.ScheduleSummary>
+      <PowerModel.FuelSummary>
+        <FuelSummary cuid="2250" IsHeatingValueAndFuelRateExpanded="false" DoDisplayFuelUpdateWarning="true">
+          <FuelSummary.UserDefinedFuelList>
+            <c:XList seed="542589249" absCount="0" />
+          </FuelSummary.UserDefinedFuelList>
+          <FuelSummary.FuelList>
+            <c:XList seed="542589247" absCount="1">
+              <c:XEntry key="wNSvH">
+                <EEMFuel cuid="2318" Description="{{NaturalGas}}" IsGridElectricity="false" IsRemovable="false" IsEditable="true" FuelRate="1.3527777777777777E-10" RateUnit="EnergyRate./MegaWattHour" FuelMode="0" PeakFuelRate="1.3527777777777777E-10" BaseFuelRate="1.3527777777777777E-10" Uid="ba102db4-3390-4e5d-a7e6-301d83f66e7a" SelectedHeatingValueSpecificEnergyUnit="EnergyDensity.MJkg" SelectedHeatingValueEnergyVolumeUnit="EnergyVolume.MJm3" EnergyRateUnit="EnergyRate./KiloWattHour" HeatingValueSpecificEnergyHHV="53887323.940000005" HeatingValueSpecificEnergyLHV="47856000.000000007" ConvertedFuelRateHHV="1.2728698380373617E-08" ConvertedFuelRateLHV="1.43329048177396E-08" SelectedFuel="3d0d13b2-230a-46a7-91d3-4629fb6c450b">
+                  <EEMFuel.MonthlyRates>
+                    <c:XList seed="542589255" absCount="12">
+                      <c:XEntry key="IYmXU">
+                        <MonthlyRate cuid="2319" Month="1" BaseRate="1.3527777777777777E-10" PeakRate="1.3527777777777777E-10" />
+                      </c:XEntry>
+                      <c:XEntry key="maLTH">
+                        <MonthlyRate cuid="2320" Month="2" BaseRate="1.3527777777777777E-10" PeakRate="1.3527777777777777E-10" />
+                      </c:XEntry>
+                      <c:XEntry key="x9H25">
+                        <MonthlyRate cuid="2321" Month="3" BaseRate="1.3527777777777777E-10" PeakRate="1.3527777777777777E-10" />
+                      </c:XEntry>
+                      <c:XEntry key="cfMlz">
+                        <MonthlyRate cuid="2322" Month="4" BaseRate="1.3527777777777777E-10" PeakRate="1.3527777777777777E-10" />
+                      </c:XEntry>
+                      <c:XEntry key="yoPpZ">
+                        <MonthlyRate cuid="2323" Month="5" BaseRate="1.3527777777777777E-10" PeakRate="1.3527777777777777E-10" />
+                      </c:XEntry>
+                      <c:XEntry key="CSjB4">
+                        <MonthlyRate cuid="2324" Month="6" BaseRate="1.3527777777777777E-10" PeakRate="1.3527777777777777E-10" />
+                      </c:XEntry>
+                      <c:XEntry key="2V4jV">
+                        <MonthlyRate cuid="2325" Month="7" BaseRate="1.3527777777777777E-10" PeakRate="1.3527777777777777E-10" />
+                      </c:XEntry>
+                      <c:XEntry key="pAWh7">
+                        <MonthlyRate cuid="2326" Month="8" BaseRate="1.3527777777777777E-10" PeakRate="1.3527777777777777E-10" />
+                      </c:XEntry>
+                      <c:XEntry key="S67Du">
+                        <MonthlyRate cuid="2327" Month="9" BaseRate="1.3527777777777777E-10" PeakRate="1.3527777777777777E-10" />
+                      </c:XEntry>
+                      <c:XEntry key="dtpwl">
+                        <MonthlyRate cuid="2328" Month="10" BaseRate="1.3527777777777777E-10" PeakRate="1.3527777777777777E-10" />
+                      </c:XEntry>
+                      <c:XEntry key="Vz8OQ">
+                        <MonthlyRate cuid="2329" Month="11" BaseRate="1.3527777777777777E-10" PeakRate="1.3527777777777777E-10" />
+                      </c:XEntry>
+                      <c:XEntry key="eRJ6I">
+                        <MonthlyRate cuid="2330" Month="12" BaseRate="1.3527777777777777E-10" PeakRate="1.3527777777777777E-10" />
+                      </c:XEntry>
+                    </c:XList>
+                  </EEMFuel.MonthlyRates>
+                  <EEMFuel.EEElectricityRateToolModel>
+                    <ToolElectricityRateModel cuid="2331" SelectedTool="2">
+                      <ToolElectricityRateModel.ElectricityRateMonthlyModel>
+                        <ElectricityRateMonthly cuid="2332" IsAdvanced="false" SystemPeakElectricityLoad="NaN" PeakLoadAnnual="0" Electricity="0" ElectricityDifference="NaN" ElectricityRate="0" TotalRateOne="0" TotalRateTwo="0" TotalRateThree="0" TotalRateFour="0" TotalFixedCharge="0" GrandTotalElectricityCost="0" xmlns="http://schemas.retscreen.net/dotret/v5/common">
+                          <ElectricityRateMonthly.ContentRow>
+                            <c:XList seed="542589256" absCount="12">
+                              <c:XEntry key="yf9yE">
+                                <ElectricityRateMonthlyRow cuid="2333" Month="1" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="lFf9M">
+                                <ElectricityRateMonthlyRow cuid="2334" Month="2" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="85gWv">
+                                <ElectricityRateMonthlyRow cuid="2335" Month="3" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="9RjjA">
+                                <ElectricityRateMonthlyRow cuid="2336" Month="4" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="cUJJc">
+                                <ElectricityRateMonthlyRow cuid="2337" Month="5" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="o9Ndy">
+                                <ElectricityRateMonthlyRow cuid="2338" Month="6" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="fnx5t">
+                                <ElectricityRateMonthlyRow cuid="2339" Month="7" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="hYm6K">
+                                <ElectricityRateMonthlyRow cuid="2340" Month="8" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="K84GV">
+                                <ElectricityRateMonthlyRow cuid="2341" Month="9" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="wou4O">
+                                <ElectricityRateMonthlyRow cuid="2342" Month="10" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="BqnXU">
+                                <ElectricityRateMonthlyRow cuid="2343" Month="11" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="JybfQ">
+                                <ElectricityRateMonthlyRow cuid="2344" Month="12" AverageLoad="0" />
+                              </c:XEntry>
+                            </c:XList>
+                          </ElectricityRateMonthly.ContentRow>
+                        </ElectricityRateMonthly>
+                      </ToolElectricityRateModel.ElectricityRateMonthlyModel>
+                      <ToolElectricityRateModel.ElectricityRateTimeOfUseModel>
+                        <ElectricityRateTimeOfUse cuid="2345" ActiveMethod="2" TotalElectricityCost="0" Electricity="0" ElectricityRate="NaN" xmlns="http://schemas.retscreen.net/dotret/v5/common">
+                          <ElectricityRateTimeOfUse.ContentRowSeason>
+                            <c:XList seed="542589257" absCount="2">
+                              <c:XEntry key="2YMbZ">
+                                <ElectricityRateTimeOfUseRowSeason cuid="2346" FirstSeason="true" />
+                              </c:XEntry>
+                              <c:XEntry key="VJPEj">
+                                <ElectricityRateTimeOfUseRowSeason cuid="2347" FirstSeason="false" />
+                              </c:XEntry>
+                            </c:XList>
+                          </ElectricityRateTimeOfUse.ContentRowSeason>
+                          <ElectricityRateTimeOfUse.ContentRowElectricity>
+                            <c:XList seed="542589258" absCount="24">
+                              <c:XEntry key="1fjpv">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2348" Hour="1" />
+                              </c:XEntry>
+                              <c:XEntry key="elMHP">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2349" Hour="2" />
+                              </c:XEntry>
+                              <c:XEntry key="XzVAG">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2350" Hour="3" />
+                              </c:XEntry>
+                              <c:XEntry key="8oXCT">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2351" Hour="4" />
+                              </c:XEntry>
+                              <c:XEntry key="5mRQ1">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2352" Hour="5" />
+                              </c:XEntry>
+                              <c:XEntry key="6WEJt">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2353" Hour="6" />
+                              </c:XEntry>
+                              <c:XEntry key="Ghogs">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2354" Hour="7" />
+                              </c:XEntry>
+                              <c:XEntry key="TaGtK">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2355" Hour="8" />
+                              </c:XEntry>
+                              <c:XEntry key="lqcLZ">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2356" Hour="9" />
+                              </c:XEntry>
+                              <c:XEntry key="nL3xw">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2357" Hour="10" />
+                              </c:XEntry>
+                              <c:XEntry key="ijSXb">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2358" Hour="11" />
+                              </c:XEntry>
+                              <c:XEntry key="RxHWh">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2359" Hour="12" />
+                              </c:XEntry>
+                              <c:XEntry key="33N4q">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2360" Hour="13" />
+                              </c:XEntry>
+                              <c:XEntry key="MdrlE">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2361" Hour="14" />
+                              </c:XEntry>
+                              <c:XEntry key="Nkwqe">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2362" Hour="15" />
+                              </c:XEntry>
+                              <c:XEntry key="rinda">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2363" Hour="16" />
+                              </c:XEntry>
+                              <c:XEntry key="SEemg">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2364" Hour="17" />
+                              </c:XEntry>
+                              <c:XEntry key="cuUNk">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2365" Hour="18" />
+                              </c:XEntry>
+                              <c:XEntry key="t7vTO">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2366" Hour="19" />
+                              </c:XEntry>
+                              <c:XEntry key="xnD5p">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2367" Hour="20" />
+                              </c:XEntry>
+                              <c:XEntry key="KNJFX">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2368" Hour="21" />
+                              </c:XEntry>
+                              <c:XEntry key="CQFuM">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2369" Hour="22" />
+                              </c:XEntry>
+                              <c:XEntry key="Hvd7J">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2370" Hour="23" />
+                              </c:XEntry>
+                              <c:XEntry key="ACsUy">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2371" Hour="24" />
+                              </c:XEntry>
+                            </c:XList>
+                          </ElectricityRateTimeOfUse.ContentRowElectricity>
+                          <ElectricityRateTimeOfUse.ContentRowMonth>
+                            <c:XList seed="542589259" absCount="12">
+                              <c:XEntry key="JtKQ7">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2372" Month="1" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="QEl4K">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2373" Month="2" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="9IWrf">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2374" Month="3" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="V18Wc">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2375" Month="4" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="rZTl5">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2376" Month="5" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="5eMoG">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2377" Month="6" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="UVbdj">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2378" Month="7" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="xFoiT">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2379" Month="8" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="yoZOS">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2380" Month="9" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="1kvaZ">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2381" Month="10" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="FAIGe">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2382" Month="11" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="EKYmp">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2383" Month="12" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                            </c:XList>
+                          </ElectricityRateTimeOfUse.ContentRowMonth>
+                        </ElectricityRateTimeOfUse>
+                      </ToolElectricityRateModel.ElectricityRateTimeOfUseModel>
+                    </ToolElectricityRateModel>
+                  </EEMFuel.EEElectricityRateToolModel>
+                </EEMFuel>
+              </c:XEntry>
+            </c:XList>
+          </FuelSummary.FuelList>
+          <FuelSummary.ElectricityList>
+            <c:XList seed="542589248" absCount="1">
+              <c:XEntry key="u6dWn">
+                <EEMFuel cuid="2252" Description="{{ElectricityExportRate}} - {{flc:Annual}}" IsGridElectricity="false" IsRemovable="false" IsEditable="true" FuelRate="6.722222222222222E-08" RateUnit="EnergyRate./KiloWattHour" FuelMode="0" PeakFuelRate="6.722222222222222E-08" BaseFuelRate="6.722222222222222E-08" Uid="8084d184-8dd3-4490-baea-8cd15179e1f5" SelectedHeatingValueSpecificEnergyUnit="EnergyDensity.MJkg" SelectedHeatingValueEnergyVolumeUnit="EnergyVolume.MJm3" EnergyRateUnit="EnergyRate./KiloWattHour" SelectedFuel="c2b3097c-68d9-4e96-97c8-853074806397">
+                  <EEMFuel.MonthlyRates>
+                    <c:XList seed="542589250" absCount="12">
+                      <c:XEntry key="PvcxE">
+                        <MonthlyRate cuid="2253" Month="1" BaseRate="6.722222222222222E-08" PeakRate="6.722222222222222E-08" />
+                      </c:XEntry>
+                      <c:XEntry key="gdBs3">
+                        <MonthlyRate cuid="2254" Month="2" BaseRate="6.722222222222222E-08" PeakRate="6.722222222222222E-08" />
+                      </c:XEntry>
+                      <c:XEntry key="7yani">
+                        <MonthlyRate cuid="2255" Month="3" BaseRate="6.722222222222222E-08" PeakRate="6.722222222222222E-08" />
+                      </c:XEntry>
+                      <c:XEntry key="OjbJO">
+                        <MonthlyRate cuid="2256" Month="4" BaseRate="6.722222222222222E-08" PeakRate="6.722222222222222E-08" />
+                      </c:XEntry>
+                      <c:XEntry key="YgEjG">
+                        <MonthlyRate cuid="2257" Month="5" BaseRate="6.722222222222222E-08" PeakRate="6.722222222222222E-08" />
+                      </c:XEntry>
+                      <c:XEntry key="6kfAV">
+                        <MonthlyRate cuid="2258" Month="6" BaseRate="6.722222222222222E-08" PeakRate="6.722222222222222E-08" />
+                      </c:XEntry>
+                      <c:XEntry key="SwULM">
+                        <MonthlyRate cuid="2259" Month="7" BaseRate="6.722222222222222E-08" PeakRate="6.722222222222222E-08" />
+                      </c:XEntry>
+                      <c:XEntry key="C4NUS">
+                        <MonthlyRate cuid="2260" Month="8" BaseRate="6.722222222222222E-08" PeakRate="6.722222222222222E-08" />
+                      </c:XEntry>
+                      <c:XEntry key="qxhu2">
+                        <MonthlyRate cuid="2261" Month="9" BaseRate="6.722222222222222E-08" PeakRate="6.722222222222222E-08" />
+                      </c:XEntry>
+                      <c:XEntry key="mO3p1">
+                        <MonthlyRate cuid="2262" Month="10" BaseRate="6.722222222222222E-08" PeakRate="6.722222222222222E-08" />
+                      </c:XEntry>
+                      <c:XEntry key="527lA">
+                        <MonthlyRate cuid="2263" Month="11" BaseRate="6.722222222222222E-08" PeakRate="6.722222222222222E-08" />
+                      </c:XEntry>
+                      <c:XEntry key="pRgFc">
+                        <MonthlyRate cuid="2264" Month="12" BaseRate="6.722222222222222E-08" PeakRate="6.722222222222222E-08" />
+                      </c:XEntry>
+                    </c:XList>
+                  </EEMFuel.MonthlyRates>
+                  <EEMFuel.EEElectricityRateToolModel>
+                    <ToolElectricityRateModel cuid="2265" SelectedTool="2">
+                      <ToolElectricityRateModel.ElectricityRateMonthlyModel>
+                        <ElectricityRateMonthly cuid="2266" IsAdvanced="false" SystemPeakElectricityLoad="NaN" PeakLoadAnnual="0" Electricity="0" ElectricityDifference="NaN" ElectricityRate="0" TotalRateOne="0" TotalRateTwo="0" TotalRateThree="0" TotalRateFour="0" TotalFixedCharge="0" GrandTotalElectricityCost="0" xmlns="http://schemas.retscreen.net/dotret/v5/common">
+                          <ElectricityRateMonthly.ContentRow>
+                            <c:XList seed="542589251" absCount="12">
+                              <c:XEntry key="t8Iul">
+                                <ElectricityRateMonthlyRow cuid="2267" Month="1" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="5vsXB">
+                                <ElectricityRateMonthlyRow cuid="2268" Month="2" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="qRMfX">
+                                <ElectricityRateMonthlyRow cuid="2269" Month="3" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="hOtDG">
+                                <ElectricityRateMonthlyRow cuid="2270" Month="4" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="fhbvK">
+                                <ElectricityRateMonthlyRow cuid="2271" Month="5" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="4B7Pm">
+                                <ElectricityRateMonthlyRow cuid="2272" Month="6" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="PiJIR">
+                                <ElectricityRateMonthlyRow cuid="2273" Month="7" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="TtHgb">
+                                <ElectricityRateMonthlyRow cuid="2274" Month="8" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="V1L2w">
+                                <ElectricityRateMonthlyRow cuid="2275" Month="9" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="x6VY5">
+                                <ElectricityRateMonthlyRow cuid="2276" Month="10" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="vUmED">
+                                <ElectricityRateMonthlyRow cuid="2277" Month="11" AverageLoad="0" />
+                              </c:XEntry>
+                              <c:XEntry key="aa4rk">
+                                <ElectricityRateMonthlyRow cuid="2278" Month="12" AverageLoad="0" />
+                              </c:XEntry>
+                            </c:XList>
+                          </ElectricityRateMonthly.ContentRow>
+                        </ElectricityRateMonthly>
+                      </ToolElectricityRateModel.ElectricityRateMonthlyModel>
+                      <ToolElectricityRateModel.ElectricityRateTimeOfUseModel>
+                        <ElectricityRateTimeOfUse cuid="2279" ActiveMethod="2" TotalElectricityCost="0" Electricity="0" ElectricityRate="NaN" xmlns="http://schemas.retscreen.net/dotret/v5/common">
+                          <ElectricityRateTimeOfUse.ContentRowSeason>
+                            <c:XList seed="542589252" absCount="2">
+                              <c:XEntry key="paQhs">
+                                <ElectricityRateTimeOfUseRowSeason cuid="2280" FirstSeason="true" />
+                              </c:XEntry>
+                              <c:XEntry key="hjHW7">
+                                <ElectricityRateTimeOfUseRowSeason cuid="2281" FirstSeason="false" />
+                              </c:XEntry>
+                            </c:XList>
+                          </ElectricityRateTimeOfUse.ContentRowSeason>
+                          <ElectricityRateTimeOfUse.ContentRowElectricity>
+                            <c:XList seed="542589253" absCount="24">
+                              <c:XEntry key="urotW">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2282" Hour="1" />
+                              </c:XEntry>
+                              <c:XEntry key="pMJSx">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2283" Hour="2" />
+                              </c:XEntry>
+                              <c:XEntry key="ciT6a">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2284" Hour="3" />
+                              </c:XEntry>
+                              <c:XEntry key="KsZiY">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2285" Hour="4" />
+                              </c:XEntry>
+                              <c:XEntry key="CNs9R">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2286" Hour="5" />
+                              </c:XEntry>
+                              <c:XEntry key="GcOqQ">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2287" Hour="6" />
+                              </c:XEntry>
+                              <c:XEntry key="I9RDp">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2288" Hour="7" />
+                              </c:XEntry>
+                              <c:XEntry key="Rmtud">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2289" Hour="8" />
+                              </c:XEntry>
+                              <c:XEntry key="VqEye">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2290" Hour="9" />
+                              </c:XEntry>
+                              <c:XEntry key="PRhhC">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2291" Hour="10" />
+                              </c:XEntry>
+                              <c:XEntry key="8WSQK">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2292" Hour="11" />
+                              </c:XEntry>
+                              <c:XEntry key="OteY2">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2293" Hour="12" />
+                              </c:XEntry>
+                              <c:XEntry key="LOgNc">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2294" Hour="13" />
+                              </c:XEntry>
+                              <c:XEntry key="DuHVi">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2295" Hour="14" />
+                              </c:XEntry>
+                              <c:XEntry key="HQ4RO">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2296" Hour="15" />
+                              </c:XEntry>
+                              <c:XEntry key="UVPxF">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2297" Hour="16" />
+                              </c:XEntry>
+                              <c:XEntry key="72Uo4">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2298" Hour="17" />
+                              </c:XEntry>
+                              <c:XEntry key="llNF8">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2299" Hour="18" />
+                              </c:XEntry>
+                              <c:XEntry key="gDaAq">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2300" Hour="19" />
+                              </c:XEntry>
+                              <c:XEntry key="mELfv">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2301" Hour="20" />
+                              </c:XEntry>
+                              <c:XEntry key="hI54D">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2302" Hour="21" />
+                              </c:XEntry>
+                              <c:XEntry key="tZF59">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2303" Hour="22" />
+                              </c:XEntry>
+                              <c:XEntry key="wvYTr">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2304" Hour="23" />
+                              </c:XEntry>
+                              <c:XEntry key="BB7r6">
+                                <ElectricityRateTimeOfUseRowElectricity cuid="2305" Hour="24" />
+                              </c:XEntry>
+                            </c:XList>
+                          </ElectricityRateTimeOfUse.ContentRowElectricity>
+                          <ElectricityRateTimeOfUse.ContentRowMonth>
+                            <c:XList seed="542589254" absCount="12">
+                              <c:XEntry key="TH4zr">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2306" Month="1" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="lyHav">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2307" Month="2" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="xhoWc">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2308" Month="3" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="mBbsg">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2309" Month="4" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="aasCV">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2310" Month="5" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="qcUXw">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2311" Month="6" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="Aiei1">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2312" Month="7" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="hgvV9">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2313" Month="8" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="w5BAs">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2314" Month="9" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="g9Q8G">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2315" Month="10" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="uNI3N">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2316" Month="11" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                              <c:XEntry key="BKyLA">
+                                <ElectricityRateTimeOfUseRowMonth cuid="2317" Month="12" ElectricityRate="0" Electricity="0" ElectricityCost="0" />
+                              </c:XEntry>
+                            </c:XList>
+                          </ElectricityRateTimeOfUse.ContentRowMonth>
+                        </ElectricityRateTimeOfUse>
+                      </ToolElectricityRateModel.ElectricityRateTimeOfUseModel>
+                    </ToolElectricityRateModel>
+                  </EEMFuel.EEElectricityRateToolModel>
+                </EEMFuel>
+              </c:XEntry>
+            </c:XList>
+          </FuelSummary.ElectricityList>
+          <FuelSummary.Notes>
+            <c:resource uid="c293632d-ae1b-4f9e-9526-5c58a05ce5be" />
+          </FuelSummary.Notes>
+          <FuelSummary.EnergyConnectModel>
+            <EnergyConnectModel cuid="2251">
+              <EnergyConnectModel.EnergyConnectLinks>
+                <c:XList seed="542589246" absCount="0" />
+              </EnergyConnectModel.EnergyConnectLinks>
+            </EnergyConnectModel>
+          </FuelSummary.EnergyConnectModel>
+        </FuelSummary>
+      </PowerModel.FuelSummary>
+      <PowerModel.HCSystemsSummary>
+        <HCSystemsSummary cuid="2387">
+          <HCSystemsSummary.SystemContainers>
+            <c:XList seed="542589264" absCount="5">
+              <c:XEntry key="RcqPJ">
+                <ComponentContainersCCS cuid="2389" Category="5">
+                  <ComponentContainersCCS.Systems>
+                    <c:XList seed="542589266" absCount="0" />
+                  </ComponentContainersCCS.Systems>
+                  <ComponentContainersCCS.EnergyConnectModel>
+                    <EnergyConnectModel cuid="2390">
+                      <EnergyConnectModel.EnergyConnectLinks>
+                        <c:XList seed="542589265" absCount="0" />
+                      </EnergyConnectModel.EnergyConnectLinks>
+                    </EnergyConnectModel>
+                  </ComponentContainersCCS.EnergyConnectModel>
+                </ComponentContainersCCS>
+              </c:XEntry>
+              <c:XEntry key="vPxW5">
+                <ComponentContainersCCS cuid="2391" Category="6">
+                  <ComponentContainersCCS.Systems>
+                    <c:XList seed="542589268" absCount="0" />
+                  </ComponentContainersCCS.Systems>
+                  <ComponentContainersCCS.EnergyConnectModel>
+                    <EnergyConnectModel cuid="2392">
+                      <EnergyConnectModel.EnergyConnectLinks>
+                        <c:XList seed="542589267" absCount="0" />
+                      </EnergyConnectModel.EnergyConnectLinks>
+                    </EnergyConnectModel>
+                  </ComponentContainersCCS.EnergyConnectModel>
+                </ComponentContainersCCS>
+              </c:XEntry>
+              <c:XEntry key="XHtBs">
+                <ComponentContainersCCS cuid="2393" Category="7">
+                  <ComponentContainersCCS.Systems>
+                    <c:XList seed="542589270" absCount="0" />
+                  </ComponentContainersCCS.Systems>
+                  <ComponentContainersCCS.EnergyConnectModel>
+                    <EnergyConnectModel cuid="2394">
+                      <EnergyConnectModel.EnergyConnectLinks>
+                        <c:XList seed="542589269" absCount="0" />
+                      </EnergyConnectModel.EnergyConnectLinks>
+                    </EnergyConnectModel>
+                  </ComponentContainersCCS.EnergyConnectModel>
+                </ComponentContainersCCS>
+              </c:XEntry>
+              <c:XEntry key="jo7rm">
+                <ComponentContainersCCS cuid="2395" Category="31">
+                  <ComponentContainersCCS.Systems>
+                    <c:XList seed="542589272" absCount="0" />
+                  </ComponentContainersCCS.Systems>
+                  <ComponentContainersCCS.EnergyConnectModel>
+                    <EnergyConnectModel cuid="2396">
+                      <EnergyConnectModel.EnergyConnectLinks>
+                        <c:XList seed="542589271" absCount="0" />
+                      </EnergyConnectModel.EnergyConnectLinks>
+                    </EnergyConnectModel>
+                  </ComponentContainersCCS.EnergyConnectModel>
+                </ComponentContainersCCS>
+              </c:XEntry>
+              <c:XEntry key="LdrGN">
+                <ComponentContainersCCS cuid="2397" Category="26">
+                  <ComponentContainersCCS.Systems>
+                    <c:XList seed="542589274" absCount="0" />
+                  </ComponentContainersCCS.Systems>
+                  <ComponentContainersCCS.EnergyConnectModel>
+                    <EnergyConnectModel cuid="2398">
+                      <EnergyConnectModel.EnergyConnectLinks>
+                        <c:XList seed="542589273" absCount="0" />
+                      </EnergyConnectModel.EnergyConnectLinks>
+                    </EnergyConnectModel>
+                  </ComponentContainersCCS.EnergyConnectModel>
+                </ComponentContainersCCS>
+              </c:XEntry>
+            </c:XList>
+          </HCSystemsSummary.SystemContainers>
+          <HCSystemsSummary.Ordering>
+            <c:Dic />
+          </HCSystemsSummary.Ordering>
+          <HCSystemsSummary.EnergyConnectModel>
+            <EnergyConnectModel cuid="2388">
+              <EnergyConnectModel.EnergyConnectLinks>
+                <c:XList seed="542589263" absCount="0" />
+              </EnergyConnectModel.EnergyConnectLinks>
+            </EnergyConnectModel>
+          </HCSystemsSummary.EnergyConnectModel>
+        </HCSystemsSummary>
+      </PowerModel.HCSystemsSummary>
+      <PowerModel.LoadsSummary>
+        <LoadSummary cuid="2399">
+          <LoadSummary.Loads>
+            <c:XList seed="542589277" absCount="18">
+              <c:XEntry key="GKPUc">
+                <ComponentContainers cuid="2401" Category="8">
+                  <ComponentContainers.Loads>
+                    <c:XList seed="542589279" absCount="0" />
+                  </ComponentContainers.Loads>
+                  <ComponentContainers.EnergyConnectModel>
+                    <EnergyConnectModel cuid="2402">
+                      <EnergyConnectModel.EnergyConnectLinks>
+                        <c:XList seed="542589278" absCount="0" />
+                      </EnergyConnectModel.EnergyConnectLinks>
+                    </EnergyConnectModel>
+                  </ComponentContainers.EnergyConnectModel>
+                </ComponentContainers>
+              </c:XEntry>
+              <c:XEntry key="lBWzC">
+                <ComponentContainers cuid="2403" Category="9">
+                  <ComponentContainers.Loads>
+                    <c:XList seed="542589281" absCount="0" />
+                  </ComponentContainers.Loads>
+                  <ComponentContainers.EnergyConnectModel>
+                    <EnergyConnectModel cuid="2404">
+                      <EnergyConnectModel.EnergyConnectLinks>
+                        <c:XList seed="542589280" absCount="0" />
+                      </EnergyConnectModel.EnergyConnectLinks>
+                    </EnergyConnectModel>
+                  </ComponentContainers.EnergyConnectModel>
+                </ComponentContainers>
+              </c:XEntry>
+              <c:XEntry key="xFCrn">
+                <ComponentContainers cuid="2405" Category="10">
+                  <ComponentContainers.Loads>
+                    <c:XList seed="542589283" absCount="0" />
+                  </ComponentContainers.Loads>
+                  <ComponentContainers.EnergyConnectModel>
+                    <EnergyConnectModel cuid="2406">
+                      <EnergyConnectModel.EnergyConnectLinks>
+                        <c:XList seed="542589282" absCount="0" />
+                      </EnergyConnectModel.EnergyConnectLinks>
+                    </EnergyConnectModel>
+                  </ComponentContainers.EnergyConnectModel>
+                </ComponentContainers>
+              </c:XEntry>
+              <c:XEntry key="m3dRb">
+                <ComponentContainers cuid="2407" Category="11">
+                  <ComponentContainers.Loads>
+                    <c:XList seed="542589285" absCount="0" />
+                  </ComponentContainers.Loads>
+                  <ComponentContainers.EnergyConnectModel>
+                    <EnergyConnectModel cuid="2408">
+                      <EnergyConnectModel.EnergyConnectLinks>
+                        <c:XList seed="542589284" absCount="0" />
+                      </EnergyConnectModel.EnergyConnectLinks>
+                    </EnergyConnectModel>
+                  </ComponentContainers.EnergyConnectModel>
+                </ComponentContainers>
+              </c:XEntry>
+              <c:XEntry key="iV4ZR">
+                <ComponentContainers cuid="2409" Category="12">
+                  <ComponentContainers.Loads>
+                    <c:XList seed="542589287" absCount="0" />
+                  </ComponentContainers.Loads>
+                  <ComponentContainers.EnergyConnectModel>
+                    <EnergyConnectModel cuid="2410">
+                      <EnergyConnectModel.EnergyConnectLinks>
+                        <c:XList seed="542589286" absCount="0" />
+                      </EnergyConnectModel.EnergyConnectLinks>
+                    </EnergyConnectModel>
+                  </ComponentContainers.EnergyConnectModel>
+                </ComponentContainers>
+              </c:XEntry>
+              <c:XEntry key="hTvAe">
+                <ComponentContainers cuid="2411" Category="13">
+                  <ComponentContainers.Loads>
+                    <c:XList seed="542589289" absCount="0" />
+                  </ComponentContainers.Loads>
+                  <ComponentContainers.EnergyConnectModel>
+                    <EnergyConnectModel cuid="2412">
+                      <EnergyConnectModel.EnergyConnectLinks>
+                        <c:XList seed="542589288" absCount="0" />
+                      </EnergyConnectModel.EnergyConnectLinks>
+                    </EnergyConnectModel>
+                  </ComponentContainers.EnergyConnectModel>
+                </ComponentContainers>
+              </c:XEntry>
+              <c:XEntry key="LMxYh">
+                <ComponentContainers cuid="2413" Category="14">
+                  <ComponentContainers.Loads>
+                    <c:XList seed="542589291" absCount="0" />
+                  </ComponentContainers.Loads>
+                  <ComponentContainers.EnergyConnectModel>
+                    <EnergyConnectModel cuid="2414">
+                      <EnergyConnectModel.EnergyConnectLinks>
+                        <c:XList seed="542589290" absCount="0" />
+                      </EnergyConnectModel.EnergyConnectLinks>
+                    </EnergyConnectModel>
+                  </ComponentContainers.EnergyConnectModel>
+                </ComponentContainers>
+              </c:XEntry>
+              <c:XEntry key="QnLNU">
+                <ComponentContainers cuid="2415" Category="15">
+                  <ComponentContainers.Loads>
+                    <c:XList seed="542589293" absCount="0" />
+                  </ComponentContainers.Loads>
+                  <ComponentContainers.EnergyConnectModel>
+                    <EnergyConnectModel cuid="2416">
+                      <EnergyConnectModel.EnergyConnectLinks>
+                        <c:XList seed="542589292" absCount="0" />
+                      </EnergyConnectModel.EnergyConnectLinks>
+                    </EnergyConnectModel>
+                  </ComponentContainers.EnergyConnectModel>
+                </ComponentContainers>
+              </c:XEntry>
+              <c:XEntry key="WuEGd">
+                <ComponentContainers cuid="2417" Category="16">
+                  <ComponentContainers.Loads>
+                    <c:XList seed="542589295" absCount="0" />
+                  </ComponentContainers.Loads>
+                  <ComponentContainers.EnergyConnectModel>
+                    <EnergyConnectModel cuid="2418">
+                      <EnergyConnectModel.EnergyConnectLinks>
+                        <c:XList seed="542589294" absCount="0" />
+                      </EnergyConnectModel.EnergyConnectLinks>
+                    </EnergyConnectModel>
+                  </ComponentContainers.EnergyConnectModel>
+                </ComponentContainers>
+              </c:XEntry>
+              <c:XEntry key="Erh7P">
+                <ComponentContainers cuid="2419" Category="17">
+                  <ComponentContainers.Loads>
+                    <c:XList seed="542589297" absCount="0" />
+                  </ComponentContainers.Loads>
+                  <ComponentContainers.EnergyConnectModel>
+                    <EnergyConnectModel cuid="2420">
+                      <EnergyConnectModel.EnergyConnectLinks>
+                        <c:XList seed="542589296" absCount="0" />
+                      </EnergyConnectModel.EnergyConnectLinks>
+                    </EnergyConnectModel>
+                  </ComponentContainers.EnergyConnectModel>
+                </ComponentContainers>
+              </c:XEntry>
+              <c:XEntry key="pofa1">
+                <ComponentContainers cuid="2421" Category="18">
+                  <ComponentContainers.Loads>
+                    <c:XList seed="542589299" absCount="0" />
+                  </ComponentContainers.Loads>
+                  <ComponentContainers.EnergyConnectModel>
+                    <EnergyConnectModel cuid="2422">
+                      <Energy

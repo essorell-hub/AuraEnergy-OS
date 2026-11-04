@@ -37,6 +37,8 @@ from backend.core.retscreen_full_engine import calculate_retscreen_complete_feas
 from backend.core.retscreen_suite_advanced import run_virtual_energy_analyzer, calculate_performance_cusum, aggregate_enterprise_portfolio
 from backend.core.nasa_gis_location_engine import fetch_nasa_power_climate_data, geocode_address_location
 from backend.core.retscreen_end_use_loads import calculate_detailed_end_use_loads, generate_cumulative_cash_flow_series
+from backend.core.retx_parser_engine import RetxProjectPackage, export_new_retx_package
+from backend.core.retscreen_climate_stations import search_climate_stations
 
 PORT = 8080
 FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "frontend")
@@ -423,6 +425,44 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retx/open-file":
+            filepath = payload.get("filepath")
+            if not filepath or not os.path.exists(filepath):
+                self._send_json({"error": "File does not exist"}, status=400)
+                return
+            pkg = RetxProjectPackage(filepath)
+            self._send_json(pkg.extract_key_metrics())
+            return
+
+        elif parsed.path == "/api/retx/export-file":
+            target = payload.get("filepath", "d:/REST/exported_retscreen_model.retx")
+            pname = payload.get("project_name", "Nový RETScreen Projekt")
+            capex = float(payload.get("total_capex", 150000.0))
+            npv = float(payload.get("npv", 280000.0))
+            irr = float(payload.get("irr_pct", 14.5))
+            pb = float(payload.get("payback_years", 5.2))
+            b_cost = float(payload.get("base_fuel_cost", 65000.0))
+            p_cost = float(payload.get("proposed_fuel_cost", 24000.0))
+            ghg = float(payload.get("ghg_reduction_tons", 120.0))
+
+            out = export_new_retx_package(target, pname, capex, npv, irr, pb, b_cost, p_cost, ghg)
+            self._send_json({"status": "RETX_EXPORTED", "path": out})
+            return
+
+        elif parsed.path == "/api/retx/list-samples":
+            sample_dir = r"C:\Program Files\RETScreen\RETScreen Expert\Net Zero Plan Example\EN"
+            files = []
+            if os.path.exists(sample_dir):
+                files = [os.path.join(sample_dir, f) for f in os.listdir(sample_dir) if f.endswith('.retx')]
+            self._send_json({"sample_files": files})
+            return
+
+        elif parsed.path == "/api/climate/search-stations":
+            q = payload.get("query", "Prague")
+            limit = int(payload.get("limit", 15))
+            self._send_json({"stations": search_climate_stations(q, limit)})
+            return
+
         elif parsed.path == "/api/retscreen/end-use-loads":
             area = float(payload.get("floor_area_m2", 4500.0))
             occ = int(payload.get("occupancy_persons", 180))
@@ -673,6 +713,44 @@ class SamServerHandler(BaseHTTPRequestHandler):
             fac_list = payload.get("facility_projects", None)
             res = aggregate_enterprise_portfolio(facility_projects=fac_list)
             self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retx/open-file":
+            filepath = payload.get("filepath")
+            if not filepath or not os.path.exists(filepath):
+                self._send_json({"error": "File does not exist"}, status=400)
+                return
+            pkg = RetxProjectPackage(filepath)
+            self._send_json(pkg.extract_key_metrics())
+            return
+
+        elif parsed.path == "/api/retx/export-file":
+            target = payload.get("filepath", "d:/REST/exported_retscreen_model.retx")
+            pname = payload.get("project_name", "Nový RETScreen Projekt")
+            capex = float(payload.get("total_capex", 150000.0))
+            npv = float(payload.get("npv", 280000.0))
+            irr = float(payload.get("irr_pct", 14.5))
+            pb = float(payload.get("payback_years", 5.2))
+            b_cost = float(payload.get("base_fuel_cost", 65000.0))
+            p_cost = float(payload.get("proposed_fuel_cost", 24000.0))
+            ghg = float(payload.get("ghg_reduction_tons", 120.0))
+
+            out = export_new_retx_package(target, pname, capex, npv, irr, pb, b_cost, p_cost, ghg)
+            self._send_json({"status": "RETX_EXPORTED", "path": out})
+            return
+
+        elif parsed.path == "/api/retx/list-samples":
+            sample_dir = r"C:\Program Files\RETScreen\RETScreen Expert\Net Zero Plan Example\EN"
+            files = []
+            if os.path.exists(sample_dir):
+                files = [os.path.join(sample_dir, f) for f in os.listdir(sample_dir) if f.endswith('.retx')]
+            self._send_json({"sample_files": files})
+            return
+
+        elif parsed.path == "/api/climate/search-stations":
+            q = payload.get("query", "Prague")
+            limit = int(payload.get("limit", 15))
+            self._send_json({"stations": search_climate_stations(q, limit)})
             return
 
         elif parsed.path == "/api/retscreen/end-use-loads":
@@ -956,6 +1034,44 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retx/open-file":
+            filepath = payload.get("filepath")
+            if not filepath or not os.path.exists(filepath):
+                self._send_json({"error": "File does not exist"}, status=400)
+                return
+            pkg = RetxProjectPackage(filepath)
+            self._send_json(pkg.extract_key_metrics())
+            return
+
+        elif parsed.path == "/api/retx/export-file":
+            target = payload.get("filepath", "d:/REST/exported_retscreen_model.retx")
+            pname = payload.get("project_name", "Nový RETScreen Projekt")
+            capex = float(payload.get("total_capex", 150000.0))
+            npv = float(payload.get("npv", 280000.0))
+            irr = float(payload.get("irr_pct", 14.5))
+            pb = float(payload.get("payback_years", 5.2))
+            b_cost = float(payload.get("base_fuel_cost", 65000.0))
+            p_cost = float(payload.get("proposed_fuel_cost", 24000.0))
+            ghg = float(payload.get("ghg_reduction_tons", 120.0))
+
+            out = export_new_retx_package(target, pname, capex, npv, irr, pb, b_cost, p_cost, ghg)
+            self._send_json({"status": "RETX_EXPORTED", "path": out})
+            return
+
+        elif parsed.path == "/api/retx/list-samples":
+            sample_dir = r"C:\Program Files\RETScreen\RETScreen Expert\Net Zero Plan Example\EN"
+            files = []
+            if os.path.exists(sample_dir):
+                files = [os.path.join(sample_dir, f) for f in os.listdir(sample_dir) if f.endswith('.retx')]
+            self._send_json({"sample_files": files})
+            return
+
+        elif parsed.path == "/api/climate/search-stations":
+            q = payload.get("query", "Prague")
+            limit = int(payload.get("limit", 15))
+            self._send_json({"stations": search_climate_stations(q, limit)})
+            return
+
         elif parsed.path == "/api/retscreen/end-use-loads":
             area = float(payload.get("floor_area_m2", 4500.0))
             occ = int(payload.get("occupancy_persons", 180))
@@ -1195,6 +1311,44 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retx/open-file":
+            filepath = payload.get("filepath")
+            if not filepath or not os.path.exists(filepath):
+                self._send_json({"error": "File does not exist"}, status=400)
+                return
+            pkg = RetxProjectPackage(filepath)
+            self._send_json(pkg.extract_key_metrics())
+            return
+
+        elif parsed.path == "/api/retx/export-file":
+            target = payload.get("filepath", "d:/REST/exported_retscreen_model.retx")
+            pname = payload.get("project_name", "Nový RETScreen Projekt")
+            capex = float(payload.get("total_capex", 150000.0))
+            npv = float(payload.get("npv", 280000.0))
+            irr = float(payload.get("irr_pct", 14.5))
+            pb = float(payload.get("payback_years", 5.2))
+            b_cost = float(payload.get("base_fuel_cost", 65000.0))
+            p_cost = float(payload.get("proposed_fuel_cost", 24000.0))
+            ghg = float(payload.get("ghg_reduction_tons", 120.0))
+
+            out = export_new_retx_package(target, pname, capex, npv, irr, pb, b_cost, p_cost, ghg)
+            self._send_json({"status": "RETX_EXPORTED", "path": out})
+            return
+
+        elif parsed.path == "/api/retx/list-samples":
+            sample_dir = r"C:\Program Files\RETScreen\RETScreen Expert\Net Zero Plan Example\EN"
+            files = []
+            if os.path.exists(sample_dir):
+                files = [os.path.join(sample_dir, f) for f in os.listdir(sample_dir) if f.endswith('.retx')]
+            self._send_json({"sample_files": files})
+            return
+
+        elif parsed.path == "/api/climate/search-stations":
+            q = payload.get("query", "Prague")
+            limit = int(payload.get("limit", 15))
+            self._send_json({"stations": search_climate_stations(q, limit)})
+            return
+
         elif parsed.path == "/api/retscreen/end-use-loads":
             area = float(payload.get("floor_area_m2", 4500.0))
             occ = int(payload.get("occupancy_persons", 180))
@@ -1431,6 +1585,44 @@ class SamServerHandler(BaseHTTPRequestHandler):
             fac_list = payload.get("facility_projects", None)
             res = aggregate_enterprise_portfolio(facility_projects=fac_list)
             self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retx/open-file":
+            filepath = payload.get("filepath")
+            if not filepath or not os.path.exists(filepath):
+                self._send_json({"error": "File does not exist"}, status=400)
+                return
+            pkg = RetxProjectPackage(filepath)
+            self._send_json(pkg.extract_key_metrics())
+            return
+
+        elif parsed.path == "/api/retx/export-file":
+            target = payload.get("filepath", "d:/REST/exported_retscreen_model.retx")
+            pname = payload.get("project_name", "Nový RETScreen Projekt")
+            capex = float(payload.get("total_capex", 150000.0))
+            npv = float(payload.get("npv", 280000.0))
+            irr = float(payload.get("irr_pct", 14.5))
+            pb = float(payload.get("payback_years", 5.2))
+            b_cost = float(payload.get("base_fuel_cost", 65000.0))
+            p_cost = float(payload.get("proposed_fuel_cost", 24000.0))
+            ghg = float(payload.get("ghg_reduction_tons", 120.0))
+
+            out = export_new_retx_package(target, pname, capex, npv, irr, pb, b_cost, p_cost, ghg)
+            self._send_json({"status": "RETX_EXPORTED", "path": out})
+            return
+
+        elif parsed.path == "/api/retx/list-samples":
+            sample_dir = r"C:\Program Files\RETScreen\RETScreen Expert\Net Zero Plan Example\EN"
+            files = []
+            if os.path.exists(sample_dir):
+                files = [os.path.join(sample_dir, f) for f in os.listdir(sample_dir) if f.endswith('.retx')]
+            self._send_json({"sample_files": files})
+            return
+
+        elif parsed.path == "/api/climate/search-stations":
+            q = payload.get("query", "Prague")
+            limit = int(payload.get("limit", 15))
+            self._send_json({"stations": search_climate_stations(q, limit)})
             return
 
         elif parsed.path == "/api/retscreen/end-use-loads":
@@ -1723,6 +1915,44 @@ class SamServerHandler(BaseHTTPRequestHandler):
             fac_list = payload.get("facility_projects", None)
             res = aggregate_enterprise_portfolio(facility_projects=fac_list)
             self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retx/open-file":
+            filepath = payload.get("filepath")
+            if not filepath or not os.path.exists(filepath):
+                self._send_json({"error": "File does not exist"}, status=400)
+                return
+            pkg = RetxProjectPackage(filepath)
+            self._send_json(pkg.extract_key_metrics())
+            return
+
+        elif parsed.path == "/api/retx/export-file":
+            target = payload.get("filepath", "d:/REST/exported_retscreen_model.retx")
+            pname = payload.get("project_name", "Nový RETScreen Projekt")
+            capex = float(payload.get("total_capex", 150000.0))
+            npv = float(payload.get("npv", 280000.0))
+            irr = float(payload.get("irr_pct", 14.5))
+            pb = float(payload.get("payback_years", 5.2))
+            b_cost = float(payload.get("base_fuel_cost", 65000.0))
+            p_cost = float(payload.get("proposed_fuel_cost", 24000.0))
+            ghg = float(payload.get("ghg_reduction_tons", 120.0))
+
+            out = export_new_retx_package(target, pname, capex, npv, irr, pb, b_cost, p_cost, ghg)
+            self._send_json({"status": "RETX_EXPORTED", "path": out})
+            return
+
+        elif parsed.path == "/api/retx/list-samples":
+            sample_dir = r"C:\Program Files\RETScreen\RETScreen Expert\Net Zero Plan Example\EN"
+            files = []
+            if os.path.exists(sample_dir):
+                files = [os.path.join(sample_dir, f) for f in os.listdir(sample_dir) if f.endswith('.retx')]
+            self._send_json({"sample_files": files})
+            return
+
+        elif parsed.path == "/api/climate/search-stations":
+            q = payload.get("query", "Prague")
+            limit = int(payload.get("limit", 15))
+            self._send_json({"stations": search_climate_stations(q, limit)})
             return
 
         elif parsed.path == "/api/retscreen/end-use-loads":
@@ -2033,6 +2263,44 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retx/open-file":
+            filepath = payload.get("filepath")
+            if not filepath or not os.path.exists(filepath):
+                self._send_json({"error": "File does not exist"}, status=400)
+                return
+            pkg = RetxProjectPackage(filepath)
+            self._send_json(pkg.extract_key_metrics())
+            return
+
+        elif parsed.path == "/api/retx/export-file":
+            target = payload.get("filepath", "d:/REST/exported_retscreen_model.retx")
+            pname = payload.get("project_name", "Nový RETScreen Projekt")
+            capex = float(payload.get("total_capex", 150000.0))
+            npv = float(payload.get("npv", 280000.0))
+            irr = float(payload.get("irr_pct", 14.5))
+            pb = float(payload.get("payback_years", 5.2))
+            b_cost = float(payload.get("base_fuel_cost", 65000.0))
+            p_cost = float(payload.get("proposed_fuel_cost", 24000.0))
+            ghg = float(payload.get("ghg_reduction_tons", 120.0))
+
+            out = export_new_retx_package(target, pname, capex, npv, irr, pb, b_cost, p_cost, ghg)
+            self._send_json({"status": "RETX_EXPORTED", "path": out})
+            return
+
+        elif parsed.path == "/api/retx/list-samples":
+            sample_dir = r"C:\Program Files\RETScreen\RETScreen Expert\Net Zero Plan Example\EN"
+            files = []
+            if os.path.exists(sample_dir):
+                files = [os.path.join(sample_dir, f) for f in os.listdir(sample_dir) if f.endswith('.retx')]
+            self._send_json({"sample_files": files})
+            return
+
+        elif parsed.path == "/api/climate/search-stations":
+            q = payload.get("query", "Prague")
+            limit = int(payload.get("limit", 15))
+            self._send_json({"stations": search_climate_stations(q, limit)})
+            return
+
         elif parsed.path == "/api/retscreen/end-use-loads":
             area = float(payload.get("floor_area_m2", 4500.0))
             occ = int(payload.get("occupancy_persons", 180))
@@ -2322,6 +2590,44 @@ class SamServerHandler(BaseHTTPRequestHandler):
             fac_list = payload.get("facility_projects", None)
             res = aggregate_enterprise_portfolio(facility_projects=fac_list)
             self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retx/open-file":
+            filepath = payload.get("filepath")
+            if not filepath or not os.path.exists(filepath):
+                self._send_json({"error": "File does not exist"}, status=400)
+                return
+            pkg = RetxProjectPackage(filepath)
+            self._send_json(pkg.extract_key_metrics())
+            return
+
+        elif parsed.path == "/api/retx/export-file":
+            target = payload.get("filepath", "d:/REST/exported_retscreen_model.retx")
+            pname = payload.get("project_name", "Nový RETScreen Projekt")
+            capex = float(payload.get("total_capex", 150000.0))
+            npv = float(payload.get("npv", 280000.0))
+            irr = float(payload.get("irr_pct", 14.5))
+            pb = float(payload.get("payback_years", 5.2))
+            b_cost = float(payload.get("base_fuel_cost", 65000.0))
+            p_cost = float(payload.get("proposed_fuel_cost", 24000.0))
+            ghg = float(payload.get("ghg_reduction_tons", 120.0))
+
+            out = export_new_retx_package(target, pname, capex, npv, irr, pb, b_cost, p_cost, ghg)
+            self._send_json({"status": "RETX_EXPORTED", "path": out})
+            return
+
+        elif parsed.path == "/api/retx/list-samples":
+            sample_dir = r"C:\Program Files\RETScreen\RETScreen Expert\Net Zero Plan Example\EN"
+            files = []
+            if os.path.exists(sample_dir):
+                files = [os.path.join(sample_dir, f) for f in os.listdir(sample_dir) if f.endswith('.retx')]
+            self._send_json({"sample_files": files})
+            return
+
+        elif parsed.path == "/api/climate/search-stations":
+            q = payload.get("query", "Prague")
+            limit = int(payload.get("limit", 15))
+            self._send_json({"stations": search_climate_stations(q, limit)})
             return
 
         elif parsed.path == "/api/retscreen/end-use-loads":
