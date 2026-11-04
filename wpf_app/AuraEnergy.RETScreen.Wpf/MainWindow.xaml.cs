@@ -123,13 +123,14 @@ namespace AuraEnergy.RETScreen.Wpf
                 txtViewTitle.Text = header;
 
                 // Dynamické přepínání kontejnerů formulářů
-                if (viewClimate != null && viewPv != null && viewHp != null && viewWbs != null && viewGridArbitrage != null)
+                if (viewClimate != null && viewPv != null && viewHp != null && viewWbs != null && viewGridArbitrage != null && viewHydrogen != null)
                 {
                     viewClimate.Visibility = Visibility.Collapsed;
                     viewPv.Visibility = Visibility.Collapsed;
                     viewHp.Visibility = Visibility.Collapsed;
                     viewWbs.Visibility = Visibility.Collapsed;
                     viewGridArbitrage.Visibility = Visibility.Collapsed;
+                    viewHydrogen.Visibility = Visibility.Collapsed;
 
                     if (header.Contains("FVE") || header.Contains("Fotovoltaika"))
                     {
@@ -143,6 +144,10 @@ namespace AuraEnergy.RETScreen.Wpf
                     {
                         viewWbs.Visibility = Visibility.Visible;
                     }
+                    else if (header.Contains("vodík") || header.Contains("Vodík") || header.Contains("Agro") || header.Contains("Agri"))
+                    {
+                        viewHydrogen.Visibility = Visibility.Visible;
+                    }
                     else if (header.Contains("PNE") || header.Contains("Arbitráž") || header.Contains("SVR") || header.Contains("síti"))
                     {
                         viewGridArbitrage.Visibility = Visibility.Visible;
@@ -152,6 +157,20 @@ namespace AuraEnergy.RETScreen.Wpf
                         viewClimate.Visibility = Visibility.Visible;
                     }
                 }
+            }
+        }
+
+        private void BtnShowHydrogen_Click(object sender, RoutedEventArgs e)
+        {
+            if (viewClimate != null && viewPv != null && viewHp != null && viewWbs != null && viewGridArbitrage != null && viewHydrogen != null)
+            {
+                viewClimate.Visibility = Visibility.Collapsed;
+                viewPv.Visibility = Visibility.Collapsed;
+                viewHp.Visibility = Visibility.Collapsed;
+                viewWbs.Visibility = Visibility.Collapsed;
+                viewGridArbitrage.Visibility = Visibility.Collapsed;
+                viewHydrogen.Visibility = Visibility.Visible;
+                txtViewTitle.Text = "Zelený vodík & Agrofotovoltaika (P2G & Agri-PV)";
             }
         }
 

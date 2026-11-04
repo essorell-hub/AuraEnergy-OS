@@ -186,6 +186,11 @@
                             <iconPacks:PackIconMaterial Kind="TransmissionTower" Width="32" Height="32" Foreground="#2E7D32" />
                         </fluent:Button.LargeIcon>
                     </fluent:Button>
+                    <fluent:Button Header="Vodík &amp; Agri-PV" Click="BtnShowHydrogen_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="Molecule" Width="32" Height="32" Foreground="#004D40" />
+                        </fluent:Button.LargeIcon>
+                    </fluent:Button>
                 </fluent:RibbonGroupBox>
             </fluent:RibbonTabItem>
         </fluent:Ribbon>
@@ -215,6 +220,7 @@
                             <TreeViewItem Header="Navržená energetická soustava" IsExpanded="True">
                                 <TreeViewItem x:Name="itemPv" Header="FVE Elektrárna (monoSi 250 kWp)" />
                                 <TreeViewItem x:Name="itemHp" Header="Tepelné čerpadlo (Země-Voda 120 kWt)" />
+                                <TreeViewItem x:Name="itemHydrogen" Header="Zelený vodík &amp; Agrofotovoltaika" />
                                 <TreeViewItem x:Name="itemGrid" Header="Připojení k síti PNE &amp; Arbitráž OTE" />
                                 <TreeViewItem Header="BESS Bateriové úložiště (300 kWh)" />
                             </TreeViewItem>
@@ -284,6 +290,9 @@
 
                     <!-- VIEW 5: PNE 33 3430-1 & ARBITRÁŽ (AURA+) -->
                     <local:CzechGridArbitrageView x:Name="viewGridArbitrage" Visibility="Collapsed" />
+
+                    <!-- VIEW 6: VODÍK & AGRI-PV -->
+                    <local:HydrogenAgriPvView x:Name="viewHydrogen" Visibility="Collapsed" />
                 </Grid>
 
                 <!-- DOLE: NATIVNÍ GRAF KUMULATIVNÍCH TOKŮ A TORNADO GRAF (LiveCharts) -->

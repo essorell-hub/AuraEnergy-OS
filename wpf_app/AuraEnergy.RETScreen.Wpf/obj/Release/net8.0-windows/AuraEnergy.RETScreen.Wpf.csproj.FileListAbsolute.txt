@@ -61,3 +61,5 @@ d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\CzechGridArb
 d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\HeatPumpView.baml
 d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\CzechGridArbitrageView.g.cs
 d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\HeatPumpView.g.cs
+d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\HydrogenAgriPvView.baml
+d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\HydrogenAgriPvView.g.cs

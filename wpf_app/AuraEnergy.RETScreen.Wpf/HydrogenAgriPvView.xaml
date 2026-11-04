@@ -1,0 +1,101 @@
+<UserControl x:Class="AuraEnergy.RETScreen.Wpf.HydrogenAgriPvView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             Background="White">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="16">
+            <!-- Header Group -->
+            <Border Background="#E0F2F1" BorderBrush="#80CBC4" BorderThickness="1" CornerRadius="3" Padding="12" Margin="0,0,0,14">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="Zelený Vodík (P2G Elektrolýza) &amp; Agrofotovoltaika (Agri-PV)" FontSize="15" FontWeight="Bold" Foreground="#004D40" />
+                        <TextBlock Text="Špičkové inovativní moduly pro dekarbonizaci těžkého průmyslu a duální využití zemědělské půdy" Foreground="#555" FontSize="11" Margin="0,2,0,0" />
+                    </StackPanel>
+                    <Button Grid.Column="1" Content="Spustit AI 48h Predikci OTE" Background="#00695C" Foreground="White" FontWeight="Bold" Padding="12,6" Click="BtnAiForecast_Click" />
+                </Grid>
+            </Border>
+
+            <!-- 2 Columns: Hydrogen Electrolyzer vs Agri-PV -->
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Left Column: Zelený Vodík (P2G) -->
+                <Border Grid.Column="0" Background="#FAFAFA" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="3" Padding="12" Margin="0,0,8,0">
+                    <StackPanel>
+                        <TextBlock Text="1. Dimenzování Výroby Zeleného Vodíku (H₂)" FontWeight="Bold" Foreground="#003366" Margin="0,0,0,8" />
+
+                        <TextBlock Text="Technologie elektrolyzéru:" Margin="0,0,0,2" />
+                        <ComboBox SelectedIndex="0" Margin="0,0,0,8">
+                            <ComboBoxItem Content="PEM Elektrolyzér (Rychlá dynamická odezva)" />
+                            <ComboBoxItem Content="Alkalický elektrolyzér (AEL - Nízký CAPEX)" />
+                            <ComboBoxItem Content="Vysokoteplotní SOEC (Využití odpadního tepla)" />
+                        </ComboBox>
+
+                        <TextBlock Text="Elektrický příkon elektrolyzéru (kW):" Margin="0,0,0,2" />
+                        <TextBox x:Name="txtElyPower" Text="500 kW" Background="#FFF2CC" BorderBrush="#F59E0B" FontWeight="Bold" Padding="4,2" TextChanged="TxtEly_TextChanged" Margin="0,0,0,8" />
+
+                        <TextBlock Text="Roční produkce čistého H₂ (t/rok):" Margin="0,0,0,2" />
+                        <TextBox x:Name="txtH2Production" Text="78.5 tun H₂ / rok" Background="#D9E1F2" BorderBrush="#005A9E" FontWeight="Bold" Padding="4,2" IsReadOnly="True" Margin="0,0,0,8" />
+
+                        <TextBlock Text="Skladovací tlak zásobníku (bar):" Margin="0,0,0,2" />
+                        <TextBox Text="350 bar (Tlakové kompozitní lahve)" Background="#FFF2CC" BorderBrush="#F59E0B" FontWeight="Bold" Padding="4,2" Margin="0,0,0,8" />
+
+                        <Border Background="#E0F7FA" Padding="6" CornerRadius="3">
+                            <TextBlock Text="VODÍKOVÝ STATUS: PŘIPRAVENO PRO ČERPÁNÍ DOTACE MODERNIZAČNÍHO FONDU" Foreground="#006064" FontWeight="Bold" FontSize="10" />
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Right Column: Agrofotovoltaika (Agri-PV) -->
+                <Border Grid.Column="1" Background="#FAFAFA" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="3" Padding="12" Margin="8,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="2. Agrofotovoltaika (Agri-PV Duální Využití)" FontWeight="Bold" Foreground="#003366" Margin="0,0,0,8" />
+
+                        <TextBlock Text="Typ zemědělské kultury pod panely:" Margin="0,0,0,2" />
+                        <ComboBox SelectedIndex="0" Margin="0,0,0,8">
+                            <ComboBoxItem Content="Bobuloviny a sady (Maliny, borůvky, jablka)" />
+                            <ComboBoxItem Content="Trvalé travní porosty a pastviny (Ovce/dobytek)" />
+                            <ComboBoxItem Content="Kořenová a listová zelenina (Brambory, salát)" />
+                        </ComboBox>
+
+                        <TextBlock Text="Světelná propustnost konstrukce (PAR %):" Margin="0,0,0,2" />
+                        <TextBox Text="65.0 % (Optimum pro fotosyntézu)" Background="#FFF2CC" BorderBrush="#F59E0B" FontWeight="Bold" Padding="4,2" Margin="0,0,0,8" />
+
+                        <TextBlock Text="Světlá výška konstrukce nad terénem (m):" Margin="0,0,0,2" />
+                        <TextBox Text="3.8 m (Průjezd běžné zemědělské techniky)" Background="#FFF2CC" BorderBrush="#F59E0B" FontWeight="Bold" Padding="4,2" Margin="0,0,0,8" />
+
+                        <TextBlock Text="Roční výnos z hektaru (FVE + Zemědělství):" Margin="0,0,0,2" />
+                        <TextBox Text="1 280 000 Kč / ha / rok (160 % konvenčního pole)" Background="#D9E1F2" BorderBrush="#005A9E" FontWeight="Bold" Padding="4,2" IsReadOnly="True" Margin="0,0,0,8" />
+
+                        <Border Background="#E8F5E9" Padding="6" CornerRadius="3">
+                            <TextBlock Text="AGRI-STATUS: SPLŇUJE NOVELU ZÁKONA O ZPF ZE DNE 1.7.2024" Foreground="#1B5E20" FontWeight="Bold" FontSize="10" />
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- AI 48h Forecast & Shadowing Banner -->
+            <Border Background="#EDE7F6" BorderBrush="#D1C4E9" BorderThickness="1" CornerRadius="3" Padding="12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="Strojové Učení &amp; Predikce Výroby: ECMWF AI Model 48h" FontWeight="Bold" Foreground="#4A148C" />
+                        <TextBlock Text="Předpověď osvitu GHI a oblačnosti v 15minutových krocích pro automatické podávání nabídek na Vnitrodenní trh OTE" Foreground="#666" FontSize="11" />
+                    </StackPanel>
+                    <Button Grid.Column="1" Content="Zobrazit 3D Stíny Budov" Background="#7B1FA2" Foreground="White" FontWeight="Bold" Padding="10,4" Click="Btn3dShadows_Click" />
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
