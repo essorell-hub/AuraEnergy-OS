@@ -215,7 +215,7 @@
                         <TextBlock Text="PROJEKTOVÝ STROM A SUBSYSTÉMY" FontWeight="Bold" Foreground="White" FontSize="11" />
                     </Border>
                     <TreeView x:Name="treeProject" BorderThickness="0" Margin="4" SelectedItemChanged="TreeProject_SelectedItemChanged">
-                        <TreeViewItem Header="Nemocnice s poliklinikou (Facility)" IsExpanded="True">
+                        <TreeViewItem x:Name="itemFacility" Header="Nemocnice s poliklinikou (Facility)" IsExpanded="True">
                             <TreeViewItem x:Name="itemClimate" Header="Lokalita a klima (Praha NASA POWER)" IsSelected="True" />
                             <TreeViewItem Header="Zatížení areálu (End-Use Loads)" IsExpanded="True">
                                 <TreeViewItem Header="Osvětlení &amp; LPD" />

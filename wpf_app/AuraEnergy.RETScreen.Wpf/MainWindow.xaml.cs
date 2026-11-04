@@ -381,36 +381,49 @@ namespace AuraEnergy.RETScreen.Wpf
             {
                 try
                 {
-                    var payload = JsonSerializer.Serialize(new
-                    {
-                        projectName = "Nemocnice s poliklinikou - Energetický audit",
-                        facilityType = "Zdravotnické zařízení / Nemocnice",
-                        location = "Praha, Česká republika",
-                        lat = 50.08,
-                        lon = 14.43,
-                        pvCapKwp = 250.0,
-                        heatPumpKw = 120.0,
-                        bessKwh = 300.0
-                    });
-                    var content = new StringContent(payload, Encoding.UTF8, "application/json");
-                    var resp = await _http.PostAsync("api/retscreen/export-executive-pdf", content);
-                    if (resp.IsSuccessStatusCode)
-                    {
-                        var bytes = await resp.Content.ReadAsByteArrayAsync();
-                        await File.WriteAllBytesAsync(dlg.FileName, bytes);
-                        MessageBox.Show($"Oficiální 2stránkový manažerský PDF report byl úspěšně vygenerován:\n{dlg.FileName}", "PDF Export Dokončen", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
+                    ExportService.GenerateDirectPdf(dlg.FileName, "Energetický posudek a návrh OZE", "Areál / Rodinný dům", "Česká republika", 250.0, 120.0, 300.0);
+                    MessageBox.Show($"Oficiální manažerský PDF report byl úspěšně vygenerován a zapsán:\n{dlg.FileName}\n\nSoubor je připraven k otevření v libovolném PDF prohlížeči.", "PDF Export Dokončen", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Chyba při stahování PDF: {ex.Message}", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Chyba při exportu PDF: {ex.Message}", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
 
         private void BtnNewFacility_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Založen nový areál: 'Průmyslový a administrativní park 2026'. Všechna pole inicializována.", "Nový Areál", MessageBoxButton.OK, MessageBoxImage.Information);
+            try
+            {
+                var dlg = new NewFacilityDialog { Owner = this };
+                if (dlg.ShowDialog() == true && dlg.Result != null)
+                {
+                    var res = dlg.Result;
+                    Title = $"AuraEnergy RETScreen® Expert Suite 2026 - {res.FacilityName} ({res.FacilityType})";
+                    if (txtViewTitle != null)
+                    {
+                        txtViewTitle.Text = $"Areál: {res.FacilityName} | {res.Location} | Plocha: {res.FloorArea:N0} m²";
+                    }
+                    
+                    // Aktualizace položky ve stromu
+                    if (itemFacility != null)
+                    {
+                        itemFacility.Header = $"{res.FacilityName} ({res.FacilityType})";
+                    }
+
+                    // Přizpůsobení viditelnosti subsystémů dle volby uživatele
+                    if (itemPv != null) itemPv.Visibility = res.EnablePv ? Visibility.Visible : Visibility.Collapsed;
+                    if (itemHp != null) itemHp.Visibility = res.EnableHp ? Visibility.Visible : Visibility.Collapsed;
+                    if (itemChp != null) itemChp.Visibility = res.EnableChp ? Visibility.Visible : Visibility.Collapsed;
+                    if (itemEsg != null) itemEsg.Visibility = res.EnableEsg ? Visibility.Visible : Visibility.Collapsed;
+
+                    MessageBox.Show($"Areál byl úspěšně založen a nakonfigurován:\n\nNázev: {res.FacilityName}\nTyp: {res.FacilityType}\nLokalita: {res.Location}\nStanice: {res.MeteoStation}\nUžitná plocha: {res.FloorArea:N0} m²\nŽivotnost projektu: {res.ProjectLife} let\n\nStruktura projektu a parametry byly inicializovány dle oficiálního standardu RETScreen.", "Areál Založen", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Chyba při zakládání areálu: {ex.Message}", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)

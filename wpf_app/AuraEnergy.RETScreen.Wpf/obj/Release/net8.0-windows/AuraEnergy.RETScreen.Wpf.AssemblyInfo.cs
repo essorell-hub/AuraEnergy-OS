@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AuraEnergy.RETScreen.Wpf")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f9901ad10e213ec120146db7edd6ec5b15fb3195")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+79e1a3b2ba5addbc9ea85d48f806a27d7b0b6249")]
 [assembly: System.Reflection.AssemblyProductAttribute("AuraEnergy.RETScreen.Wpf")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AuraEnergy.RETScreen.Wpf")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

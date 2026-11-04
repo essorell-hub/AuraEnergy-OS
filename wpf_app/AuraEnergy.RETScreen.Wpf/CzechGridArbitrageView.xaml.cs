@@ -21,7 +21,15 @@ namespace AuraEnergy.RETScreen.Wpf
 
             if (dlg.ShowDialog() == true)
             {
-                MessageBox.Show($"Jednopolové schéma zapojení a trasy kabelů byly úspěšně vyexportovány pro CAD/BIM projektanta:\n{dlg.FileName}", "CAD/BIM Export Dokončen", MessageBoxButton.OK, MessageBoxImage.Information);
+                try
+                {
+                    ExportService.GenerateDirectDxf(dlg.FileName, "FVE + BESS + Odberne Misto PCC", 250.0, 300.0);
+                    MessageBox.Show($"Jednopolové schéma zapojení a trasy kabelů byly úspěšně zapsány do formátu DXF:\n{dlg.FileName}\n\nSoubor je připraven k otevření v AutoCADu nebo DWG prohlížeči.", "CAD Export Dokončen", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Chyba při exportu DXF: {ex.Message}", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
