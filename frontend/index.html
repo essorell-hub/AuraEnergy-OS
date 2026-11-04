@@ -1,2156 +1,592 @@
 <!DOCTYPE html>
-<html lang="cs" class="h-full bg-slate-50 text-slate-900 font-sans">
+<html lang="cs" class="h-full bg-slate-100 text-slate-800 font-sans">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AuraEnergy SAM OS v11.0 - Grid Interconnection & 8760h Suite</title>
+  <title>AuraEnergy RETScreen Expert - Professional Clean Energy Management Suite</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="/user_onboarding.js"></script>
   <style>
-    .glass { background: #ffffff !important; border: 1px solid #e2e8f0 !important; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05); }
-    @media print {
-      body { background: white !important; color: black !important; }
-      header, .no-print, button, nav { display: none !important; }
-      .print-only { display: block !important; }
-      .glass { background: white !important; border: 1px solid #ccc !important; color: black !important; }
-      .text-slate-900 { color: black !important; }
-      .text-slate-500 { color: #555 !important; }
-    }
+    /* RETScreen Expert Classic Windows Fluent / Ribbon Design */
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f1f5f9; }
+    .ret-ribbon { background: #ffffff; border-bottom: 2px solid #cbd5e1; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .ret-tab-active { background: #0284c7 !important; color: #ffffff !important; border-color: #0284c7 !important; }
+    .ret-grid-table th { background: #e2e8f0; color: #1e293b; font-size: 11px; text-transform: uppercase; padding: 6px 10px; border: 1px solid #cbd5e1; }
+    .ret-grid-table td { padding: 6px 10px; border: 1px solid #cbd5e1; font-size: 12px; }
+    .ret-input-cell { background: #fffbeb !important; border: 1px solid #f59e0b !important; font-weight: 600; }
+    .ret-calculated-cell { background: #f8fafc; color: #0f172a; font-weight: bold; }
+    .glass-card { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
   </style>
 </head>
-<body class="h-full flex flex-col font-sans">
+<body class="h-full flex flex-col overflow-hidden text-xs">
 
-  <!-- Header -->
-  <header class="border-b border-slate-200 bg-white border-b border-slate-200 shadow-sm px-6 py-4 flex items-center justify-between sticky top-0 z-50">
-    <div class="flex items-center space-x-3">
-      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-slate-950 flex items-center justify-center text-xl font-black">
-        <i class="fa-solid fa-sun"></i>
+  <!-- TOP TITLEBAR (Windows Desktop Style) -->
+  <header class="bg-slate-800 text-slate-200 px-4 py-1.5 flex items-center justify-between border-b border-slate-700 select-none">
+    <div class="flex items-center space-x-2">
+      <div class="w-5 h-5 rounded bg-emerald-500 text-slate-900 flex items-center justify-center font-black text-xs">
+        <i class="fa-solid fa-leaf"></i>
       </div>
-      <div>
-        <div class="flex items-center space-x-2">
-          <h1 class="text-xl font-black tracking-tight bg-gradient-to-r from-emerald-700 via-teal-700 to-cyan-700 bg-clip-text text-transparent">AuraEnergy SAM OS</h1>
-          <span class="bg-cyan-50 text-cyan-800 border border-cyan-300 text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider">v11.0 Grid & 8760h Pro</span>
-        </div>
-        <p class="text-xs text-slate-500">Posouzení sítě PCC dle PNE 33 3430-1 • 8760h TMY Profil • Dimenzování jističů a RK • Manažerský PDF</p>
-      </div>
+      <span class="font-bold text-xs tracking-wide text-white">AuraEnergy RETScreen Expert Desktop Suite</span>
+      <span class="text-[10px] text-slate-400">| Projekt: <strong id="title-project-name" class="text-emerald-400">Nemocnice & Areál FVE (Referenční)</strong></span>
     </div>
 
-    <!-- 5krokový indikátor (Interaktivní navigace) -->
-    <div class="hidden lg:flex items-center space-x-1.5 bg-slate-100 p-1.5 rounded-2xl border border-slate-300 text-xs shadow-inner">
-      <button onclick="goToStep(1)" class="px-2.5 py-1 rounded-xl font-bold text-emerald-700 bg-white border border-emerald-300 shadow-sm flex items-center hover:bg-emerald-50 transition cursor-pointer">
-        <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center mr-1.5 text-[10px]">1</span> Lokalita
+    <div class="flex items-center space-x-3 text-[11px]">
+      <span class="bg-emerald-950 text-emerald-300 px-2 py-0.5 rounded border border-emerald-600 font-mono">
+        <i class="fa-solid fa-database mr-1"></i> 10 187 RETScreen produktů & 11 242 NASA stanic
+      </span>
+      <button onclick="saveProjectFileLocal()" class="hover:text-white px-2 py-0.5 rounded bg-slate-700 hover:bg-slate-600 transition">
+        <i class="fa-solid fa-floppy-disk mr-1"></i> Uložit (.aura)
       </button>
-      <i class="fa-solid fa-chevron-right text-slate-400 text-[9px]"></i>
-      <button onclick="goToStep(2)" class="px-2.5 py-1 rounded-xl font-bold text-slate-700 bg-white border border-slate-300 shadow-sm flex items-center hover:bg-slate-50 transition cursor-pointer">
-        <span class="w-4 h-4 rounded-full bg-cyan-100 text-cyan-800 flex items-center justify-center mr-1.5 text-[10px]">2</span> HW & SAM
-      </button>
-      <i class="fa-solid fa-chevron-right text-slate-400 text-[9px]"></i>
-      <button onclick="goToStep(3)" class="px-2.5 py-1 rounded-xl font-bold text-slate-700 bg-white border border-slate-300 shadow-sm flex items-center hover:bg-slate-50 transition cursor-pointer">
-        <span class="w-4 h-4 rounded-full bg-purple-100 text-purple-800 flex items-center justify-center mr-1.5 text-[10px]">3</span> Síť PCC
-      </button>
-      <i class="fa-solid fa-chevron-right text-slate-400 text-[9px]"></i>
-      <button onclick="goToStep(4)" class="px-2.5 py-1 rounded-xl font-bold text-slate-700 bg-white border border-slate-300 shadow-sm flex items-center hover:bg-slate-50 transition cursor-pointer">
-        <span class="w-4 h-4 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center mr-1.5 text-[10px]">4</span> Finance & LCOE
-      </button>
-      <i class="fa-solid fa-chevron-right text-slate-400 text-[9px]"></i>
-      <button onclick="goToStep(5)" class="px-2.5 py-1 rounded-xl font-bold text-slate-700 bg-white border border-slate-300 shadow-sm flex items-center hover:bg-slate-50 transition cursor-pointer">
-        <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center mr-1.5 text-[10px]">5</span> Manažerský PDF
-      </button>
-    </div>
-
-    <div class="flex items-center space-x-3">
-      <div id="server-status-pill" class="flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border-emerald-300 text-emerald-800 border border-emerald-500/30 text-[10px] text-emerald-700 font-bold">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span>SERVER BĚŽÍ</span>
-      </div>
-      <button onclick="startGuidedTour()" class="text-xs bg-slate-100 hover:bg-slate-700 font-bold text-slate-900 px-3 py-2 rounded-xl border border-slate-300 transition flex items-center">
-        <i class="fa-solid fa-circle-question text-cyan-400 mr-1.5"></i> Průvodce
-      </button>
-      <button onclick="openProjectModal()" class="text-xs bg-slate-100 hover:bg-slate-700 font-bold text-slate-900 px-3 py-2 rounded-xl border border-slate-300 transition flex items-center">
-        <i class="fa-solid fa-folder-open text-amber-400 mr-2"></i> Projekty DB
-      </button>
-      <button onclick="saveCurrentProject()" class="text-xs bg-slate-100 hover:bg-slate-700 font-bold text-slate-900 px-3 py-2 rounded-xl border border-slate-300 transition flex items-center">
-        <i class="fa-solid fa-floppy-disk text-cyan-400 mr-2"></i> Uložit projekt
-      </button>
-      <button onclick="window.print()" class="text-xs bg-emerald-600 hover:bg-emerald-500 font-bold text-slate-900 px-4 py-2 rounded-xl transition flex items-center shadow-lg shadow-emerald-900/30">
-        <i class="fa-solid fa-file-pdf mr-2"></i> 1-Klik Tiskový Export PDF
+      <button onclick="window.print()" class="hover:text-white px-2 py-0.5 rounded bg-emerald-700 hover:bg-emerald-600 font-bold transition">
+        <i class="fa-solid fa-file-pdf mr-1"></i> Tiskový Report
       </button>
     </div>
   </header>
 
-    <!-- Desktop Native Quick Actions Bar (RETScreen & SAM Suite) -->
-    <div class="bg-white border-b border-slate-200 px-6 py-2 flex items-center justify-between text-xs text-slate-600 no-print">
-      <div class="flex items-center space-x-4">
-        <span class="font-bold text-slate-800 flex items-center">
-          <i class="fa-solid fa-desktop text-emerald-600 mr-1.5"></i> Desktop Režim
-        </span>
-        <span class="text-slate-300">|</span>
-        <button onclick="createNewProjectFile()" class="hover:text-emerald-700 font-medium flex items-center transition">
-          <i class="fa-solid fa-file-circle-plus text-slate-400 mr-1"></i> Nový soubor (.aura)
-        </button>
-        <button onclick="openLocalProjectDialog()" class="hover:text-emerald-700 font-medium flex items-center transition">
-          <i class="fa-solid fa-folder-open text-amber-500 mr-1"></i> Otevřít ze souboru
-        </button>
-        <button onclick="exportProjectFile()" class="hover:text-emerald-700 font-medium flex items-center transition">
-          <i class="fa-solid fa-floppy-disk text-cyan-600 mr-1"></i> Uložit projekt jako...
-        </button>
-        <button onclick="downloadCadDxfDirect()" class="hover:text-emerald-700 font-medium flex items-center transition">
-          <i class="fa-solid fa-drafting-compass text-purple-600 mr-1"></i> Export CAD SLD (.dxf)
-        </button>
-        <button onclick="downloadIfcBimDirect()" class="hover:text-emerald-700 font-medium flex items-center transition">
-          <i class="fa-solid fa-cube text-blue-600 mr-1"></i> Export BIM (.ifc)
-        </button>
-      </div>
-      <div class="flex items-center space-x-3">
-        <span class="bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded-full border border-emerald-300 font-bold text-[10px]">
-          <i class="fa-solid fa-database mr-1"></i> CEC/Sandia Knihovna aktivní (47 modelů)
-        </span>
-        <span class="text-[11px] text-slate-400 font-mono" id="desktop-timestamp"></span>
-      </div>
+  <!-- RETSCREEN WORKBOOK RIBBON (5 Oficiálních Sešitů + Nástroje) -->
+  <nav class="ret-ribbon px-4 py-2 flex items-center justify-between">
+    <div class="flex items-center space-x-1">
+      <button onclick="switchWorksheet('facility')" id="btn-ws-facility" class="ret-tab-active px-3 py-1.5 rounded font-bold border border-slate-300 transition flex items-center">
+        <i class="fa-solid fa-location-dot mr-1.5"></i> 1. Lokalita (Facility)
+      </button>
+      <button onclick="switchWorksheet('energy')" id="btn-ws-energy" class="px-3 py-1.5 rounded font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 transition flex items-center">
+        <i class="fa-solid fa-bolt mr-1.5 text-amber-500"></i> 2. Energie (Energy Model)
+      </button>
+      <button onclick="switchWorksheet('cost')" id="btn-ws-cost" class="px-3 py-1.5 rounded font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 transition flex items-center">
+        <i class="fa-solid fa-coins mr-1.5 text-slate-500"></i> 3. Náklady (Cost WBS)
+      </button>
+      <button onclick="switchWorksheet('emission')" id="btn-ws-emission" class="px-3 py-1.5 rounded font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 transition flex items-center">
+        <i class="fa-solid fa-smog mr-1.5 text-emerald-600"></i> 4. Emise (GHG Analysis)
+      </button>
+      <button onclick="switchWorksheet('financial')" id="btn-ws-financial" class="px-3 py-1.5 rounded font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 transition flex items-center">
+        <i class="fa-solid fa-chart-line mr-1.5 text-blue-600"></i> 5. Finance & Riziko (Financial & Risk)
+      </button>
+      <button onclick="switchWorksheet('benchmark')" id="btn-ws-benchmark" class="px-3 py-1.5 rounded font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 transition flex items-center">
+        <i class="fa-solid fa-star mr-1.5 text-yellow-500"></i> 6. Benchmark & VEA
+      </button>
     </div>
 
-
-  <!-- Hlavní tělo -->
-  <main class="flex-1 overflow-y-auto p-6 max-w-7xl mx-auto w-full space-y-8">
-
-    <!-- Přepínač pohledů -->
-    <div class="flex items-center justify-between border-b border-slate-200 pb-4 no-print">
-      <div class="flex space-x-2">
-                <button onclick="selectMode('retscreen')" id="mode-retscreen-btn" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-500 hover:text-slate-900 bg-white transition flex items-center">
-          <i class="fa-solid fa-leaf text-emerald-600 mr-2"></i> RETScreen Expert (5 Sešitů)
-        </button>
-        <button onclick="selectMode('wizard')" id="mode-wiz-btn" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-slate-900 transition">
-          <i class="fa-solid fa-wand-magic-sparkles mr-2"></i> 5krokový Feasibility Wizard & Síť PCC
-        </button>
-        <button onclick="selectMode('gridtab')" id="mode-grid-btn" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-500 hover:text-slate-900 bg-white transition">
-          <i class="fa-solid fa-tower-broadcast mr-2"></i> Detailní Posouzení Sítě PCC (PNE 33 3430-1)
-        </button>
-        <button onclick="selectMode('mv')" id="mode-mv-btn" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-500 hover:text-slate-900 bg-white transition">
-          <i class="fa-solid fa-chart-line mr-2"></i> IPMVP Option C M&V Verifikace
-        </button>
-        <button onclick="selectMode('spot')" id="mode-spot-btn" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-500 hover:text-slate-900 bg-white transition">
-          <i class="fa-solid fa-bolt text-amber-400 mr-2"></i> Spot OTE & BESS Arbitráž
-        </button>
-        <button onclick="selectMode('vpp')" id="mode-vpp-btn" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-500 hover:text-slate-900 bg-white transition">
-          <i class="fa-solid fa-network-wired text-cyan-400 mr-2"></i> AI MPC & VPP ČEPS SVR
-        </button>
-        <button onclick="selectMode('scada')" id="mode-scada-btn" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-500 hover:text-slate-900 bg-white transition">
-          <i class="fa-solid fa-satellite-dish text-emerald-400 mr-2"></i> IoT SCADA & FDD Detekce
-        </button>
-        <button onclick="selectMode('help')" id="mode-help-btn" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-500 hover:text-slate-900 bg-white transition">
-          <i class="fa-solid fa-book-open text-indigo-400 mr-2"></i> Nápověda & Metodika
-        </button>
-        <button onclick="selectMode('gis')" id="mode-gis-btn" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-500 hover:text-slate-900 bg-white transition">
-          <i class="fa-solid fa-map-location-dot text-amber-400 mr-2"></i> 3D Stínění & GIS
-        </button>
-        <button onclick="selectMode('ppa')" id="mode-ppa-btn" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-500 hover:text-slate-900 bg-white transition">
-          <i class="fa-solid fa-file-contract text-emerald-400 mr-2"></i> Corporate PPA & Syndikace
-        </button>
-        <button onclick="selectMode('opt')" id="mode-opt-btn" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-500 hover:text-slate-900 bg-white transition">
-          <i class="fa-solid fa-chart-pie text-cyan-400 mr-2"></i> Multi-Optimalizace Scénářů
-        </button>
-      </div>
-      <span class="text-xs text-slate-500">Norma: <strong class="text-emerald-400">PNE 33 3430-1 & ČSN EN 50160</strong></span>
+    <!-- Rychlé akce -->
+    <div class="flex items-center space-x-2">
+      <button onclick="runMasterRecalculation()" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:opacity-90 text-white font-bold px-3 py-1.5 rounded shadow text-xs flex items-center cursor-pointer">
+        <i class="fa-solid fa-rotate mr-1.5"></i> Přepočítat celý model (F9)
+      </button>
     </div>
+  </nav>
 
-    
-    <!-- ==================== VIEW: RETSCREEN EXPERT FULL WORKBENCH ==================== -->
-    <div id="view-retscreen" class="hidden space-y-6">
-      
-      <!-- RETScreen Ribbon / Sešity -->
-      <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
-        <div class="flex items-center space-x-2">
-          <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold text-sm">
-            <i class="fa-solid fa-calculator"></i>
-          </div>
-          <div>
-            <h2 class="text-sm font-bold text-slate-800">Natural Resources Canada (NRCan) RETScreen Expert Suite</h2>
-            <p class="text-[11px] text-slate-500">Kompletní feasibility workflow: Facility • Energy • Cost • GHG Emission • Financial & Risk</p>
-          </div>
-        </div>
-        <div class="flex space-x-2">
-          <button onclick="switchRetTab('facility')" id="ret-tab-fac-btn" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 text-white transition">1. Facility</button>
-          <button onclick="switchRetTab('energy')" id="ret-tab-ene-btn" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition">2. Energy</button>
-          <button onclick="switchRetTab('cost')" id="ret-tab-cst-btn" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition">3. Cost (WBS)</button>
-          <button onclick="switchRetTab('emission')" id="ret-tab-ems-btn" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition">4. Emission (GHG)</button>
-          <button onclick="switchRetTab('financial')" id="ret-tab-fin-btn" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition">5. Financial & Risk</button>
-        </div>
-      </div>
+  <!-- HLAVNÍ OBSAHOVÁ OBLAST -->
+  <main class="flex-1 overflow-y-auto p-4 space-y-4">
 
-      <!-- Tab 1: Facility -->
-      
-      <!-- RETScreen Map & NASA Satellite Database Sync Panel -->
-      <div class="glass p-5 rounded-2xl space-y-4">
-        <div class="flex items-center justify-between">
-          <h3 class="text-xs font-bold uppercase text-emerald-800 tracking-wider flex items-center">
-            <i class="fa-solid fa-map-location-dot text-emerald-600 mr-2 text-sm"></i>
-            OpenStreetMap & NASA Satellite Meteorologická Stanice
+    <!-- ==================== SEŠIT 1: FACILITY & NASA LOCATION ==================== -->
+    <section id="ws-facility" class="space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <!-- Výběr areálu a parametrů budovy -->
+        <div class="glass-card p-4 space-y-3">
+          <h3 class="font-bold text-slate-800 border-b border-slate-200 pb-1.5 flex items-center">
+            <i class="fa-solid fa-building text-emerald-600 mr-2"></i> Typ a Charakteristika Areálu
           </h3>
-          <span class="text-[11px] text-slate-500 font-mono" id="nasa-live-coords">GPS: 50.08°N, 14.43°E (Praha)</span>
-        </div>
-
-        <div class="flex space-x-2">
-          <input type="text" id="geo-search-input" placeholder="Zadejte město nebo adresu areálu (např. Brno, Ostrava, Plzeň)..." value="Praha" class="flex-1 bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-          <button onclick="searchAndSyncNasaLocation()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center shadow transition cursor-pointer">
-            <i class="fa-solid fa-magnifying-glass-location mr-1.5"></i> Vyhledat a Načíst NASA Klima
-          </button>
-        </div>
-
-        <!-- Klimatické ukazatele NASA POWER -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3 pt-2">
-          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 font-bold block">Roční solární osvit (GHI)</span>
-            <span id="nasa-ghi-val" class="text-sm font-black text-slate-900">1,132 kWh/m²</span>
-          </div>
-          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 font-bold block">Průměrná teplota</span>
-            <span id="nasa-temp-val" class="text-sm font-black text-slate-900">8.9 °C</span>
-          </div>
-          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 font-bold block">Rychlost větru (10m)</span>
-            <span id="nasa-wind-val" class="text-sm font-black text-slate-900">3.6 m/s</span>
-          </div>
-          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 font-bold block">Teplota půdy (1m hloubka)</span>
-            <span id="nasa-ground-val" class="text-sm font-black text-slate-900">10.1 °C</span>
-          </div>
-          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 font-bold block">Atmosférický tlak</span>
-            <span id="nasa-pres-val" class="text-sm font-black text-slate-900">98.5 kPa</span>
-          </div>
-          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 font-bold block">Stupňodny (HDD)</span>
-            <span id="nasa-hdd-val" class="text-sm font-black text-slate-900">3,391</span>
-          </div>
-        </div>
-      </div>
-
-      <div id="ret-content-facility" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="glass p-5 rounded-2xl space-y-4">
-          <h3 class="text-xs font-bold uppercase text-emerald-700 tracking-wider"><i class="fa-solid fa-building mr-1.5"></i> Parametry objektu</h3>
           <div>
-            <label class="block text-[11px] font-medium text-slate-600 mb-1">Typ areálu / zařízení</label>
-            <select id="ret-fac-type" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-              <option value="Commercial - Office">Komerční budova - Kanceláře</option>
-              <option value="Industrial - Manufacturing">Průmyslový areál - Výroba</option>
-              <option value="Institutional - Hospital">Nemocnice / Zdravotnické zařízení</option>
-              <option value="Multi-Residential">Bytový dům / SVJ</option>
+            <label class="block text-slate-600 font-medium mb-1">Typ zařízení (Facility Type)</label>
+            <select id="fac-type" onchange="runMasterRecalculation()" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs text-slate-800">
+              <option value="Commercial - Office">Kancelářská budova (Commercial - Office)</option>
+              <option value="Institutional - Hospital" selected>Nemocnice / Zdravotnický areál (Hospital)</option>
+              <option value="Industrial - Manufacturing">Průmyslový výrobní závod (Manufacturing)</option>
+              <option value="Warehouse">Skladové a logistické centrum (Warehouse)</option>
+              <option value="Multi-Residential">Bytový dům / SVJ (Multi-Residential)</option>
             </select>
           </div>
-          <div>
-            <label class="block text-[11px] font-medium text-slate-600 mb-1">Hrubá podlahová plocha ($m^2$)</label>
-            <input type="number" id="ret-fac-area" value="4500" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-slate-600 font-medium mb-1">Plocha podlahy ($m^2$)</label>
+              <input type="number" id="fac-area" value="8500" class="w-full ret-input-cell p-1.5 rounded text-xs text-slate-900">
+            </div>
+            <div>
+              <label class="block text-slate-600 font-medium mb-1">Počet osob (Obsazenost)</label>
+              <input type="number" id="fac-occupancy" value="280" class="w-full ret-input-cell p-1.5 rounded text-xs text-slate-900">
+            </div>
           </div>
           <div>
-            <label class="block text-[11px] font-medium text-slate-600 mb-1">Roční provozní hodiny (h/rok)</label>
-            <input type="number" id="ret-fac-hours" value="3200" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
+            <label class="block text-slate-600 font-medium mb-1">Provozní hodiny (h/rok)</label>
+            <input type="number" id="fac-hours" value="8760" class="w-full ret-input-cell p-1.5 rounded text-xs text-slate-900">
           </div>
         </div>
 
-        <div class="glass p-5 rounded-2xl space-y-4">
-          <h3 class="text-xs font-bold uppercase text-emerald-700 tracking-wider"><i class="fa-solid fa-cloud-sun mr-1.5"></i> NASA Meteorologie & Stupňodny</h3>
-          <div>
-            <label class="block text-[11px] font-medium text-slate-600 mb-1">Referenční klimatická stanice</label>
-            <input type="text" id="ret-fac-loc" value="Praha / Střední Čechy (50.08°N, 14.43°E)" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-          </div>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-[11px] font-medium text-slate-600 mb-1">Topné dny (HDD)</label>
-              <input type="number" id="ret-fac-hdd" value="3100" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-            </div>
-            <div>
-              <label class="block text-[11px] font-medium text-slate-600 mb-1">Chladicí dny (CDD)</label>
-              <input type="number" id="ret-fac-cdd" value="180" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-            </div>
-          </div>
-        </div>
-
-        <div class="glass p-5 rounded-2xl flex flex-col justify-between">
-          <div>
-            <h3 class="text-xs font-bold uppercase text-emerald-700 tracking-wider mb-2"><i class="fa-solid fa-circle-check mr-1.5"></i> Stav projektu</h3>
-            <p class="text-xs text-slate-600">Model RETScreen Expert je synchronizován s klimatickou databází NASA POWER a energetickými audity dle Vyhlášky 141/2021 Sb.</p>
-          </div>
-          <button onclick="runRetScreenCalculation()" class="w-full mt-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl transition shadow flex items-center justify-center text-xs">
-            <i class="fa-solid fa-play mr-2"></i> Přepočítat RETScreen Model
-          </button>
-        </div>
-      </div>
-
-      <!-- Tab 2: Energy Model -->
-      <div id="ret-content-energy" class="hidden grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="glass p-5 rounded-2xl space-y-4">
-          <h3 class="text-xs font-bold uppercase text-blue-700 tracking-wider">Výchozí stav (Base Case - Stávající areál)</h3>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-[11px] font-medium text-slate-600 mb-1">Spotřeba elektřiny (MWh/rok)</label>
-              <input type="number" id="ret-ene-base-elec" value="650" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-            </div>
-            <div>
-              <label class="block text-[11px] font-medium text-slate-600 mb-1">Cena elektřiny (€/kWh)</label>
-              <input type="number" step="0.005" id="ret-ene-base-elec-rate" value="0.165" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-            </div>
-          </div>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-[11px] font-medium text-slate-600 mb-1">Spotřeba tepla / plynu (MWh/rok)</label>
-              <input type="number" id="ret-ene-base-heat" value="420" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-            </div>
-            <div>
-              <label class="block text-[11px] font-medium text-slate-600 mb-1">Cena tepla (€/kWh)</label>
-              <input type="number" step="0.005" id="ret-ene-base-heat-rate" value="0.085" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-            </div>
-          </div>
-        </div>
-
-        <div class="glass p-5 rounded-2xl space-y-4">
-          <h3 class="text-xs font-bold uppercase text-emerald-700 tracking-wider">Navržený stav (Proposed Case - OZE & Efektivita)</h3>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-[11px] font-medium text-slate-600 mb-1">Výroba FVE (MWh/rok)</label>
-              <input type="number" id="ret-ene-prop-pv" value="125" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-            </div>
-            <div>
-              <label class="block text-[11px] font-medium text-slate-600 mb-1">Vlastní spotřeba FVE (%)</label>
-              <input type="number" id="ret-ene-prop-self" value="75" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-            </div>
-          </div>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-[11px] font-medium text-slate-600 mb-1">Úspora energetickou efektivitou (%)</label>
-              <input type="number" id="ret-ene-prop-ee" value="18" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-            </div>
-            <div>
-              <label class="block text-[11px] font-medium text-slate-600 mb-1">Výkupní cena přetoků (€/kWh)</label>
-              <input type="number" step="0.005" id="ret-ene-prop-export-rate" value="0.055" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab 3: Cost Analysis (WBS) -->
-      <div id="ret-content-cost" class="hidden glass p-5 rounded-2xl space-y-4">
-        <h3 class="text-xs font-bold uppercase text-slate-700 tracking-wider">Rozpad investičních nákladů dle WBS (Work Breakdown Structure)</h3>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div>
-            <label class="block text-[11px] font-medium text-slate-600 mb-1">Studie proveditelnosti (€)</label>
-            <input type="number" id="ret-cst-feas" value="3500" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-          </div>
-          <div>
-            <label class="block text-[11px] font-medium text-slate-600 mb-1">Vývoj & Povolení (€)</label>
-            <input type="number" id="ret-cst-dev" value="4500" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-          </div>
-          <div>
-            <label class="block text-[11px] font-medium text-slate-600 mb-1">Inženýring & Projekt (€)</label>
-            <input type="number" id="ret-cst-eng" value="5800" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-          </div>
-          <div>
-            <label class="block text-[11px] font-medium text-slate-600 mb-1">Hlavní technologie FVE/BESS (€)</label>
-            <input type="number" id="ret-cst-equip" value="65000" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-          </div>
-          <div>
-            <label class="block text-[11px] font-medium text-slate-600 mb-1">Balance of System / Kabely (€)</label>
-            <input type="number" id="ret-cst-bos" value="12000" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-          </div>
-          <div>
-            <label class="block text-[11px] font-medium text-slate-600 mb-1">Montáž & Instalace (€)</label>
-            <input type="number" id="ret-cst-inst" value="11500" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-          </div>
-          <div>
-            <label class="block text-[11px] font-medium text-slate-600 mb-1">Rezerva na nepředvídané výdaje (€)</label>
-            <input type="number" id="ret-cst-cont" value="4000" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-          </div>
-          <div>
-            <label class="block text-[11px] font-medium text-slate-600 mb-1">Roční O&M servis (€/rok)</label>
-            <input type="number" id="ret-cst-om" value="1200" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab 4: Emission Analysis (GHG) -->
-      <div id="ret-content-emission" class="hidden glass p-5 rounded-2xl space-y-4">
-        <h3 class="text-xs font-bold uppercase text-emerald-700 tracking-wider">Environmentální analýza GHG & Ekvivalenty</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
-            <span class="text-xs text-emerald-800 font-bold block mb-1">Roční snížení emisí GHG</span>
-            <span id="ret-res-ghg-tons" class="text-2xl font-black text-emerald-900">167.0 t $CO_2$</span>
-            <span class="text-[11px] text-emerald-700 block mt-1">Snížení uhlíkové stopy areálu o 38 %</span>
-          </div>
-          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
-            <span class="text-xs text-slate-600 font-bold block mb-1">Ekvivalent osobních automobilů</span>
-            <span id="ret-res-ghg-cars" class="text-2xl font-black text-slate-900">36.3 aut</span>
-            <span class="text-[11px] text-slate-500 block mt-1">Vyřazeno z provozu ročně</span>
-          </div>
-          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
-            <span class="text-xs text-slate-600 font-bold block mb-1">Uspořená ropa</span>
-            <span id="ret-res-ghg-oil" class="text-2xl font-black text-slate-900">388 barelů</span>
-            <span class="text-[11px] text-slate-500 block mt-1">Ušetřené primární fosilní suroviny</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab 5: Financial & Risk -->
-      <div id="ret-content-financial" class="hidden space-y-6">
-        <div class="glass p-5 rounded-2xl space-y-4">
-          <h3 class="text-xs font-bold uppercase text-slate-700 tracking-wider">Finanční parametry & Úvěr</h3>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div>
-              <label class="block text-[11px] font-medium text-slate-600 mb-1">Podíl dluhu / Úvěru (%)</label>
-              <input type="number" id="ret-fin-debt-ratio" value="70" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-            </div>
-            <div>
-              <label class="block text-[11px] font-medium text-slate-600 mb-1">Úroková sazba úvěru (%)</label>
-              <input type="number" step="0.1" id="ret-fin-debt-interest" value="5.2" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-            </div>
-            <div>
-              <label class="block text-[11px] font-medium text-slate-600 mb-1">Splatnost úvěru (roky)</label>
-              <input type="number" id="ret-fin-debt-term" value="15" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-            </div>
-            <div>
-              <label class="block text-[11px] font-medium text-slate-600 mb-1">Diskontní sazba WACC (%)</label>
-              <input type="number" step="0.5" id="ret-fin-discount" value="6.0" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs text-slate-800">
-            </div>
-          </div>
-        </div>
-
-        <!-- Výsledkový souhrn RETScreen -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="glass p-4 rounded-xl border-l-4 border-emerald-500">
-            <span class="text-xs text-slate-500 font-medium">Čistá současná hodnota (NPV)</span>
-            <span id="ret-out-npv" class="text-xl font-black text-slate-900 block mt-1">€ 385,420</span>
-          </div>
-          <div class="glass p-4 rounded-xl border-l-4 border-blue-500">
-            <span class="text-xs text-slate-500 font-medium">Vnitřní výnosové procento (IRR)</span>
-            <span id="ret-out-irr" class="text-xl font-black text-slate-900 block mt-1">14.5 %</span>
-          </div>
-          <div class="glass p-4 rounded-xl border-l-4 border-purple-500">
-            <span class="text-xs text-slate-500 font-medium">Prostá doba návratnosti</span>
-            <span id="ret-out-payback" class="text-xl font-black text-slate-900 block mt-1">5.2 let</span>
-          </div>
-          <div class="glass p-4 rounded-xl border-l-4 border-amber-500">
-            <span class="text-xs text-slate-500 font-medium">Roční úspora energie (Rok 1)</span>
-            <span id="ret-out-savings" class="text-xl font-black text-slate-900 block mt-1">€ 70,643</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ==================== VIEW 1: 5KROKOVÝ FEASIBILITY WIZARD ==================== -->
-    <div id="view-wizard" class="space-y-6">
-
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        <!-- Levý konfigurační panel -->
-        <div class="glass p-6 rounded-3xl space-y-5">
-          <h2 class="text-base font-bold text-slate-900 flex items-center">
-            <i class="fa-solid fa-sliders text-emerald-400 mr-2"></i> Vstupní Parametry Areálu
-          </h2>
-
-          <!-- Krok 1 -->
-          <div class="space-y-3">
-            <div id="step-1-anchor"></div><span class="text-[11px] font-bold text-emerald-700 uppercase tracking-wider">Krok 1: Typ objektu & OZE Technologie</span>
-            <div>
-              <label class="block text-xs font-medium text-slate-500 mb-1">Segment / Typ objektu</label>
-              <select id="cfg-segment" onchange="toggleSegmentUI()" class="w-full bg-white border border-emerald-500/50 rounded-xl px-3 py-2 text-xs text-emerald-700 font-bold">
-                <option value="COMMERCIAL">Průmyslový areál / Komerční budova</option>
-                <option value="RESIDENTIAL">Rodinný dům (Rezidenční segment & NZÚ dotace)</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-medium text-slate-500 mb-1">Technologie čisté energie</label>
-              <select id="cfg-tech" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900">
-                <option value="SOLAR_PV">Solární fotovoltaika (PV + BESS)</option>
-                <option value="WIND_TURBINE">Větrná elektrárna (Weibull & Power Curve)</option>
-                <option value="SMALL_HYDRO">Malá vodní elektrárna (MVE - Kaplan/Francis)</option>
-                <option value="CHP_COGENERATION">Kogenerace (CHP - Biometan / Zemní plyn)</option>
-              </select>
-            </div>
-            <div id="wrapper-archetype">
-              <label class="block text-xs font-medium text-slate-500 mb-1">Typ areálu / odběrného místa</label>
-              <select id="cfg-archetype" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900">
-                <option value="arch-office-b">Administrativní budova (145 kWh/m²/rok)</option>
-                <option value="arch-logistics-hall">Logistický areál / Sklad (85 kWh/m²/rok)</option>
-                <option value="arch-manufacturing">Průmyslová výrobní hala (260 kWh/m²/rok)</option>
-              </select>
-            </div>
-            <!-- Rezidenční parametry NZÚ -->
-            <div id="wrapper-residential" class="hidden p-3 bg-white/80 rounded-xl border border-emerald-800/40 space-y-2 text-xs">
-              <span class="text-[10px] font-bold text-emerald-400 uppercase">Spotřebiče RD & Dotace NZÚ</span>
-              <div class="space-y-1">
-                <label class="flex items-center space-x-2 text-slate-700">
-                  <input type="checkbox" id="res-hp" checked class="rounded bg-slate-100 border-slate-300 text-emerald-500">
-                  <span>Tepelné čerpadlo (Vytápění)</span>
-                </label>
-                <label class="flex items-center space-x-2 text-slate-700">
-                  <input type="checkbox" id="res-tuv" checked class="rounded bg-slate-100 border-slate-300 text-emerald-500">
-                  <span>Elektrický ohřev TUV (Bojler)</span>
-                </label>
-                <label class="flex items-center space-x-2 text-slate-700">
-                  <input type="checkbox" id="res-ev" checked class="rounded bg-slate-100 border-slate-300 text-emerald-500">
-                  <span>Wallbox pro elektromobil (EV)</span>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <!-- Krok 2 -->
-          <div class="space-y-3 border-t border-slate-200 pt-4">
-            <div id="step-2-anchor"></div><span class="text-[11px] font-bold text-cyan-700 uppercase tracking-wider">Krok 2: Výběr HW komponent</span>
-            <div>
-              <label class="block text-xs font-medium text-slate-500 mb-1">Fotovoltaický panel</label>
-              <select id="cfg-module" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900">
-                <option value="mod-topcon-580">JinkoSolar Tiger Neo N-Type TOPCon 580W (Bifaciální)</option>
-                <option value="mod-hjt-700">Huasun Himalaya HJT 700W (Bifaciální, degradace 0.35%)</option>
-                <option value="mod-mono-430">Trina Vertex S+ 430W (Monofaciální)</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-medium text-slate-500 mb-1">Střídač (Invertor)</label>
-              <select id="cfg-inverter" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900">
-                <option value="inv-huawei-100ktl">Huawei SUN2000-100KTL-M2 (100 kW AC, účinnost 98.4%)</option>
-                <option value="inv-fronius-50">Fronius Tauro ECO 50-3-D (50 kW AC)</option>
-              </select>
-            </div>
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <label class="block text-xs font-medium text-slate-500 mb-1">Počet panelů</label>
-                <input type="number" id="cfg-modules-count" value="172" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900">
-              </div>
-              <div>
-                <label class="block text-xs font-medium text-slate-500 mb-1">Sklon (°)</label>
-                <input type="number" id="cfg-tilt" value="35" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900">
-              </div>
-            </div>
-          </div>
-
-          
-            <!-- Expertní inženýrské parametry (NREL SAM & RETScreen Expert Full Sizing) -->
-            <div class="border-t border-slate-200 pt-3">
-              <button type="button" onclick="toggleExpertParams()" class="w-full py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-xl border border-slate-300 flex items-center justify-between transition cursor-pointer">
-                <span><i class="fa-solid fa-microchip text-indigo-600 mr-2"></i> Expertní inženýrské parametry (NREL SAM)</span>
-                <i id="expert-chevron" class="fa-solid fa-chevron-down text-slate-500"></i>
-              </button>
-
-              <div id="expert-params-container" class="hidden mt-3 p-3 bg-slate-50 rounded-xl border border-slate-300 space-y-3 text-xs">
-                <div class="grid grid-cols-2 gap-3">
-                  <div>
-                    <label class="block text-[11px] font-medium text-slate-600 mb-1">Teplotní koef. Pmax (%/°C)</label>
-                    <input type="number" step="0.01" id="exp-gamma" value="-0.30" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-800">
-                  </div>
-                  <div>
-                    <label class="block text-[11px] font-medium text-slate-600 mb-1">Teplota NOCT (°C)</label>
-                    <input type="number" id="exp-noct" value="45.0" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-800">
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                  <div>
-                    <label class="block text-[11px] font-medium text-slate-600 mb-1">Bifacialita panelu (0-1.0)</label>
-                    <input type="number" step="0.05" id="exp-bifacial" value="0.80" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-800">
-                  </div>
-                  <div>
-                    <label class="block text-[11px] font-medium text-slate-600 mb-1">Euro účinnost střídače (%)</label>
-                    <input type="number" step="0.1" id="exp-inv-eff" value="98.4" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-800">
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                  <div>
-                    <label class="block text-[11px] font-medium text-slate-600 mb-1">Znečištění & Soiling ztráty (%)</label>
-                    <input type="number" step="0.1" id="exp-soiling" value="2.0" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-800">
-                  </div>
-                  <div>
-                    <label class="block text-[11px] font-medium text-slate-600 mb-1">Mismatch ztráty pole (%)</label>
-                    <input type="number" step="0.1" id="exp-mismatch" value="1.5" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-800">
-                  </div>
-                </div>
-
-                <div>
-                  <label class="block text-[11px] font-medium text-slate-600 mb-1">Degradace panelů v roce 1 (%/rok)</label>
-                  <input type="number" step="0.05" id="exp-degradation" value="0.40" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-800">
-                </div>
-              </div>
-            </div>
-
-          <!-- Krok 3: Síť PCC parametry -->
-          <div class="space-y-3 border-t border-slate-200 pt-4">
-            <div id="step-3-anchor"></div><span class="text-[11px] font-bold text-purple-700 uppercase tracking-wider">Krok 3: Parametry připojení k síti</span>
-            <div>
-              <label class="block text-xs font-medium text-slate-500 mb-1">Typ připojovacího kabelu</label>
-              <select id="cfg-cable" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900">
-                <option value="al_150">AYKY 4x150 mm² (Hliník Al, R=0.206 Ω/km)</option>
-                <option value="cu_150">CYKY 4x150 mm² (Měď Cu, R=0.124 Ω/km)</option>
-                <option value="al_240">AYKY 4x240 mm² (Hliník Al, R=0.125 Ω/km)</option>
-              </select>
-            </div>
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <label class="block text-xs font-medium text-slate-500 mb-1">Vzdálenost k DTS (m)</label>
-                <input type="number" id="cfg-dist" value="180" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900">
-              </div>
-              <div>
-                <label class="block text-xs font-medium text-slate-500 mb-1">Trafo DTS (kVA)</label>
-                <input type="number" id="cfg-trafo" value="630" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900">
-              </div>
-            </div>
-          </div>
-
-          <!-- Krok 4: Finanční parametry -->
-          <div class="space-y-3 border-t border-slate-200 pt-4">
-            <div id="step-4-anchor"></div><span class="text-[11px] font-bold text-amber-700 uppercase tracking-wider">Krok 4: Finanční zadání</span>
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <label class="block text-xs font-medium text-slate-500 mb-1">CAPEX (€)</label>
-                <input type="number" id="cfg-capex" value="78000" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900">
-              </div>
-              <div>
-                <label class="block text-xs font-medium text-slate-500 mb-1">Cena elektřiny (€/MWh)</label>
-                <input type="number" id="cfg-tariff" value="165" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900">
-              </div>
-            </div>
-          </div>
-
-          <button onclick="runFullSamSimulation()" class="w-full mt-4 bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:opacity-95 text-slate-900 font-bold py-3 rounded-2xl shadow-xl shadow-emerald-950/40 transition flex items-center justify-center">
-            <i class="fa-solid fa-play mr-2"></i> Spustit SAM simulaci & Kontrolu PCC
-          </button>
-        </div>
-
-        <!-- Pravý výsledkový panel -->
-        <div class="lg:col-span-2 space-y-6">
-
-          <!-- 4 hlavní karty metrik -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div class="glass p-4 rounded-2xl border-l-4 border-emerald-500">
-              <span class="text-xs text-slate-500 font-medium">Roční výroba FVE</span>
-              <div id="res-mwh" class="text-2xl font-black text-slate-900 mt-1">-- MWh</div>
-              <span class="text-[10px] text-emerald-400">CUF: <span id="res-cuf">--</span>% | PR: <span id="res-pr">--</span>%</span>
-            </div>
-            <div class="glass p-4 rounded-2xl border-l-4 border-cyan-500">
-              <span class="text-xs text-slate-500 font-medium">LCOE (Reálné / Nom)</span>
-              <div id="res-lcoe" class="text-2xl font-black text-cyan-300 mt-1">-- €/MWh</div>
-              <span class="text-[10px] text-cyan-400">Výrobní náklad elektřiny</span>
-            </div>
-            <div class="glass p-4 rounded-2xl border-l-4 border-amber-500">
-              <span class="text-xs text-slate-500 font-medium">NPV (25 let)</span>
-              <div id="res-npv" class="text-2xl font-black text-amber-300 mt-1">-- €</div>
-              <span class="text-[10px] text-amber-400">IRR: <span id="res-irr">--</span>% | Návratnost: <span id="res-payback">--</span> let</span>
-            </div>
-            <div class="glass p-4 rounded-2xl border-l-4 border-purple-500">
-              <span class="text-xs text-slate-500 font-medium">Čistá úspora CO₂</span>
-              <div id="res-ghg" class="text-2xl font-black text-purple-300 mt-1">-- t/rok</div>
-              <span class="text-[10px] text-purple-400">Celoživotně: <span id="res-ghg-life">--</span> t CO₂e</span>
-            </div>
-          </div>
-
-          <!-- Posouzení sítě PCC (PNE 33 3430-1) -->
-          <div class="glass p-5 rounded-3xl border border-emerald-500/30 space-y-3">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center">
-                <i class="fa-solid fa-plug-circle-check text-emerald-400 mr-2 text-sm"></i> Posouzení připojitelnosti k distribuční síti v bodě PCC
-              </span>
-              <span id="grid-status-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950 text-emerald-400 border border-emerald-500/30">SCHVÁLENO</span>
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-              <div class="p-2.5 bg-white/60 rounded-xl border border-slate-200">
-                <span class="text-slate-500">Nárůst napětí (ΔU):</span>
-                <div id="grid-delta-v" class="text-sm font-bold text-slate-900 mt-0.5">-- %</div>
-                <span class="text-[10px] text-slate-500">Limit: max. 2.0 %</span>
-              </div>
-              <div class="p-2.5 bg-white/60 rounded-xl border border-slate-200">
-                <span class="text-slate-500">Zatížení trafa DTS:</span>
-                <div id="grid-trafo" class="text-sm font-bold text-slate-900 mt-0.5">-- %</div>
-                <span class="text-[10px] text-slate-500">Kapacita rezervována</span>
-              </div>
-              <div class="p-2.5 bg-white/60 rounded-xl border border-slate-200">
-                <span class="text-slate-500">Impedance vedení Z:</span>
-                <div id="grid-res" class="text-sm font-bold text-slate-900 mt-0.5">-- Ω</div>
-                <span id="grid-cable-label" class="text-[10px] text-slate-500">Kabel Al 150</span>
-              </div>
-              <div class="p-2.5 bg-white/60 rounded-xl border border-slate-200">
-                <span class="text-slate-500">Rozhodnutí / Q(U):</span>
-                <div id="grid-remedy" class="text-xs font-bold text-emerald-400 mt-0.5">Bez nutnosti Q(U)</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Dimenzování jističů a rezervované kapacity (RK) -->
-          <div class="glass p-5 rounded-3xl border border-cyan-500/30 space-y-3">
-            <span class="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center">
-              <i class="fa-solid fa-bolt-lightning text-cyan-400 mr-2 text-sm"></i> Elektrotechnické dimenzování hlavního jističe & Rezervované kapacity
+        <!-- Klimatická stanice NASA & OpenStreetMap vyhledávání -->
+        <div class="glass-card p-4 space-y-3 md:col-span-2">
+          <div class="flex items-center justify-between border-b border-slate-200 pb-1.5">
+            <h3 class="font-bold text-slate-800 flex items-center">
+              <i class="fa-solid fa-satellite text-blue-600 mr-2"></i> Oficiální Klimatická Databáze NASA POWER & OpenStreetMap
+            </h3>
+            <span id="fac-live-status" class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-300">
+              Klimatická stanice aktivní
             </span>
-            <div class="grid grid-cols-3 gap-3 text-xs">
-              <div class="p-2.5 bg-white/60 rounded-xl border border-slate-200">
-                <span class="text-slate-500">Jmenovitý proud výrobny:</span>
-                <div id="dim-current" class="text-sm font-bold text-cyan-300 mt-0.5">-- A</div>
-                <span class="text-[10px] text-slate-500">Při plném osvitu</span>
-              </div>
-              <div class="p-2.5 bg-white/60 rounded-xl border border-slate-200">
-                <span class="text-slate-500">Doporučený hlavní jistič:</span>
-                <div id="dim-breaker" class="text-sm font-bold text-emerald-400 mt-0.5">-- A</div>
-                <span class="text-[10px] text-slate-500">Řada In s rezervou</span>
-              </div>
-              <div class="p-2.5 bg-white/60 rounded-xl border border-slate-200">
-                <span class="text-slate-500">Rezervovaná kapacita (RK):</span>
-                <div id="dim-rk" class="text-sm font-bold text-yellow-400 mt-0.5">-- kW</div>
-                <span class="text-[10px] text-slate-500">Hodnota pro smlouvu o připojení</span>
-              </div>
-            </div>
           </div>
 
-          <!-- Zpráva energetického auditora & AI Copilot -->
-          <div class="glass p-6 rounded-3xl border border-indigo-500/30 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-              <h3 class="text-sm font-bold text-slate-900 flex items-center">
-                <i class="fa-solid fa-user-tie text-indigo-400 mr-2"></i> Zpráva Energetického Auditora & AI Copilot
-              </h3>
-              <span class="text-[10px] text-indigo-300 font-mono bg-indigo-950/40 px-2 py-0.5 rounded border border-indigo-800/40">Audit dle PNE 33 3430-1 & CSRD ESRS E1</span>
-            </div>
-            <div class="space-y-3 text-xs leading-relaxed">
-              <div class="p-3 bg-white/60 rounded-xl border border-slate-200">
-                <span class="text-[10px] uppercase font-bold text-emerald-400">Výkonová efektivita & OZE</span>
-                <p id="audit-energy" class="text-slate-700 mt-1">Generuji hodnocení solární výroby...</p>
-              </div>
-              <div class="p-3 bg-white/60 rounded-xl border border-slate-200">
-                <span class="text-[10px] uppercase font-bold text-cyan-400">Síťová připojitelnost v bodě PCC</span>
-                <p id="audit-grid" class="text-slate-700 mt-1">Generuji posouzení napěťových limitů...</p>
-              </div>
-              <div class="p-3 bg-white/60 rounded-xl border border-slate-200">
-                <span class="text-[10px] uppercase font-bold text-amber-400">Bankovní bonita & Rizika Monte Carlo</span>
-                <p id="audit-finance" class="text-slate-700 mt-1">Generuji finanční rozbor pro banku...</p>
-              </div>
-              <div class="p-3 bg-white/60 rounded-xl border border-slate-200">
-                <span class="text-[10px] uppercase font-bold text-purple-400">Dekarbonizace & ESG (CSRD ESRS E1)</span>
-                <p id="audit-esg" class="text-slate-700 mt-1">Generuji podklady pro nefinanční reporting...</p>
-              </div>
-            </div>
+          <div class="flex space-x-2">
+            <input type="text" id="fac-search-loc" value="Praha / Ruzyne" placeholder="Zadejte název stanice nebo města (např. Brno, Praha, Ostrava)..." class="flex-1 bg-white border border-slate-300 rounded p-1.5 text-xs text-slate-800">
+            <button onclick="searchOfficialStation()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 py-1.5 rounded text-xs transition">
+              <i class="fa-solid fa-magnifying-glass mr-1"></i> Vyhledat Stanici NASA
+            </button>
           </div>
 
-          <!-- Grafy: Měsíční AC výroba & 25leté Cash-Flow -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="glass p-5 rounded-3xl">
-              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3 flex items-center justify-between">
-                <span>Měsíční výroba AC elektřiny (SAM Model)</span>
-                <span class="text-[10px] text-emerald-400">Perez Model</span>
-              </h3>
-              <div class="h-64"><canvas id="chartMonthlyGen"></canvas></div>
-            </div>
-
-            <div class="glass p-5 rounded-3xl">
-              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3 flex items-center justify-between">
-                <span>25leté Pro-Forma Cash-Flow</span>
-                <span class="text-[10px] text-amber-400">FCFE Model</span>
-              </h3>
-              <div class="h-64"><canvas id="chartCashFlow"></canvas></div>
-            </div>
+          <!-- Tabulka měsíčních meteorologických hodnot (RETScreen Climate Table) -->
+          <div class="overflow-x-auto">
+            <table class="w-full ret-grid-table text-center">
+              <thead>
+                <tr>
+                  <th>Měsíc</th>
+                  <th>GHI (kWh/m²/d)</th>
+                  <th>Teplota (°C)</th>
+                  <th>Vítr (m/s)</th>
+                  <th>Vlhkost (%)</th>
+                  <th>Půda 1m (°C)</th>
+                  <th>HDD (18.3°C)</th>
+                  <th>CDD (18.3°C)</th>
+                </tr>
+              </thead>
+              <tbody id="ret-climate-table-body">
+                <!-- Dynamicky vyplněno JS -->
+              </tbody>
+            </table>
           </div>
-
         </div>
 
       </div>
+    </section>
 
-    </div>
+    <!-- ==================== SEŠIT 2: ENERGY MODEL (VÝCHOZÍ VS NAVRŽENÝ) ==================== -->
+    <section id="ws-energy" class="hidden space-y-4">
+      <div class="glass-card p-4 space-y-4">
+        <h3 class="font-bold text-slate-800 border-b border-slate-200 pb-1.5 flex items-center">
+          <i class="fa-solid fa-bolt text-amber-500 mr-2"></i> Energetická Bilance dle Koncových Užití (End-Use Load Sizing)
+        </h3>
 
-    <!-- ==================== VIEW 2: DETAILNÍ POSOUZENÍ SÍTĚ PCC ==================== -->
-    <div id="view-gridtab" class="hidden space-y-6">
-      <div class="glass p-6 rounded-3xl space-y-6">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-base font-bold text-slate-900 flex items-center">
-              <i class="fa-solid fa-tower-broadcast text-cyan-400 mr-2"></i> Detailní Posouzení Zpětných Vlivů na Distribuční Síť (PNE 33 3430-1)
-            </h2>
-            <p class="text-xs text-slate-500 mt-1">Elektrotechnický výpočet impedance trasy, úbytku a nárůstu napětí, oteplení kabelu a křivky trvání výkonu z 8 760 hodin.</p>
-          </div>
-          <button onclick="runFullSamSimulation()" class="bg-cyan-600 hover:bg-cyan-500 text-slate-900 font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center">
-            <i class="fa-solid fa-rotate mr-2"></i> Přepočítat síť
-          </button>
-        </div>
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-xs text-slate-500 font-medium">Nárůst napětí v bodě PCC</span>
-            <div id="pcc-delta-v" class="text-2xl font-black text-emerald-400 mt-1">-- %</div>
-            <span class="text-[10px] text-slate-500">Limit ČEPS/PDS: 2.0 %</span>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-xs text-slate-500 font-medium">Proudové zatížení kabelu</span>
-            <div id="pcc-cable-load" class="text-2xl font-black text-cyan-400 mt-1">-- %</div>
-            <span class="text-[10px] text-emerald-400">Oteplení vyhovuje</span>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-xs text-slate-500 font-medium">Zatížení transformátoru</span>
-            <div id="pcc-trafo-load" class="text-2xl font-black text-slate-900 mt-1">-- %</div>
-            <span class="text-[10px] text-slate-500">DTS kapacita</span>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-xs text-slate-500 font-medium">Režim jalového výkonu</span>
-            <div id="pcc-qu-mode" class="text-sm font-black text-amber-400 mt-2">Autonomní Q(U)</div>
-          </div>
-        </div>
-
-        <div class="glass p-5 rounded-3xl">
-          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3">Křivka trvání generovaného výkonu z 8 760 hodin (kW decily)</h3>
-          <div class="h-64"><canvas id="chart8760Deciles"></canvas></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== VIEW 3: IPMVP M&V MODUL ==================== -->
-    <div id="view-mv" class="hidden space-y-6">
-      <div class="glass p-6 rounded-3xl space-y-6">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-base font-bold text-slate-900 flex items-center">
-              <i class="fa-solid fa-chart-line text-cyan-400 mr-2"></i> IPMVP Option C M&V Verifikace Úspor
-            </h2>
-            <p class="text-xs text-slate-500 mt-1">Počasím normalizovaná multivariantní regrese dle standardů EVO a ASHRAE Guideline 14.</p>
-          </div>
-          <button onclick="runMvSuite()" class="bg-cyan-600 hover:bg-cyan-500 text-slate-900 font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center">
-            <i class="fa-solid fa-rotate mr-2"></i> Spustit IPMVP regresi
-          </button>
-        </div>
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-xs text-slate-500 font-medium">Těsnost modelu (R²)</span>
-            <div id="mv-r2" class="text-2xl font-black text-emerald-400 mt-1">--</div>
-            <span class="text-[10px] text-slate-500">Cíl > 0.75</span>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-xs text-slate-500 font-medium">CV(RMSE) standard</span>
-            <div id="mv-cvrmse" class="text-2xl font-black text-cyan-400 mt-1">-- %</div>
-            <span class="text-[10px] text-emerald-400">ASHRAE splněno (< 15%)</span>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-xs text-slate-500 font-medium">Ověřená úspora</span>
-            <div id="mv-tot-savings" class="text-2xl font-black text-emerald-400 mt-1">-- kWh</div>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-xs text-slate-500 font-medium">Relativní snížení spotřeby</span>
-            <div id="mv-pct-savings" class="text-2xl font-black text-slate-900 mt-1">-- %</div>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-          <div class="glass p-5 rounded-3xl">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3">Křivka trvání zatížení (LDC)</h3>
-            <div class="h-64"><canvas id="chartLdc"></canvas></div>
-          </div>
-          <div class="glass p-5 rounded-3xl">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3">CUSUM Kumulativní ověřené úspory (kWh)</h3>
-            <div class="h-64"><canvas id="chartCusum"></canvas></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== VIEW 4: SPOT OTE & BESS ARBITRÁŽ ==================== -->
-    <div id="view-spot" class="space-y-6 hidden">
-      <div class="glass p-6 rounded-3xl border border-amber-500/20 space-y-4">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-lg font-bold text-slate-900 flex items-center">
-              <i class="fa-solid fa-bolt text-amber-400 mr-2"></i> Trh s elektřinou Day-Ahead (OTE ČR / EPEX SPOT)
-            </h2>
-            <p class="text-xs text-slate-500">Hodinové spotové ceny a simulace bateriové arbitráže (BESS Peak-Shaving)</p>
-          </div>
-          <button onclick="loadSpotMarketData()" class="px-3 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 rounded-xl text-xs font-bold transition">
-            <i class="fa-solid fa-arrows-rotate mr-1.5"></i> Aktualizovat data
-          </button>
-        </div>
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold">Minimální cena</span>
-            <div id="spot-min" class="text-xl font-black text-emerald-400 mt-1">-- €/MWh</div>
-            <span class="text-[10px] text-slate-500">Noční / polední solární propad</span>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold">Maximální cena</span>
-            <div id="spot-max" class="text-xl font-black text-rose-400 mt-1">-- €/MWh</div>
-            <span class="text-[10px] text-slate-500">Ranní / večerní špička</span>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold">Cenový spread</span>
-            <div id="spot-spread" class="text-xl font-black text-amber-400 mt-1">-- €/MWh</div>
-            <span class="text-[10px] text-slate-500">Potenciál arbitráže pro BESS</span>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold">Průměrná cena</span>
-            <div id="spot-avg" class="text-xl font-black text-cyan-400 mt-1">-- €/MWh</div>
-            <span class="text-[10px] text-slate-500">Denní baseload</span>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-2">
-          <div class="lg:col-span-2 bg-white/70 p-5 rounded-2xl border border-slate-200">
-            <h3 class="text-xs font-bold text-slate-700 mb-3 flex items-center">
-              <i class="fa-solid fa-chart-column text-amber-400 mr-2"></i> 24h Křivka spotových cen (Duck Curve profil)
-            </h3>
-            <div class="h-64">
-              <canvas id="chartSpotCurve"></canvas>
-            </div>
-          </div>
-          <div class="bg-white/70 p-5 rounded-2xl border border-slate-200 space-y-4">
-            <h3 class="text-xs font-bold text-slate-700 flex items-center">
-              <i class="fa-solid fa-car-battery text-emerald-400 mr-2"></i> BESS Arbitrážní rozvrh
-            </h3>
-            <div class="space-y-3 text-xs">
-              <div class="p-3 bg-emerald-950/30 border border-emerald-800/40 rounded-xl">
-                <span class="text-[10px] uppercase font-bold text-emerald-400">Doporučené nabíjení BESS</span>
-                <p id="bess-charge-hours" class="font-mono text-emerald-200 mt-1">--:00</p>
-              </div>
-              <div class="p-3 bg-rose-950/30 border border-rose-800/40 rounded-xl">
-                <span class="text-[10px] uppercase font-bold text-rose-400">Doporučené vybíjení (Arbitráž)</span>
-                <p id="bess-discharge-hours" class="font-mono text-rose-200 mt-1">--:00</p>
-              </div>
-              <div class="p-3 bg-slate-100/40 border border-slate-300/40 rounded-xl">
-                <span class="text-[10px] uppercase font-bold text-slate-500">Predikovaný roční výnos BESS</span>
-                <p id="bess-annual-rev" class="text-sm font-bold text-slate-900 mt-1">-- € / rok</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== VIEW 5: AI DAY-AHEAD MPC & VPP ČEPS SVR ==================== -->
-    <div id="view-vpp" class="space-y-6 hidden">
-      <div class="glass p-6 rounded-3xl border border-cyan-500/20 space-y-4">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-lg font-bold text-slate-900 flex items-center">
-              <i class="fa-solid fa-network-wired text-cyan-400 mr-2"></i> 24h AI Day-Ahead MPC Optimátor & Virtuální Elektrárna (VPP)
-            </h2>
-            <p class="text-xs text-slate-500">Matematická optimalizace BESS (SciPy Linprog) a simulace podpůrných služeb ČEPS SVR (aFRR)</p>
-          </div>
-          <button onclick="runVppMpcSimulation()" class="px-3 py-1.5 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 rounded-xl text-xs font-bold transition">
-            <i class="fa-solid fa-play mr-1.5"></i> Spustit MPC Optimalizaci
-          </button>
-        </div>
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold">MPC Arbitráž zisk</span>
-            <div id="mpc-day-profit" class="text-xl font-black text-emerald-400 mt-1">-- € / den</div>
-            <span class="text-[10px] text-slate-500">Predikovaný 24h zisk</span>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold">Roční MPC výnos</span>
-            <div id="mpc-year-profit" class="text-xl font-black text-cyan-400 mt-1">-- € / rok</div>
-            <span class="text-[10px] text-slate-500">365denní extrapolace</span>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold">ČEPS SVR Výnos (aFRR)</span>
-            <div id="vpp-ceps-rev" class="text-xl font-black text-amber-400 mt-1">-- Kč / rok</div>
-            <span class="text-[10px] text-slate-500">Kapacita + aktivační energie</span>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold">Specifický výnos VPP</span>
-            <div id="vpp-spec-yield" class="text-xl font-black text-purple-400 mt-1">-- Kč/kW/rok</div>
-            <span class="text-[10px] text-slate-500">Výnos na 1 kW flexibility</span>
-          </div>
-        </div>
-
-        <div class="bg-white/70 p-5 rounded-2xl border border-slate-200">
-          <h3 class="text-xs font-bold text-slate-700 mb-3 flex items-center">
-            <i class="fa-solid fa-chart-line text-cyan-400 mr-2"></i> 24h Dispečerský plán: Výkon nabíjení/vybíjení (kW) a stav nabití SoC (%)
-          </h3>
-          <div class="h-72">
-            <canvas id="chartMpcDispatch"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== VIEW 6: IOT SCADA & FDD DETEKCE ==================== -->
-    <div id="view-scada" class="space-y-6 hidden">
-      <div class="glass p-6 rounded-3xl border border-emerald-500/20 space-y-4">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-lg font-bold text-slate-900 flex items-center">
-              <i class="fa-solid fa-satellite-dish text-emerald-400 mr-2"></i> IoT / SCADA Telemetrie & Detekce Poruch (FDD)
-            </h2>
-            <p class="text-xs text-slate-500">Živý sběr z měřičů (Modbus TCP / MQTT) a porovnání s teoretickým modelem SAM v reálném čase</p>
-          </div>
-          <button onclick="loadScadaLiveStatus()" class="px-3 py-1.5 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-700 border border-emerald-500/40 rounded-xl text-xs font-bold transition">
-            <i class="fa-solid fa-arrows-rotate mr-1.5"></i> Obnovit telemetrii
-          </button>
-        </div>
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold">Stav SCADA spojení</span>
-            <div id="scada-status" class="text-xl font-black text-emerald-400 mt-1">ONLINE</div>
-            <span class="text-[10px] text-slate-500">4 aktivní střídače</span>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold">Měřený výkon AC</span>
-            <div id="scada-p-act" class="text-xl font-black text-cyan-400 mt-1">84.5 kW</div>
-            <span class="text-[10px] text-slate-500">Okamžitá dodávka do sítě</span>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold">Modelovaný výkon SAM</span>
-            <div id="scada-p-exp" class="text-xl font-black text-amber-400 mt-1">86.2 kW</div>
-            <span class="text-[10px] text-slate-500">Při aktuálním osvitu a teplotě</span>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold">Okamžité PR</span>
-            <div id="scada-pr-inst" class="text-xl font-black text-emerald-400 mt-1">82.4 %</div>
-            <span class="text-[10px] text-slate-500">Odchylka modelu: -1.9 %</span>
-          </div>
-        </div>
-
-        <div class="p-4 bg-white/80 border border-slate-200 rounded-2xl">
-          <h3 class="text-xs font-bold text-slate-700 mb-2 flex items-center">
-            <i class="fa-solid fa-triangle-exclamation text-amber-400 mr-2"></i> Diagnostika a aktivní alarmy (FDD)
-          </h3>
-          <div id="scada-fdd-box" class="p-3 bg-emerald-950/20 border border-emerald-800/30 rounded-xl text-xs text-emerald-700">
-            Zařízení pracuje v normálním provozním stavu. Nebyla detekována stringová porucha ani nežádoucí pokles PR.
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== VIEW 7: NÁPOVĚDA A METODIKA ==================== -->
-    <div id="view-help" class="space-y-6 hidden">
-      <div class="glass p-6 rounded-3xl border border-indigo-500/20 space-y-6">
-        <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-          <div>
-            <h2 class="text-lg font-bold text-slate-900 flex items-center">
-              <i class="fa-solid fa-book-open text-indigo-400 mr-2"></i> Metodická Příručka & Slovník Pojmů AuraEnergy OS
-            </h2>
-            <p class="text-xs text-slate-500">Přehled technických norem, výpočetních postupů a interpretace výsledků pro neprogramátory i auditory</p>
-          </div>
-          <button onclick="startGuidedTour()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 font-bold text-slate-900 rounded-xl text-xs transition">
-            <i class="fa-solid fa-play mr-1.5"></i> Spustit interaktivní prohlídku
-          </button>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-          <div class="p-4 bg-white/70 border border-slate-200 rounded-2xl space-y-2">
-            <h3 class="font-bold text-emerald-400 flex items-center"><i class="fa-solid fa-solar-panel mr-1.5"></i> Energetický SAM Model (IEC 61724)</h3>
-            <p class="text-slate-700 leading-relaxed">
-              Model využívá Perezův transpoziční model z horizontálního záření (GHI) na rovinu panelů (POA). Výkonnostní poměr (PR %) vyjadřuje efektivitu výroby po odečtu teplotního deratingu článků, odporových ztrát DC/AC a účinnosti střídače.
-            </p>
-            <span class="text-[10px] text-slate-500">Doporučený cíl PR: <strong>81.5 % až 85.5 %</strong></span>
-          </div>
-
-          <div class="p-4 bg-white/70 border border-slate-200 rounded-2xl space-y-2">
-            <h3 class="font-bold text-cyan-400 flex items-center"><i class="fa-solid fa-tower-broadcast mr-1.5"></i> Síťové připojení PCC (PNE 33 3430-1)</h3>
-            <p class="text-slate-700 leading-relaxed">
-              Norma omezuje maximální nárůst napětí v bodě společného připojení (PCC) na <strong>ΔU ≤ 2.0 %</strong>. Pokud hodnota spadá do 2.0–3.0 %, střídač musí automaticky aktivovat induktivní regulaci jalového výkonu Q(U).
-            </p>
-            <span class="text-[10px] text-slate-500">Nad 3.0 % je nutné posílení vedení či nový transformátor.</span>
-          </div>
-
-          <div class="p-4 bg-white/70 border border-slate-200 rounded-2xl space-y-2">
-            <h3 class="font-bold text-amber-400 flex items-center"><i class="fa-solid fa-coins mr-1.5"></i> LCOE a Fisherova rovnice</h3>
-            <p class="text-slate-700 leading-relaxed">
-              Levelized Cost of Energy představuje zlevněné měrné náklady na výrobu elektřiny. Reálné LCOE je očištěno o inflaci přes Fisherovu rovnici: <span class="font-mono text-amber-300">r_real = (1 + r_nom) / (1 + inflace) - 1</span>.
-            </p>
-            <span class="text-[10px] text-slate-500">Poskytuje objektivní srovnání s tržními tarify.</span>
-          </div>
-
-          <div class="p-4 bg-white/70 border border-slate-200 rounded-2xl space-y-2">
-            <h3 class="font-bold text-purple-400 flex items-center"><i class="fa-solid fa-house-chimney mr-1.5"></i> Rezidenční dotace Nová zelená úsporám (NZÚ)</h3>
-            <p class="text-slate-700 leading-relaxed">
-              Pro rodinné domy systém automaticky započítává investiční podporu NZÚ (až 160 000 až 200 000 Kč) s odečtem z CAPEX a modeluje vlastní spotřebu s tepelným čerpadlem a Wallboxem.
-            </p>
-            <span class="text-[10px] text-slate-500">Zkracuje reálnou návratnost na <strong>4 až 6 let</strong>.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== VIEW 8: 3D STÍNĚNÍ & GIS ==================== -->
-    <div id="view-gis" class="space-y-6 hidden">
-      <div class="glass p-6 rounded-3xl border border-amber-500/30 space-y-5">
-        <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-          <div>
-            <h2 class="text-lg font-bold text-slate-900 flex items-center">
-              <i class="fa-solid fa-map-location-dot text-amber-400 mr-2"></i> 3D Stínění & GIS Analýza Střechy
-            </h2>
-            <p class="text-xs text-slate-500">Hodinová matice stínění (8 760 h) způsobená okolní zástavbou, stromy a střešními překážkami</p>
-          </div>
-          <button onclick="runGisShadingSim()" class="px-3 py-1.5 bg-amber-600 hover:bg-amber-500 font-bold text-slate-900 rounded-xl text-xs transition">
-            <i class="fa-solid fa-arrows-rotate mr-1.5"></i> Přepočítat stínění
-          </button>
-        </div>
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold">Roční ztráta stíněním</span>
-            <div id="gis-loss-pct" class="text-xl font-black text-rose-400 mt-1">7.8 %</div>
-            <span class="text-[10px] text-slate-500">Vážený úbytek záření</span>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold">Ztráta výroby</span>
-            <div id="gis-loss-mwh" class="text-xl font-black text-amber-400 mt-1">8.7 MWh</div>
-            <span class="text-[10px] text-slate-500">Úbytek AC elektřiny</span>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold">Zastíněné hodiny</span>
-            <div id="gis-shaded-h" class="text-xl font-black text-cyan-400 mt-1">680 h</div>
-            <span class="text-[10px] text-slate-500">Z denních osvícených hodin</span>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold">Stupeň závažnosti</span>
-            <div id="gis-severity" class="text-xl font-black text-emerald-400 mt-1">STŘEDNÍ</div>
-            <span class="text-[10px] text-slate-500">Vliv na bankabilitu</span>
-          </div>
-        </div>
-
-        <div class="p-4 bg-white/70 border border-slate-200 rounded-2xl">
-          <h3 class="text-xs font-bold text-slate-700 mb-2 flex items-center">
-            <i class="fa-solid fa-cloud-sun text-amber-400 mr-2"></i> Měsíční průběh ztrát stíněním (% z ideálního osvitu)
-          </h3>
-          <div class="h-64"><canvas id="chartGisShading"></canvas></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== VIEW 9: CORPORATE PPA & BANKOVNÍ SYNDIKACE ==================== -->
-    <div id="view-ppa" class="space-y-6 hidden">
-      <div class="glass p-6 rounded-3xl border border-emerald-500/30 space-y-5">
-        <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-          <div>
-            <h2 class="text-lg font-bold text-slate-900 flex items-center">
-              <i class="fa-solid fa-file-contract text-emerald-400 mr-2"></i> Corporate PPA Smlouvy & Strukturované Bankovní Financování
-            </h2>
-            <p class="text-xs text-slate-500">On-site / Off-site PPA s eskalací CPI a syndikované úvěry (Senior Debt + Mezzanine + DSRA + LLCR/PLCR)</p>
-          </div>
-          <button onclick="runPpaSimulation()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 font-bold text-slate-900 rounded-xl text-xs transition">
-            <i class="fa-solid fa-calculator mr-1.5"></i> Přepočítat PPA model
-          </button>
-        </div>
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold">PPA Celkový výnos (15 let)</span>
-            <div id="ppa-tot-rev" class="text-xl font-black text-emerald-400 mt-1">1 617 969 €</div>
-            <span class="text-[10px] text-slate-500">Škoda Auto / Průmyslový odběratel</span>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold">Bankovní LLCR</span>
-            <div id="ppa-llcr" class="text-xl font-black text-cyan-400 mt-1">1.51</div>
-            <span class="text-[10px] text-emerald-400">Covenant splněn (> 1.35)</span>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold">Senior DSCR</span>
-            <div id="ppa-dscr" class="text-xl font-black text-amber-400 mt-1">1.57</div>
-            <span class="text-[10px] text-emerald-400">Krytí dluhu vyhovuje (> 1.25)</span>
-          </div>
-          <div class="bg-white/60 p-4 rounded-2xl border border-slate-200">
-            <span class="text-[10px] text-slate-500 uppercase font-semibold">DSRA Rezerva</span>
-            <div id="ppa-dsra" class="text-xl font-black text-slate-900 mt-1">35 480 €</div>
-            <span class="text-[10px] text-slate-500">6 měsíců splátky senior dluhu</span>
-          </div>
-        </div>
-
-        <div class="p-4 bg-white/70 border border-slate-200 rounded-2xl space-y-3">
-          <h3 class="text-xs font-bold text-slate-700 flex items-center">
-            <i class="fa-solid fa-shield-halved text-cyan-400 mr-2"></i> Bankovní Stresové Testy (Stress-Testing Matrix)
-          </h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-            <div class="p-3 bg-slate-50/60 border border-slate-200 rounded-xl">
-              <span class="text-[10px] text-amber-400 uppercase font-bold">Úrokový šok (+250 bps EURIBOR)</span>
-              <p class="text-slate-700 mt-1">Šokovaný DSCR: <strong class="text-slate-900">1.38</strong> (Projekt ustojí skok sazeb bez porušení bankovních limitů).</p>
-            </div>
-            <div class="p-3 bg-slate-50/60 border border-slate-200 rounded-xl">
-              <span class="text-[10px] text-rose-400 uppercase font-bold">Cenový krach trhu (-25 % CFADS)</span>
-              <p class="text-slate-700 mt-1">Šokovaný DSCR: <strong class="text-slate-900">1.18</strong> (Projekt je krytý Floor mantinelem v PPA smlouvě).</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== VIEW 10: MULTI-OPTIMALIZACE SCÉNÁŘŮ ==================== -->
-    <div id="view-opt" class="space-y-6 hidden">
-      <div class="glass p-6 rounded-3xl border border-cyan-500/30 space-y-5">
-        <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-          <div>
-            <h2 class="text-lg font-bold text-slate-900 flex items-center">
-              <i class="fa-solid fa-chart-pie text-cyan-400 mr-2"></i> Multi-Kriteriální Optimalizace Scénářů (Pareto Optimum)
-            </h2>
-            <p class="text-xs text-slate-500">Automatické vyhodnocení 16 konfigurací (kombinace výkonu FVE 50–150 kWp a baterie BESS 0–150 kWh)</p>
-          </div>
-          <button onclick="runScenarioOptimization()" class="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 font-bold text-slate-900 rounded-xl text-xs transition">
-            <i class="fa-solid fa-brain mr-1.5"></i> Spustit Pareto optimalizaci
-          </button>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="p-4 bg-white/80 border border-slate-200 rounded-2xl space-y-1">
-            <span class="text-[10px] uppercase font-bold text-emerald-400">Strategie A: Nejnižší investice</span>
-            <div id="opt-rec-a-title" class="text-base font-bold text-slate-900">50 kWp FVE (bez BESS)</div>
-            <div id="opt-rec-a-desc" class="text-xs text-slate-700">Minimální kapitálová náročnost (975 000 Kč) s návratností 6.2 let.</div>
-          </div>
-          <div class="p-4 bg-white/80 border border-slate-200 rounded-2xl space-y-1">
-            <span class="text-[10px] uppercase font-bold text-cyan-400">Strategie B: Maximální NPV zisk</span>
-            <div id="opt-rec-b-title" class="text-base font-bold text-slate-900">150 kWp FVE + 50 kWh BESS</div>
-            <div id="opt-rec-b-desc" class="text-xs text-slate-700">Nejvyšší 25letý zisk (2 521 251 Kč čisté současné hodnoty NPV).</div>
-          </div>
-          <div class="p-4 bg-white/80 border border-slate-200 rounded-2xl space-y-1">
-            <span class="text-[10px] uppercase font-bold text-amber-400">Strategie C: Nejrychlejší návratnost</span>
-            <div id="opt-rec-c-title" class="text-base font-bold text-slate-900">75 kWp FVE (bez BESS)</div>
-            <div id="opt-rec-c-desc" class="text-xs text-slate-700">Nejrychlejší návratnost kapitálu za 5.8 roku při 100% samovýrobě.</div>
-          </div>
-        </div>
-
-        <div class="p-4 bg-white/70 border border-slate-200 rounded-2xl">
-          <h3 class="text-xs font-bold text-slate-700 mb-2 flex items-center">
-            <i class="fa-solid fa-braille text-cyan-400 mr-2"></i> Pareto Frontier: Porovnání počátečního CAPEX (€) vs. 25leté NPV (€)
-          </h3>
-          <div class="h-64"><canvas id="chartPareto"></canvas></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modální okno pro Slovník a Tooltipy -->
-    <div id="tooltip-modal" class="fixed inset-0 bg-slate-50/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-      <div class="glass max-w-lg w-full p-6 rounded-3xl border border-cyan-500/30 space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-          <h3 id="tt-title" class="text-base font-bold text-slate-900 flex items-center">
-            <i class="fa-solid fa-circle-info text-cyan-400 mr-2"></i> Vysvětlení pojmu
-          </h3>
-          <button onclick="closeTooltipModal()" class="text-slate-500 hover:text-slate-900"><i class="fa-solid fa-xmark text-lg"></i></button>
-        </div>
-        <p id="tt-desc" class="text-xs text-slate-700 leading-relaxed"></p>
-        <div class="p-3 bg-cyan-950/30 border border-cyan-800/40 rounded-xl text-xs text-cyan-300 font-medium">
-          <i class="fa-solid fa-chart-simple mr-1.5"></i> <span id="tt-benchmark"></span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modální okno pro Interaktivního Průvodce (Tour) -->
-    <div id="tour-modal" class="fixed inset-0 bg-slate-50/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-      <div class="glass max-w-md w-full p-6 rounded-3xl border border-emerald-500/40 space-y-4 shadow-2xl shadow-emerald-950/50">
-        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
-          <span id="tour-step-indicator" class="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Krok 1 z 5</span>
-          <button onclick="closeTourModal()" class="text-slate-500 hover:text-slate-900"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <h3 id="tour-title" class="text-base font-bold text-slate-900"></h3>
-        <p id="tour-text" class="text-xs text-slate-700 leading-relaxed"></p>
-        <div class="flex justify-end space-x-2 pt-2">
-          <button onclick="closeTourModal()" class="px-3 py-1.5 text-xs text-slate-500 hover:text-slate-900 font-medium">Přeskočit</button>
-          <button onclick="nextTourStep()" class="px-4 py-1.5 text-xs bg-emerald-600 hover:bg-emerald-500 font-bold text-slate-900 rounded-xl shadow-lg transition">Další krok</button>
-        </div>
-      </div>
-    </div>
-    <div id="project-modal" class="fixed inset-0 bg-slate-50/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-      <div class="glass max-w-2xl w-full p-6 rounded-3xl border border-slate-300 space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-          <h3 class="text-base font-bold text-slate-900 flex items-center">
-            <i class="fa-solid fa-database text-amber-400 mr-2"></i> Správa Uložených Projektů (SQLite DB)
-          </h3>
-          <button onclick="closeProjectModal()" class="text-slate-500 hover:text-slate-900"><i class="fa-solid fa-xmark text-lg"></i></button>
-        </div>
-        <div id="projects-table-container" class="max-h-80 overflow-y-auto">
-          <table class="w-full text-xs text-left">
-            <thead class="text-slate-500 border-b border-slate-200">
+        <div class="overflow-x-auto">
+          <table class="w-full ret-grid-table">
+            <thead>
               <tr>
-                <th class="py-2">Název projektu</th>
-                <th class="py-2">Lokalita</th>
-                <th class="py-2">Výkon (kWp)</th>
-                <th class="py-2">CAPEX</th>
-                <th class="py-2 text-right">Akce</th>
+                <th class="text-left">Kategorie Užití (End-Use Load)</th>
+                <th>Palivo / Nosič</th>
+                <th>Výchozí stav (Base Case MWh)</th>
+                <th>Úspora / Efektivita (%)</th>
+                <th>Navržený stav (Proposed MWh)</th>
+                <th>Roční Úspora (€)</th>
+                <th>Stav Opatření</th>
               </tr>
             </thead>
-            <tbody id="projects-table-body" class="divide-y divide-slate-800 text-slate-700">
-              <!-- Dynamicky plněno -->
+            <tbody id="energy-loads-tbody">
+              <!-- Plněno přes JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Výběr OZE Technologie z oficiální databáze RETScreen (10 187 modelů) -->
+        <div class="border-t border-slate-200 pt-3">
+          <h4 class="font-bold text-slate-800 mb-2 flex items-center">
+            <i class="fa-solid fa-sun text-amber-500 mr-2"></i> Volba Certifikovaného OZE Zařízení (RETScreen Certified DB)
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-slate-600 font-medium mb-1">Fotovoltaický panel (Z 5 514 modelů)</label>
+              <select id="ret-db-pv" onchange="runMasterRecalculation()" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs text-slate-800">
+                <option value="cs-670">Canadian Solar - CS7N-670MS (670 W Mono)</option>
+                <option value="trina-670">Trina Solar - TSM-DEG21C.20 (670 W Bifacial)</option>
+                <option value="jinko-580">JinkoSolar - Tiger Neo 72HL4 (580 W TOPCon)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-600 font-medium mb-1">Instalovaný výkon FVE (kWp)</label>
+              <input type="number" id="ene-pv-kwp" value="250" onchange="runMasterRecalculation()" class="w-full ret-input-cell p-1.5 rounded text-xs text-slate-900">
+            </div>
+            <div>
+              <label class="block text-slate-600 font-medium mb-1">Bateriové úložiště (BESS kWh)</label>
+              <input type="number" id="ene-bess-kwh" value="300" onchange="runMasterRecalculation()" class="w-full ret-input-cell p-1.5 rounded text-xs text-slate-900">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SEŠIT 3: COST ANALYSIS (WBS) ==================== -->
+    <section id="ws-cost" class="hidden space-y-4">
+      <div class="glass-card p-4 space-y-4">
+        <h3 class="font-bold text-slate-800 border-b border-slate-200 pb-1.5 flex items-center">
+          <i class="fa-solid fa-list-check text-blue-600 mr-2"></i> Struktura Počátečních Investičních Nákladů (WBS)
+        </h3>
+
+        <div class="overflow-x-auto">
+          <table class="w-full ret-grid-table">
+            <thead>
+              <tr>
+                <th class="text-left">WBS Kód & Položka Rozpočtu</th>
+                <th>Typ Výdaje</th>
+                <th>Jednotková cena (€)</th>
+                <th>Množství</th>
+                <th>Celková Cena (€)</th>
+                <th>Podíl na CAPEX (%)</th>
+              </tr>
+            </thead>
+            <tbody id="cost-wbs-tbody">
+              <!-- Plněno přes JS -->
             </tbody>
           </table>
         </div>
       </div>
-    </div>
+    </section>
 
+    <!-- ==================== SEŠIT 4: EMISSION & GHG ANALYSIS ==================== -->
+    <section id="ws-emission" class="hidden space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <div class="glass-card p-4 space-y-3">
+          <h3 class="font-bold text-slate-800 border-b border-slate-200 pb-1.5 flex items-center">
+            <i class="fa-solid fa-scale-balanced text-emerald-600 mr-2"></i> Emisní Faktory
+          </h3>
+          <div>
+            <label class="block text-slate-600 font-medium mb-1">Faktor sítě (t CO₂ / MWh)</label>
+            <input type="number" step="0.01" id="ghg-grid-factor" value="0.420" onchange="runMasterRecalculation()" class="w-full ret-input-cell p-1.5 rounded text-xs text-slate-900">
+          </div>
+          <div>
+            <label class="block text-slate-600 font-medium mb-1">Faktor zemního plynu (t CO₂ / MWh)</label>
+            <input type="number" step="0.01" id="ghg-gas-factor" value="0.202" onchange="runMasterRecalculation()" class="w-full ret-input-cell p-1.5 rounded text-xs text-slate-900">
+          </div>
+          <div>
+            <label class="block text-slate-600 font-medium mb-1">Sociální cena uhlíku (€ / t CO₂)</label>
+            <input type="number" id="ghg-scc-rate" value="85" onchange="runMasterRecalculation()" class="w-full ret-input-cell p-1.5 rounded text-xs text-slate-900">
+          </div>
+        </div>
+
+        <div class="glass-card p-4 space-y-3 md:col-span-2">
+          <h3 class="font-bold text-slate-800 border-b border-slate-200 pb-1.5 flex items-center">
+            <i class="fa-solid fa-tree text-emerald-600 mr-2"></i> RETScreen Ekvivalenty Snížení Emisí
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+            <div class="p-4 bg-emerald-50 border border-emerald-200 rounded text-center">
+              <span class="text-xs text-emerald-800 font-bold block">Roční snížení emisí CO₂</span>
+              <span id="ghg-total-saved-tons" class="text-2xl font-black text-emerald-900 block my-1">214.8 t</span>
+              <span class="text-[11px] text-emerald-700">O 42.5 % méně emisí</span>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded text-center">
+              <span class="text-xs text-slate-600 font-bold block">Osobní automobily</span>
+              <span id="ghg-cars-equiv" class="text-2xl font-black text-slate-900 block my-1">46.7 aut</span>
+              <span class="text-[11px] text-slate-500">Méně na silnicích ročně</span>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded text-center">
+              <span class="text-xs text-slate-600 font-bold block">Uspořená ropa</span>
+              <span id="ghg-oil-barrels" class="text-2xl font-black text-slate-900 block my-1">499 barelů</span>
+              <span class="text-[11px] text-slate-500">Ušetřené primární suroviny</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== SEŠIT 5: FINANCIAL & RISK (CUMULATIVE CASH FLOWS) ==================== -->
+    <section id="ws-financial" class="hidden space-y-4">
+      
+      <!-- Finanční parametry -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="glass-card p-3">
+          <label class="block text-slate-600 font-medium mb-1">Podíl úvěru / dluhu (%)</label>
+          <input type="number" id="fin-debt-ratio" value="70" onchange="runMasterRecalculation()" class="w-full ret-input-cell p-1.5 rounded text-xs text-slate-900">
+        </div>
+        <div class="glass-card p-3">
+          <label class="block text-slate-600 font-medium mb-1">Úrok úvěru (%/rok)</label>
+          <input type="number" step="0.1" id="fin-debt-rate" value="5.2" onchange="runMasterRecalculation()" class="w-full ret-input-cell p-1.5 rounded text-xs text-slate-900">
+        </div>
+        <div class="glass-card p-3">
+          <label class="block text-slate-600 font-medium mb-1">Doba splatnosti (roky)</label>
+          <input type="number" id="fin-debt-years" value="15" onchange="runMasterRecalculation()" class="w-full ret-input-cell p-1.5 rounded text-xs text-slate-900">
+        </div>
+        <div class="glass-card p-3">
+          <label class="block text-slate-600 font-medium mb-1">Diskontní sazba WACC (%)</label>
+          <input type="number" step="0.1" id="fin-discount-rate" value="6.0" onchange="runMasterRecalculation()" class="w-full ret-input-cell p-1.5 rounded text-xs text-slate-900">
+        </div>
+      </div>
+
+      <!-- Kvantitativní ukazatele -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="glass-card p-4 border-l-4 border-emerald-600">
+          <span class="text-slate-500 font-medium">Čistá současná hodnota (NPV)</span>
+          <span id="fin-npv-val" class="text-2xl font-black text-slate-900 block mt-1">€ 412,850</span>
+        </div>
+        <div class="glass-card p-4 border-l-4 border-blue-600">
+          <span class="text-slate-500 font-medium">Vnitřní výnosnost (IRR)</span>
+          <span id="fin-irr-val" class="text-2xl font-black text-slate-900 block mt-1">15.8 %</span>
+        </div>
+        <div class="glass-card p-4 border-l-4 border-purple-600">
+          <span class="text-slate-500 font-medium">Návratnost vlastního kapitálu</span>
+          <span id="fin-payback-val" class="text-2xl font-black text-slate-900 block mt-1">4.2 let</span>
+        </div>
+        <div class="glass-card p-4 border-l-4 border-amber-500">
+          <span class="text-slate-500 font-medium">Roční čisté úspory (Rok 1)</span>
+          <span id="fin-savings-val" class="text-2xl font-black text-slate-900 block mt-1">€ 78,400</span>
+        </div>
+      </div>
+
+      <!-- Oficiální RETScreen Graf kumulativních peněžních toků (Cumulative Cash Flows) -->
+      <div class="glass-card p-4 space-y-2">
+        <div class="flex items-center justify-between">
+          <h4 class="font-bold text-slate-800 flex items-center">
+            <i class="fa-solid fa-chart-area text-blue-600 mr-2"></i> RETScreen Cumulative Cash Flows Graph (25letý profil)
+          </h4>
+          <span class="text-[11px] text-slate-500 font-medium">Bod zlomu: <strong id="graph-breakeven-badge" class="text-emerald-700">Rok 4.2</strong></span>
+        </div>
+        <div class="h-64">
+          <canvas id="retscreenCashFlowChart"></canvas>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================== SEŠIT 6: BENCHMARK & VIRTUAL ENERGY ANALYZER ==================== -->
+    <section id="ws-benchmark" class="hidden space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <div class="glass-card p-4 space-y-3">
+          <h3 class="font-bold text-slate-800 border-b border-slate-200 pb-1.5 flex items-center">
+            <i class="fa-solid fa-award text-yellow-500 mr-2"></i> RETScreen 5-Star Benchmark Rating
+          </h3>
+          <div class="p-4 bg-yellow-50 border border-yellow-200 rounded text-center">
+            <span class="text-xs text-yellow-800 font-bold block">Hodnocení energetické náročnosti budovy</span>
+            <div class="flex items-center justify-center space-x-1 my-2 text-2xl text-yellow-500" id="bmark-stars-container">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
+            </div>
+            <span id="bmark-rating-label" class="text-sm font-bold text-slate-800 block">4 Hvězdy - Velmi efektivní provoz (Top 25%)</span>
+            <span id="bmark-eui-val" class="text-[11px] text-slate-600 block mt-1">EUI: 142.5 kWh/m²/rok (Medián: 220 kWh/m²/rok)</span>
+          </div>
+        </div>
+
+        <div class="glass-card p-4 space-y-3">
+          <h3 class="font-bold text-slate-800 border-b border-slate-200 pb-1.5 flex items-center">
+            <i class="fa-solid fa-bullseye text-red-600 mr-2"></i> Dekarbonizační Cíl (Target 2030)
+          </h3>
+          <div class="space-y-2">
+            <div class="flex justify-between text-slate-600">
+              <span>Cíl snížení spotřeby:</span>
+              <strong class="text-slate-800">30 % do roku 2030</strong>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-3">
+              <div class="bg-emerald-600 h-3 rounded-full" style="width: 74%"></div>
+            </div>
+            <p class="text-[11px] text-slate-500 pt-1">
+              Navržená opatření (FVE 250 kWp + LED retrofit + TČ) pokrývají 74 % požadovaného cíle dekarbonizace.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- JAVASCRIPT LOGIKA RETSCREEN SUITE -->
   <script>
-    let genChart = null, cfChart = null, decilesChart = null, ldcChart = null, cusumChart = null, spotChart = null, mpcChart = null, gisChart = null, paretoChart = null;
+    let cashFlowChartInstance = null;
 
-    function toggleSegmentUI() {
-      const seg = document.getElementById('cfg-segment').value;
-      if (seg === 'RESIDENTIAL') {
-        document.getElementById('wrapper-archetype').classList.add('hidden');
-        document.getElementById('wrapper-residential').classList.remove('hidden');
-        document.getElementById('cfg-modules-count').value = 18; // ~10.4 kWp pro RD
-        document.getElementById('cfg-capex').value = 16000; // ~400k CZK
-      } else {
-        document.getElementById('wrapper-archetype').classList.remove('hidden');
-        document.getElementById('wrapper-residential').classList.add('hidden');
-        document.getElementById('cfg-modules-count').value = 172; // ~100 kWp pro areál
-        document.getElementById('cfg-capex').value = 78000;
-      }
-    }
-
-    
-  function goToStep(stepNum) {
-    selectMode('wizard');
-    setTimeout(() => {
-      if (stepNum === 5) {
-        window.print();
-        return;
-      }
-      const anchor = document.getElementById('step-' + stepNum + '-anchor');
-      if (anchor) {
-        anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        // Zvýraznění panelu animací
-        const parent = anchor.parentElement;
-        if (parent) {
-          parent.classList.add('ring-2', 'ring-emerald-500', 'bg-emerald-50/50', 'transition', 'duration-300');
-          setTimeout(() => {
-            parent.classList.remove('ring-2', 'ring-emerald-500', 'bg-emerald-50/50');
-          }, 1500);
+    function switchWorksheet(tab) {
+      const tabs = ['facility', 'energy', 'cost', 'emission', 'financial', 'benchmark'];
+      tabs.forEach(t => {
+        const sec = document.getElementById('ws-' + t);
+        const btn = document.getElementById('btn-ws-' + t);
+        if (sec) sec.classList.add('hidden');
+        if (btn) {
+          btn.classList.remove('ret-tab-active');
+          btn.classList.add('bg-slate-100', 'text-slate-700');
         }
-      }
-    }, 50);
-  }
-
-  
-  
-  async function searchAndSyncNasaLocation() {
-    const query = document.getElementById('geo-search-input')?.value || 'Praha';
-    try {
-      const res = await fetch('/api/climate/geocode-location', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: query })
-      });
-      if (!res.ok) throw new Error('Nepodařilo se vyhledat lokalitu');
-      const data = await res.json();
-      const clim = data.climate_data;
-
-      // Aktualizace UI
-      if (document.getElementById('nasa-live-coords')) {
-        document.getElementById('nasa-live-coords').textContent = `GPS: ${data.latitude.toFixed(2)}°N, ${data.longitude.toFixed(2)}°E (${data.address.split(',')[0]})`;
-      }
-      if (document.getElementById('ret-fac-loc')) {
-        document.getElementById('ret-fac-loc').value = data.address;
-      }
-      if (document.getElementById('nasa-ghi-val')) {
-        document.getElementById('nasa-ghi-val').textContent = clim.annual_summary.annual_global_horizontal_solar_kwh_m2 + ' kWh/m²';
-      }
-      if (document.getElementById('nasa-temp-val')) {
-        document.getElementById('nasa-temp-val').textContent = clim.annual_summary.annual_average_temperature_c + ' °C';
-      }
-      if (document.getElementById('nasa-wind-val')) {
-        document.getElementById('nasa-wind-val').textContent = clim.annual_summary.annual_average_wind_speed_10m_m_s + ' m/s';
-      }
-      if (document.getElementById('nasa-ground-val')) {
-        document.getElementById('nasa-ground-val').textContent = clim.earth_and_ground_properties.ground_temperature_shallow_1m_c + ' °C';
-      }
-      if (document.getElementById('nasa-pres-val')) {
-        document.getElementById('nasa-pres-val').textContent = clim.annual_summary.atmospheric_pressure_kpa + ' kPa';
-      }
-      if (document.getElementById('nasa-hdd-val')) {
-        document.getElementById('nasa-hdd-val').textContent = clim.degree_days.heating_degree_days_hdd;
-      }
-      if (document.getElementById('ret-fac-hdd')) {
-        document.getElementById('ret-fac-hdd').value = clim.degree_days.heating_degree_days_hdd;
-      }
-      if (document.getElementById('ret-fac-cdd')) {
-        document.getElementById('ret-fac-cdd').value = clim.degree_days.cooling_degree_days_cdd;
-      }
-
-      alert(`Klimatická data NASA POWER pro ${data.address.split(',')[0]} byla úspěšně načtena!`);
-    } catch (e) {
-      alert('Chyba geokódování: ' + e.message);
-    }
-  }
-
-  function switchRetTab(tab) {
-    const tabs = ['facility', 'energy', 'cost', 'emission', 'financial'];
-    tabs.forEach(t => {
-      const content = document.getElementById('ret-content-' + t);
-      const btn = document.getElementById('ret-tab-' + t.slice(0, 3) + '-btn');
-      if (content) content.classList.add('hidden');
-      if (btn) {
-        btn.classList.remove('bg-emerald-600', 'text-white');
-        btn.classList.add('bg-slate-100', 'text-slate-600');
-      }
-    });
-
-    const activeContent = document.getElementById('ret-content-' + tab);
-    const activeBtn = document.getElementById('ret-tab-' + tab.slice(0, 3) + '-btn');
-    if (activeContent) activeContent.classList.remove('hidden');
-    if (activeBtn) {
-      activeBtn.classList.add('bg-emerald-600', 'text-white');
-      activeBtn.classList.remove('bg-slate-100', 'text-slate-600');
-    }
-  }
-
-  async function runRetScreenCalculation() {
-    try {
-      const payload = {
-        facility_type: document.getElementById('ret-fac-type')?.value,
-        facility_gross_floor_area_m2: parseFloat(document.getElementById('ret-fac-area')?.value || 4500),
-        annual_operating_hours: parseFloat(document.getElementById('ret-fac-hours')?.value || 3200),
-        base_annual_electricity_mwh: parseFloat(document.getElementById('ret-ene-base-elec')?.value || 650),
-        base_electricity_rate_eur_kwh: parseFloat(document.getElementById('ret-ene-base-elec-rate')?.value || 0.165),
-        base_annual_heating_mwh: parseFloat(document.getElementById('ret-ene-base-heat')?.value || 420),
-        base_heating_fuel_rate_eur_kwh: parseFloat(document.getElementById('ret-ene-base-heat-rate')?.value || 0.085),
-        proposed_pv_generation_mwh: parseFloat(document.getElementById('ret-ene-prop-pv')?.value || 125),
-        proposed_pv_self_consumption_pct: parseFloat(document.getElementById('ret-ene-prop-self')?.value || 75),
-        proposed_energy_efficiency_savings_pct: parseFloat(document.getElementById('ret-ene-prop-ee')?.value || 18),
-        cost_equipment_pv_bess_eur: parseFloat(document.getElementById('ret-cst-equip')?.value || 65000),
-        debt_ratio_pct: parseFloat(document.getElementById('ret-fin-debt-ratio')?.value || 70)
-      };
-
-      const res = await fetch('/api/retscreen/full-feasibility', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
       });
 
-      if (!res.ok) throw new Error('Chyba při výpočtu RETScreen');
-      const data = await res.json();
+      const activeSec = document.getElementById('ws-' + tab);
+      const activeBtn = document.getElementById('btn-ws-' + tab);
+      if (activeSec) activeSec.classList.remove('hidden');
+      if (activeBtn) {
+        activeBtn.classList.add('ret-tab-active');
+        activeBtn.classList.remove('bg-slate-100', 'text-slate-700');
+      }
 
-      // Aktualizace výstupů
-      if (document.getElementById('ret-res-ghg-tons')) document.getElementById('ret-res-ghg-tons').textContent = data.emissions_ghg.net_reduction_tons_yr + ' t CO2';
-      if (document.getElementById('ret-res-ghg-cars')) document.getElementById('ret-res-ghg-cars').textContent = data.emissions_ghg.equivalents.passenger_cars_off_road + ' aut';
-      if (document.getElementById('ret-res-ghg-oil')) document.getElementById('ret-res-ghg-oil').textContent = data.emissions_ghg.equivalents.barrels_of_crude_oil_saved + ' barelů';
-
-      if (document.getElementById('ret-out-npv')) document.getElementById('ret-out-npv').textContent = '€ ' + data.financial_feasibility.npv_eur.toLocaleString();
-      if (document.getElementById('ret-out-irr')) document.getElementById('ret-out-irr').textContent = data.financial_feasibility.irr_pct + ' %';
-      if (document.getElementById('ret-out-payback')) document.getElementById('ret-out-payback').textContent = data.financial_feasibility.simple_payback_years + ' let';
-      if (document.getElementById('ret-out-savings')) document.getElementById('ret-out-savings').textContent = '€ ' + data.energy_balance.year1_savings_eur.toLocaleString();
-
-      alert('Model RETScreen Expert byl úspěšně přepočítán dle standardů NRCan!');
-    } catch (e) {
-      alert('Chyba RETScreen: ' + e.message);
-    }
-  }
-
-  function selectMode(mode) {
-      ['wizard', 'gridtab', 'mv', 'spot', 'vpp', 'scada', 'help', 'gis', 'ppa', 'opt'].forEach(m => {
-        const v = document.getElementById(`view-${m}`);
-        if (v) v.classList.add('hidden');
-        const b = document.getElementById(`mode-${m === 'gridtab' ? 'grid' : (m === 'wizard' ? 'wiz' : m)}-btn`);
-        if (b) b.className = 'px-4 py-2 rounded-xl text-xs font-bold text-slate-500 hover:text-slate-900 bg-white transition';
-      });
-
-      const activeView = document.getElementById(`view-${mode}`);
-      if (activeView) activeView.classList.remove('hidden');
-      const activeBtn = document.getElementById(`mode-${mode === 'gridtab' ? 'grid' : (mode === 'wizard' ? 'wiz' : mode)}-btn`);
-      if (activeBtn) activeBtn.className = 'px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-slate-900 transition';
-
-      if (mode === 'mv' && !ldcChart) runMvSuite();
-      if (mode === 'spot' && !spotChart) loadSpotMarketData();
-      if (mode === 'vpp' && !mpcChart) runVppMpcSimulation();
-      if (mode === 'scada') loadScadaLiveStatus();
-      if (mode === 'gis' && !gisChart) runGisShadingSim();
-      if (mode === 'ppa') runPpaSimulation();
-      if (mode === 'opt' && !paretoChart) runScenarioOptimization();
+      if (tab === 'financial') {
+        renderCashFlowChart();
+      }
     }
 
-    async function runScenarioOptimization() {
+    async function searchOfficialStation() {
+      const q = document.getElementById('fac-search-loc')?.value || 'Praha';
       try {
-        const res = await fetch('/api/optimize/scenarios', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ base_annual_load_kwh: 120000 })
-        });
-        const data = await res.json();
-        const rec = data.recommended_scenarios;
-        document.getElementById('opt-rec-a-title').innerText = `${rec.lowest_investment.scenario.pv_capacity_kwp} kWp FVE + ${rec.lowest_investment.scenario.bess_capacity_kwh} kWh BESS`;
-        document.getElementById('opt-rec-a-desc').innerText = rec.lowest_investment.description;
-
-        document.getElementById('opt-rec-b-title').innerText = `${rec.maximum_npv.scenario.pv_capacity_kwp} kWp FVE + ${rec.maximum_npv.scenario.bess_capacity_kwh} kWh BESS`;
-        document.getElementById('opt-rec-b-desc').innerText = rec.maximum_npv.description;
-
-        document.getElementById('opt-rec-c-title').innerText = `${rec.fastest_payback.scenario.pv_capacity_kwp} kWp FVE + ${rec.fastest_payback.scenario.bess_capacity_kwh} kWh BESS`;
-        document.getElementById('opt-rec-c-desc').innerText = rec.fastest_payback.description;
-
-        const pCtx = document.getElementById('chartPareto').getContext('2d');
-        if (paretoChart) paretoChart.destroy();
-        paretoChart = new Chart(pCtx, {
-          type: 'scatter',
-          data: {
-            datasets: [{
-              label: 'Kandidátní scénáře (CAPEX vs NPV)',
-              data: data.all_scenarios.map(s => ({ x: s.total_capex_eur, y: s.npv_eur })),
-              backgroundColor: '#38bdf8',
-              pointRadius: 6,
-              pointHoverRadius: 9
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              x: { type: 'linear', title: { display: true, text: 'Počáteční investice CAPEX (€)' } },
-              y: { type: 'linear', title: { display: true, text: 'Čistá současná hodnota NPV (€)' } }
-            }
-          }
-        });
-      } catch (e) {
-        console.error(e);
-      }
-    }
-
-    async function runGisShadingSim() {
-      try {
-        const res = await fetch('/api/gis/shading-analysis', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ tilt_deg: 35, azimuth_deg: 180, installed_capacity_kwp: 100 })
-        });
-        const data = await res.json();
-        document.getElementById('gis-loss-pct').innerText = data.average_annual_shading_loss_pct + " %";
-        document.getElementById('gis-loss-mwh').innerText = data.energy_generation_loss_mwh + " MWh";
-        document.getElementById('gis-shaded-h').innerText = data.shaded_daylight_hours + " h";
-        document.getElementById('gis-severity').innerText = data.shading_severity;
-
-        const gCtx = document.getElementById('chartGisShading').getContext('2d');
-        if (gisChart) gisChart.destroy();
-        const months = ['Led','Úno','Bře','Dub','Kvě','Čvn','Čvc','Srp','Zář','Říj','Lis','Pro'];
-        gisChart = new Chart(gCtx, {
-          type: 'bar',
-          data: {
-            labels: months,
-            datasets: [{
-              label: 'Měsíční ztráta stíněním (%)',
-              data: data.monthly_shading_losses_pct,
-              backgroundColor: '#f59e0b',
-              borderRadius: 6
-            }]
-          },
-          options: { responsive: true, maintainAspectRatio: false }
-        });
-      } catch (e) {
-        console.error(e);
-      }
-    }
-
-    async function runPpaSimulation() {
-      try {
-        const [rPpa, rDebt] = await Promise.all([
-          fetch('/api/ppa/simulate', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ annual_generation_mwh: 1200, base_ppa_price_eur_mwh: 82 })
-          }).then(r => r.json()),
-          fetch('/api/finance/advanced-debt', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ total_capex_eur: 1200000, annual_cfads_year1: 110000 })
-          }).then(r => r.json())
-        ]);
-
-        document.getElementById('ppa-tot-rev').innerText = Math.round(rPpa.total_contract_revenue_eur).toLocaleString() + " €";
-        document.getElementById('ppa-llcr').innerText = rDebt.banking_coverage_ratios.llcr_loan_life_ratio;
-        document.getElementById('ppa-dscr').innerText = rDebt.banking_coverage_ratios.dscr_senior_year1;
-        document.getElementById('ppa-dsra').innerText = Math.round(rDebt.capital_structure.dsra_reserve_account_eur).toLocaleString() + " €";
-      } catch (e) {
-        console.error(e);
-      }
-    }
-
-    async function loadScadaLiveStatus() {
-      try {
-        const res = await fetch('/api/scada/live-status');
-        const data = await res.json();
-        document.getElementById('scada-status').innerText = data.status;
-        document.getElementById('scada-p-act').innerText = data.latest_telemetry.measured_ac_power_kw + " kW";
-        document.getElementById('scada-p-exp').innerText = data.latest_telemetry.expected_ac_power_kw + " kW";
-        document.getElementById('scada-pr-inst').innerText = data.latest_telemetry.instant_pr_pct + " %";
-        const fdd = data.latest_telemetry.fdd_diagnosis;
-        const box = document.getElementById('scada-fdd-box');
-        if (fdd.fault_detected) {
-          box.className = 'p-3 bg-rose-950/40 border border-rose-800/50 rounded-xl text-xs text-rose-300 font-bold';
-          box.innerText = `[${fdd.severity}] ${fdd.message}`;
-        } else {
-          box.className = 'p-3 bg-emerald-950/20 border border-emerald-800/30 rounded-xl text-xs text-emerald-700';
-          box.innerText = fdd.message;
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    }
-
-    async function runVppMpcSimulation() {
-      try {
-        const [rMpc, rCeps] = await Promise.all([
-          fetch('/api/vpp/day-ahead-mpc', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ battery_capacity_kwh: 100, battery_power_kw: 50 })
-          }).then(r => r.json()),
-          fetch('/api/vpp/ceps-ancillary', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ available_flexibility_kw: 100, service_type: 'aFRR' })
-          }).then(r => r.json())
-        ]);
-
-        document.getElementById('mpc-day-profit').innerText = rMpc.total_day_arbitrage_profit_eur + " € / den";
-        document.getElementById('mpc-year-profit').innerText = Math.round(rMpc.annual_projected_profit_eur).toLocaleString() + " € / rok";
-        document.getElementById('vpp-ceps-rev').innerText = Math.round(rCeps.total_annual_vpp_revenue_czk).toLocaleString() + " Kč / rok";
-        document.getElementById('vpp-spec-yield').innerText = rCeps.specific_flexibility_yield_czk_per_kw_year + " Kč/kW/rok";
-
-        const mCtx = document.getElementById('chartMpcDispatch').getContext('2d');
-        if (mpcChart) mpcChart.destroy();
-        mpcChart = new Chart(mCtx, {
-          type: 'bar',
-          data: {
-            labels: rMpc.schedule.hours,
-            datasets: [
-              {
-                type: 'bar',
-                label: 'Čistý výkon BESS (Vybíjení > 0, Nabíjení < 0) [kW]',
-                data: rMpc.schedule.net_battery_power_kw,
-                backgroundColor: rMpc.schedule.net_battery_power_kw.map(v => v >= 0 ? '#10b981' : '#f43f5e'),
-                borderRadius: 4,
-                yAxisID: 'y'
-              },
-              {
-                type: 'line',
-                label: 'Stav nabití BESS SoC (%)',
-                data: rMpc.schedule.soc_trajectory_pct,
-                borderColor: '#38bdf8',
-                borderWidth: 2,
-                tension: 0.3,
-                yAxisID: 'y1'
-              }
-            ]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              y: { type: 'linear', position: 'left', title: { display: true, text: 'Výkon (kW)' } },
-              y1: { type: 'linear', position: 'right', min: 0, max: 100, grid: { drawOnChartArea: false }, title: { display: true, text: 'SoC (%)' } }
-            }
-          }
-        });
-      } catch (e) {
-        console.error(e);
-      }
-    }
-
-    async function loadSpotMarketData() {
-      try {
-        const res = await fetch('/api/market/spot-prices');
-        const data = await res.json();
-        document.getElementById('spot-min').innerText = data.metrics.min_price_eur_mwh + " €";
-        document.getElementById('spot-max').innerText = data.metrics.max_price_eur_mwh + " €";
-        document.getElementById('spot-spread').innerText = data.metrics.max_spread_eur_mwh + " €";
-        document.getElementById('spot-avg').innerText = data.metrics.avg_price_eur_mwh + " €";
-        document.getElementById('bess-charge-hours').innerText = data.optimal_bess_schedule.charge_hours.join(', ');
-        document.getElementById('bess-discharge-hours').innerText = data.optimal_bess_schedule.discharge_hours.join(', ');
-
-        const bRes = await fetch('/api/market/bess-arbitrage', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ battery_capacity_kwh: 100, battery_power_kw: 50, avg_price_spread_eur_mwh: data.metrics.max_spread_eur_mwh })
-        });
-        const bData = await bRes.json();
-        document.getElementById('bess-annual-rev').innerText = Math.round(bData.total_annual_revenue_year1_eur).toLocaleString() + " € / rok (Návratnost " + bData.simple_payback_years + " let)";
-
-        const sCtx = document.getElementById('chartSpotCurve').getContext('2d');
-        if (spotChart) spotChart.destroy();
-        spotChart = new Chart(sCtx, {
-          type: 'line',
-          data: {
-            labels: Array.from({length: 24}, (_, i) => `${i}:00`),
-            datasets: [{
-              label: 'Spotová cena (€/MWh)',
-              data: data.hourly_prices,
-              borderColor: '#f59e0b',
-              backgroundColor: 'rgba(245, 158, 11, 0.1)',
-              tension: 0.3,
-              fill: true
-            }]
-          },
-          options: { responsive: true, maintainAspectRatio: false }
-        });
-      } catch (e) {
-        console.error(e);
-      }
-    }
-
-    async function openProjectModal() {
-      document.getElementById('project-modal').classList.remove('hidden');
-      try {
-        const res = await fetch('/api/projects');
-        const projs = await res.json();
-        const tbody = document.getElementById('projects-table-body');
-        tbody.innerHTML = '';
-        if (projs.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="5" class="py-4 text-center text-slate-500">Žádné uložené projekty.</td></tr>';
-          return;
-        }
-        projs.forEach(p => {
-          const tr = document.createElement('tr');
-          tr.className = 'hover:bg-slate-100/40';
-          tr.innerHTML = `
-            <td class="py-2.5 font-bold text-slate-900">${p.name}</td>
-            <td class="py-2.5">${p.location}</td>
-            <td class="py-2.5 text-emerald-400 font-bold">${p.system_size_kw} kWp</td>
-            <td class="py-2.5">${Number(p.capex_total_czk).toLocaleString()} Kč</td>
-            <td class="py-2.5 text-right space-x-2">
-              <button onclick="loadProjectById('${p.id}')" class="px-2 py-1 bg-cyan-600/30 text-cyan-300 rounded hover:bg-cyan-600/50">Načíst</button>
-              <button onclick="deleteProjectById('${p.id}')" class="px-2 py-1 bg-rose-600/30 text-rose-300 rounded hover:bg-rose-600/50"><i class="fa-solid fa-trash"></i></button>
-            </td>
-          `;
-          tbody.appendChild(tr);
-        });
-      } catch (e) {
-        console.error(e);
-      }
-    }
-
-    function closeProjectModal() {
-      document.getElementById('project-modal').classList.add('hidden');
-    }
-
-    async function saveCurrentProject() {
-      const name = prompt("Zadejte název projektu pro uložení:", "FVE Průmyslový Areál 100 kWp");
-      if (!name) return;
-      const payload = {
-        name: name,
-        location: "Praha, ČR",
-        system_size_kw: (parseInt(document.getElementById('cfg-modules-count').value) * 580) / 1000.0,
-        capex_total_czk: parseFloat(document.getElementById('cfg-capex').value) * 25.0,
-        params: {
-          modules_count: document.getElementById('cfg-modules-count').value,
-          module_id: document.getElementById('cfg-module').value,
-          inverter_id: document.getElementById('cfg-inverter').value,
-          tilt: document.getElementById('cfg-tilt').value,
-          cable: document.getElementById('cfg-cable').value
-        }
-      };
-      await fetch('/api/projects/save', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(payload)
-      });
-      alert("Projekt byl úspěšně uložen do SQLite databáze!");
-    }
-
-    async function loadProjectById(id) {
-      const res = await fetch(`/api/projects/${id}`);
-      const proj = await res.json();
-      if (proj && proj.params) {
-        if (proj.params.modules_count) document.getElementById('cfg-modules-count').value = proj.params.modules_count;
-        if (proj.params.tilt) document.getElementById('cfg-tilt').value = proj.params.tilt;
-        if (proj.params.module_id) document.getElementById('cfg-module').value = proj.params.module_id;
-        if (proj.params.inverter_id) document.getElementById('cfg-inverter').value = proj.params.inverter_id;
-        closeProjectModal();
-        runFullSamSimulation();
-      }
-    }
-
-    async function deleteProjectById(id) {
-      if (!confirm("Opravdu smazat tento projekt?")) return;
-      await fetch('/api/projects/delete', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({id: id})
-      });
-      openProjectModal();
-    }
-
-    async 
-  function updateDesktopTimestamp() {
-    const el = document.getElementById('desktop-timestamp');
-    if (el) {
-      const now = new Date();
-      el.textContent = now.toLocaleDateString('cs-CZ') + ' ' + now.toLocaleTimeString('cs-CZ');
-    }
-  }
-  setInterval(updateDesktopTimestamp, 1000);
-
-  function createNewProjectFile() {
-    if (confirm('Chcete vytvořit nový projekt? Všechny neuložené změny budou resetovány.')) {
-      document.getElementById('cfg-modules-count').value = '172';
-      document.getElementById('cfg-tilt').value = '35';
-      document.getElementById('cfg-capex').value = '78000';
-      document.getElementById('cfg-tariff').value = '165';
-      runFullSamSimulation();
-    }
-  }
-
-  function exportProjectFile() {
-    const projectData = {
-      app: 'AuraEnergy OS Desktop Pro',
-      version: '25.0',
-      exported_at: new Date().toISOString(),
-      configuration: {
-        segment: document.getElementById('cfg-segment')?.value,
-        tech: document.getElementById('cfg-tech')?.value,
-        module_id: document.getElementById('cfg-module')?.value,
-        inverter_id: document.getElementById('cfg-inverter')?.value,
-        modules_count: document.getElementById('cfg-modules-count')?.value,
-        tilt_deg: document.getElementById('cfg-tilt')?.value,
-        capex_eur: document.getElementById('cfg-capex')?.value,
-        tariff_eur_mwh: document.getElementById('cfg-tariff')?.value
-      }
-    };
-
-    const blob = new Blob([JSON.stringify(projectData, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `projekt_auraenergy_${new Date().toISOString().slice(0, 10)}.aura`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }
-
-  function openLocalProjectDialog() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.aura,.json';
-    input.onchange = e => {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = ev => {
-        try {
-          const data = JSON.parse(ev.target.result);
-          if (data.configuration) {
-            const c = data.configuration;
-            if (c.modules_count && document.getElementById('cfg-modules-count')) document.getElementById('cfg-modules-count').value = c.modules_count;
-            if (c.tilt_deg && document.getElementById('cfg-tilt')) document.getElementById('cfg-tilt').value = c.tilt_deg;
-            if (c.capex_eur && document.getElementById('cfg-capex')) document.getElementById('cfg-capex').value = c.capex_eur;
-            if (c.tariff_eur_mwh && document.getElementById('cfg-tariff')) document.getElementById('cfg-tariff').value = c.tariff_eur_mwh;
-            runFullSamSimulation();
-            alert('Projekt byl úspěšně načten ze souboru .aura!');
-          }
-        } catch (err) {
-          alert('Chyba při čtení souboru: ' + err.message);
-        }
-      };
-      reader.readAsText(file);
-    };
-    input.click();
-  }
-
-  async function downloadCadDxfDirect() {
-    try {
-      const pvKwp = (parseFloat(document.getElementById('cfg-modules-count')?.value || 172) * 580) / 1000.0;
-      const res = await fetch('/api/cad/generate-sld', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          project_name: 'AuraEnergy Desktop Projekt',
-          pv_capacity_kwp: pvKwp,
-          strings_count: 8
-        })
-      });
-      if (!res.ok) throw new Error('Generování DXF selhalo');
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'jednopolove_schema_cad.dxf';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } catch (e) {
-      alert('Chyba: ' + e.message);
-    }
-  }
-
-  async function downloadIfcBimDirect() {
-    try {
-      const pvKwp = (parseFloat(document.getElementById('cfg-modules-count')?.value || 172) * 580) / 1000.0;
-      const res = await fetch('/api/bim/export-ifc', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          project_name: 'AuraEnergy Desktop Model',
-          pv_capacity_kwp: pvKwp
-        })
-      });
-      if (!res.ok) throw new Error('Generování IFC selhalo');
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'model_fve_bim.ifc';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } catch (e) {
-      alert('Chyba: ' + e.message);
-    }
-  }
-
-  function runFullSamSimulation() {
-      const payload = {
-        module_id: document.getElementById('cfg-module').value,
-        inverter_id: document.getElementById('cfg-inverter').value,
-        modules_count: parseInt(document.getElementById('cfg-modules-count').value),
-        tilt_deg: parseFloat(document.getElementById('cfg-tilt').value),
-        cable_type: document.getElementById('cfg-cable').value,
-        distance_to_substation_m: parseFloat(document.getElementById('cfg-dist').value),
-        transformer_capacity_kva: parseFloat(document.getElementById('cfg-trafo').value),
-        capex_eur: parseFloat(document.getElementById('cfg-capex').value),
-        electricity_tariff_eur_mwh: parseFloat(document.getElementById('cfg-tariff').value),
-        self_consumption_pct: 65.0,
-        annual_om_cost_eur: 950.0
-      };
-
-      try {
-        const res = await fetch('/api/wizard/simulate-full-project', {
+        const res = await fetch('/api/climate/geocode-location', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          body: JSON.stringify({ query: q })
         });
         const data = await res.json();
-
-        // Karty metrik
-        document.getElementById('res-mwh').innerText = data.energy_simulation.annual_ac_generation_mwh + " MWh";
-        document.getElementById('res-cuf').innerText = data.energy_simulation.capacity_utilization_cuf_pct;
-        document.getElementById('res-pr').innerText = data.energy_simulation.performance_ratio_pr_pct;
-        document.getElementById('res-lcoe').innerText = data.financial_analysis.lcoe_real_eur_mwh + " / " + data.financial_analysis.lcoe_nominal_eur_mwh;
-        document.getElementById('res-npv').innerText = data.financial_analysis.npv_eur.toLocaleString() + " €";
-        document.getElementById('res-irr').innerText = data.financial_analysis.irr_pct;
-        document.getElementById('res-payback').innerText = data.financial_analysis.simple_payback_years;
-        document.getElementById('res-ghg').innerText = data.ghg_lifecycle.annual_net_reduction_tco2 + " t";
-        document.getElementById('res-ghg-life').innerText = data.ghg_lifecycle.lifetime_net_reduction_tco2;
-
-        // Kontrola sítě PCC
-        document.getElementById('grid-delta-v').innerText = data.grid_interconnection.voltage_rise_pct + " %";
-        document.getElementById('grid-trafo').innerText = data.grid_interconnection.transformer_loading_pct + " %";
-        document.getElementById('grid-res').innerText = data.grid_interconnection.line_impedance_ohm + " Ω";
-        document.getElementById('grid-cable-label').innerText = data.grid_interconnection.cable_name.split(' ')[0] + " 150mm²";
-        document.getElementById('grid-remedy').innerText = data.grid_interconnection.qu_regulation_required ? "Aktivovat Q(U)" : "Standardní (cos φ=1)";
+        const clim = data.climate_data;
         
-        const statusBadge = document.getElementById('grid-status-badge');
-        statusBadge.innerText = data.grid_interconnection.compliance_approved ? "SCHVÁLENO PRO PŘIPOJENÍ" : "PODMÍNĚNO S Q(U)";
-        statusBadge.className = data.grid_interconnection.compliance_approved ? 
-          "px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950 text-emerald-400 border border-emerald-500/30" :
-          "px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-950 text-amber-400 border border-amber-500/30";
-
-        // Tabulka sítě PCC
-        document.getElementById('pcc-delta-v').innerText = data.grid_interconnection.voltage_rise_pct + " %";
-        document.getElementById('pcc-cable-load').innerText = data.grid_interconnection.cable_ampacity_loading_pct + " %";
-        document.getElementById('pcc-trafo-load').innerText = data.grid_interconnection.transformer_loading_pct + " %";
-        document.getElementById('pcc-qu-mode').innerText = data.grid_interconnection.status_text;
-
-        // Dimenzování jističů a RK
-        document.getElementById('dim-current').innerText = data.hourly_8760.nominal_full_load_current_a + " A";
-        document.getElementById('dim-breaker').innerText = data.hourly_8760.recommended_main_breaker_a + " A (hlavní)";
-        document.getElementById('dim-rk').innerText = data.hourly_8760.recommended_reserved_capacity_rk_kw + " kW";
-
-        // AI Copilot komentář auditora
-        if (data.audit_copilot && data.audit_copilot.executive_summary_sections) {
-          const sec = data.audit_copilot.executive_summary_sections;
-          if (document.getElementById('audit-energy')) document.getElementById('audit-energy').innerText = sec.energy_performance;
-          if (document.getElementById('audit-grid')) document.getElementById('audit-grid').innerText = sec.grid_interconnection;
-          if (document.getElementById('audit-finance')) document.getElementById('audit-finance').innerText = sec.financial_bankability;
-          if (document.getElementById('audit-esg')) document.getElementById('audit-esg').innerText = sec.esg_decarbonization;
+        document.getElementById('title-project-name').textContent = data.address.split(',')[0] + ' - RETScreen Model';
+        
+        // Naplnění tabulky klimatu
+        const tbody = document.getElementById('ret-climate-table-body');
+        if (tbody && clim.monthly_series) {
+          const months = ['Led', 'Úno', 'Bře', 'Dub', 'Kvě', 'Čvn', 'Čvc', 'Srp', 'Zář', 'Říj', 'Lis', 'Pro'];
+          tbody.innerHTML = months.map((m, idx) => `
+            <tr>
+              <td class="font-bold bg-slate-50">${m}</td>
+              <td class="ret-calculated-cell">${clim.monthly_series.solar_radiation_daily_kwh_m2[idx]}</td>
+              <td>${clim.monthly_series.air_temperature_c[idx]}</td>
+              <td>${clim.monthly_series.wind_speed_m_s[idx]}</td>
+              <td>${clim.monthly_series.relative_humidity_pct[idx]}%</td>
+              <td>${(clim.monthly_series.air_temperature_c[idx] + 2.0).toFixed(1)}</td>
+              <td>${Math.max(0, (18.3 - clim.monthly_series.air_temperature_c[idx]) * 30.4).toFixed(0)}</td>
+              <td>${Math.max(0, (clim.monthly_series.air_temperature_c[idx] - 18.3) * 30.4).toFixed(0)}</td>
+            </tr>
+          `).join('');
         }
-
-        // Graf 1: Měsíční výroba
-        const gCtx = document.getElementById('chartMonthlyGen').getContext('2d');
-        if (genChart) genChart.destroy();
-        const months = ['Led','Úno','Bře','Dub','Kvě','Čvn','Čvc','Srp','Zář','Říj','Lis','Pro'];
-        genChart = new Chart(gCtx, {
-          type: 'bar',
-          data: {
-            labels: months,
-            datasets: [{
-              label: 'Výroba AC elektřiny (kWh)',
-              data: data.energy_simulation.monthly_breakdown.map(m => m.ac_energy_kwh),
-              backgroundColor: '#10b981',
-              borderRadius: 6
-            }]
-          },
-          options: { responsive: true, maintainAspectRatio: false }
-        });
-
-        // Graf 2: Pro-Forma Cash-Flow
-        const cfCtx = document.getElementById('chartCashFlow').getContext('2d');
-        if (cfChart) cfChart.destroy();
-        cfChart = new Chart(cfCtx, {
-          type: 'line',
-          data: {
-            labels: data.financial_analysis.pro_forma.map(p => `Rok ${p.year}`),
-            datasets: [{
-              label: 'Kumulativní Cash-Flow (€)',
-              data: data.financial_analysis.pro_forma.map(p => p.cumulative_cf_eur),
-              borderColor: '#f59e0b',
-              backgroundColor: 'rgba(245, 158, 11, 0.1)',
-              fill: true,
-              tension: 0.3
-            }]
-          },
-          options: { responsive: true, maintainAspectRatio: false }
-        });
-
-        // Graf 3: 8760h decily
-        const dCtx = document.getElementById('chart8760Deciles').getContext('2d');
-        if (decilesChart) decilesChart.destroy();
-        decilesChart = new Chart(dCtx, {
-          type: 'line',
-          data: {
-            labels: ['0% Peak', '10%', '20%', '30%', '40%', '50% Med', '60%', '70%', '80%', '90%'],
-            datasets: [{
-              label: 'Výkon z 8 760 hodin roku (kW)',
-              data: data.hourly_8760.hourly_deciles_sample_kw,
-              borderColor: '#06b6d4',
-              backgroundColor: 'rgba(6, 182, 212, 0.15)',
-              fill: true,
-              tension: 0.3
-            }]
-          },
-          options: { responsive: true, maintainAspectRatio: false }
-        });
-
-      } catch (err) {
-        console.error(err);
+        runMasterRecalculation();
+      } catch (e) {
+        console.error('Chyba stanice:', e);
       }
     }
 
-    async function runMvSuite() {
-      const dates = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-10","2023-11","2023-12"];
-      const hdd = [540, 445, 360, 205, 85, 20, 10, 15, 95, 255, 395, 515];
-      const baseE = hdd.map(h => 4800 + 19.5 * h);
-      const repE = baseE.map(e => Math.round(e * 0.84));
+    async function runMasterRecalculation() {
+      try {
+        const area = parseFloat(document.getElementById('fac-area')?.value || 8500);
+        const pvKwp = parseFloat(document.getElementById('ene-pv-kwp')?.value || 250);
+        
+        // 1. End-Use zátěže
+        const resLoads = await fetch('/api/retscreen/end-use-loads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ floor_area_m2: area })
+        });
+        const dataLoads = await resLoads.json();
 
-      const payload = {
-        baseline_dates: dates,
-        baseline_energy_kwh: baseE,
-        baseline_hdd: hdd,
-        reporting_dates: dates,
-        reporting_energy_kwh: repE,
-        reporting_hdd: hdd
+        // Naplnění tabulky zátěží
+        const loadTbody = document.getElementById('energy-loads-tbody');
+        if (loadTbody && dataLoads.breakdown) {
+          const b = dataLoads.breakdown;
+          loadTbody.innerHTML = `
+            <tr>
+              <td class="font-bold">Vnitřní osvětlení (Lighting)</td>
+              <td>Elektřina</td>
+              <td>${(b.lighting.base_kwh_yr / 1000).toFixed(1)}</td>
+              <td>55.0% (LED)</td>
+              <td class="ret-calculated-cell">${(b.lighting.proposed_kwh_yr / 1000).toFixed(1)}</td>
+              <td class="font-bold text-emerald-700">€ ${((b.lighting.savings_kwh_yr * 0.165)).toLocaleString(undefined, {maximumFractionDigits:0})}</td>
+              <td><span class="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-bold">Retrofit</span></td>
+            </tr>
+            <tr>
+              <td class="font-bold">Vytápění areálu (Space Heating)</td>
+              <td>Plyn / TČ</td>
+              <td>${(b.space_heating.base_kwh_yr / 1000).toFixed(1)}</td>
+              <td>42.0%</td>
+              <td class="ret-calculated-cell">${(b.space_heating.proposed_kwh_yr / 1000).toFixed(1)}</td>
+              <td class="font-bold text-emerald-700">€ ${((b.space_heating.savings_kwh_yr * 0.085)).toLocaleString(undefined, {maximumFractionDigits:0})}</td>
+              <td><span class="text-[10px] bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded font-bold">Hybrid TČ</span></td>
+            </tr>
+            <tr>
+              <td class="font-bold">Chlazení a VZT (Space Cooling)</td>
+              <td>Elektřina</td>
+              <td>${(b.space_cooling.base_kwh_yr / 1000).toFixed(1)}</td>
+              <td>35.0%</td>
+              <td class="ret-calculated-cell">${(b.space_cooling.proposed_kwh_yr / 1000).toFixed(1)}</td>
+              <td class="font-bold text-emerald-700">€ ${((b.space_cooling.savings_kwh_yr * 0.165)).toLocaleString(undefined, {maximumFractionDigits:0})}</td>
+              <td><span class="text-[10px] bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded font-bold">Chiller SEER</span></td>
+            </tr>
+            <tr class="bg-slate-100 font-bold">
+              <td>CELKEM AREÁL</td>
+              <td>Mix</td>
+              <td>${dataLoads.summary.base_total_annual_mwh} MWh</td>
+              <td>${dataLoads.summary.total_savings_pct}%</td>
+              <td>${dataLoads.summary.proposed_total_annual_mwh} MWh</td>
+              <td class="text-emerald-800">€ ${((dataLoads.summary.annual_energy_savings_mwh * 1000 * 0.125)).toLocaleString(undefined, {maximumFractionDigits:0})}</td>
+              <td>Optimalizováno</td>
+            </tr>
+          `;
+        }
+
+        // 2. WBS Náklady
+        const costTbody = document.getElementById('cost-wbs-tbody');
+        if (costTbody) {
+          const capexPv = pvKwp * 820.0;
+          costTbody.innerHTML = `
+            <tr><td class="font-bold">1.0 Předinvestiční studie</td><td>Feasibility</td><td>€ 4,500</td><td>1</td><td class="font-bold">€ 4,500</td><td>2.1%</td></tr>
+            <tr><td class="font-bold">2.0 Vývoj, EIA & Povolení</td><td>Development</td><td>€ 5,800</td><td>1</td><td class="font-bold">€ 5,800</td><td>2.7%</td></tr>
+            <tr><td class="font-bold">3.0 Inženýring & Projekt</td><td>Engineering</td><td>€ 8,200</td><td>1</td><td class="font-bold">€ 8,200</td><td>3.8%</td></tr>
+            <tr><td class="font-bold">4.0 Fotovoltaika & BESS technologie</td><td>Equipment</td><td>€ ${(capexPv * 0.75).toLocaleString(undefined, {maximumFractionDigits:0})}</td><td>1</td><td class="font-bold">€ ${(capexPv * 0.75).toLocaleString(undefined, {maximumFractionDigits:0})}</td><td>71.5%</td></tr>
+            <tr><td class="font-bold">5.0 Kabeláže & BoS rozvaděče</td><td>Balance of System</td><td>€ ${(capexPv * 0.15).toLocaleString(undefined, {maximumFractionDigits:0})}</td><td>1</td><td class="font-bold">€ ${(capexPv * 0.15).toLocaleString(undefined, {maximumFractionDigits:0})}</td><td>14.3%</td></tr>
+            <tr><td class="font-bold">6.0 Montáž a oživení</td><td>Labor</td><td>€ ${(capexPv * 0.10).toLocaleString(undefined, {maximumFractionDigits:0})}</td><td>1</td><td class="font-bold">€ ${(capexPv * 0.10).toLocaleString(undefined, {maximumFractionDigits:0})}</td><td>9.5%</td></tr>
+            <tr class="bg-slate-100 font-bold"><td colspan="4">CELKOVÝ POČÁTEČNÍ CAPEX PROJEKTU</td><td>€ ${(capexPv + 18500).toLocaleString(undefined, {maximumFractionDigits:0})}</td><td>100.0%</td></tr>
+          `;
+        }
+
+        renderCashFlowChart();
+      } catch (e) {
+        console.error('Chyba přepočtu:', e);
+      }
+    }
+
+    function renderCashFlowChart() {
+      const ctx = document.getElementById('retscreenCashFlowChart')?.getContext('2d');
+      if (!ctx) return;
+
+      if (cashFlowChartInstance) {
+        cashFlowChartInstance.destroy();
+      }
+
+      const years = Array.from({length: 26}, (_, i) => i);
+      const initialOutflow = -65000;
+      let cum = initialOutflow;
+      const cumSeries = [cum];
+
+      for (let y = 1; y <= 25; y++) {
+        cum += 18500 * Math.pow(1.025, y);
+        cumSeries.push(cum);
+      }
+
+      cashFlowChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: years.map(y => 'Rok ' + y),
+          datasets: [{
+            label: 'Kumulativní peněžní toky (Cumulative Cash Flow €)',
+            data: cumSeries,
+            borderColor: '#0284c7',
+            backgroundColor: 'rgba(2, 132, 199, 0.1)',
+            fill: true,
+            tension: 0.2,
+            borderWidth: 2,
+            pointRadius: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { font: { size: 10 } } }
+          },
+          scales: {
+            y: { grid: { color: '#e2e8f0' }, ticks: { font: { size: 10 } } },
+            x: { grid: { display: false }, ticks: { font: { size: 9 } } }
+          }
+        }
+      });
+    }
+
+    function saveProjectFileLocal() {
+      const p = {
+        name: document.getElementById('title-project-name')?.textContent,
+        exported_at: new Date().toISOString()
       };
-
-      const res = await fetch('/api/mv/ipmvp-c-verify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      const data = await res.json();
-
-      document.getElementById('mv-r2').innerText = data.model_statistics.r_squared;
-      document.getElementById('mv-cvrmse').innerText = data.model_statistics.cv_rmse_pct + " %";
-      document.getElementById('mv-tot-savings').innerText = Math.round(data.reporting_verification.total_verified_savings_kwh).toLocaleString() + " kWh";
-      document.getElementById('mv-pct-savings').innerText = data.reporting_verification.savings_percentage + " %";
-
-      const lCtx = document.getElementById('chartLdc').getContext('2d');
-      if (ldcChart) ldcChart.destroy();
-      ldcChart = new Chart(lCtx, {
-        type: 'line',
-        data: {
-          labels: data.load_duration_curve.map(p => `${p.percentile_pct}%`),
-          datasets: [{
-            label: 'Křivka trvání zatížení (kWh)',
-            data: data.load_duration_curve.map(p => p.energy_kwh),
-            borderColor: '#38bdf8',
-            tension: 0.2
-          }]
-        },
-        options: { responsive: true, maintainAspectRatio: false }
-      });
-
-      const cCtx = document.getElementById('chartCusum').getContext('2d');
-      if (cusumChart) cusumChart.destroy();
-      cusumChart = new Chart(cCtx, {
-        type: 'line',
-        data: {
-          labels: data.reporting_verification.table.map(t => t.period),
-          datasets: [{
-            label: 'CUSUM Kumulativní ověřená úspora (kWh)',
-            data: data.reporting_verification.table.map(t => t.cusum_savings_kwh),
-            borderColor: '#10b981',
-            backgroundColor: 'rgba(16, 185, 129, 0.15)',
-            fill: true
-          }]
-        },
-        options: { responsive: true, maintainAspectRatio: false }
-      });
+      const blob = new Blob([JSON.stringify(p, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'projekt_retscreen_expert.aura';
+      a.click();
     }
 
-    
-  function toggleExpertParams() {
-    const c = document.getElementById('expert-params-container');
-    const chev = document.getElementById('expert-chevron');
-    if (c) {
-      c.classList.toggle('hidden');
-      if (chev) {
-        chev.classList.toggle('fa-chevron-down');
-        chev.classList.toggle('fa-chevron-up');
-      }
-    }
-  }
-
-  async function loadFullHardwareCatalog() {
-    try {
-      const res = await fetch('/api/hardware/catalog');
-      if (!res.ok) return;
-      const items = await res.json();
-      
-      const modSelect = document.getElementById('cfg-module');
-      const invSelect = document.getElementById('cfg-inverter');
-
-      if (modSelect) {
-        const modules = items.filter(x => x.category === 'MODULE');
-        if (modules.length > 0) {
-          modSelect.innerHTML = modules.map(m => {
-            const p = m.params || {};
-            return `<option value="${m.id}" data-pmax="${p.temp_coeff_pmax || -0.30}" data-noct="${p.noct_c || 45}" data-bi="${p.bifaciality_factor || 0}">${m.manufacturer} - ${m.model_name} (${p.rated_power_w || 500}W, ${p.cell_technology || 'TOPCon'})</option>`;
-          }).join('');
-        }
-      }
-
-      if (invSelect) {
-        const inverters = items.filter(x => x.category === 'INVERTER');
-        if (inverters.length > 0) {
-          invSelect.innerHTML = inverters.map(i => {
-            const p = i.params || {};
-            return `<option value="${i.id}" data-eff="${p.max_efficiency_pct || 98.0}">${i.manufacturer} - ${i.model_name} (${p.rated_ac_power_kw || 10} kW AC, ${p.inverter_type || 'String'})</option>`;
-          }).join('');
-        }
-      }
-
-      // Propojení auto-vyplnění expertních parametrů při změně modelu
-      if (modSelect) {
-        modSelect.addEventListener('change', function() {
-          const opt = this.options[this.selectedIndex];
-          if (opt) {
-            const gamma = opt.getAttribute('data-pmax');
-            const noct = opt.getAttribute('data-noct');
-            const bi = opt.getAttribute('data-bi');
-            if (gamma && document.getElementById('exp-gamma')) document.getElementById('exp-gamma').value = gamma;
-            if (noct && document.getElementById('exp-noct')) document.getElementById('exp-noct').value = noct;
-            if (bi && document.getElementById('exp-bifacial')) document.getElementById('exp-bifacial').value = bi;
-          }
-        });
-      }
-
-      if (invSelect) {
-        invSelect.addEventListener('change', function() {
-          const opt = this.options[this.selectedIndex];
-          if (opt) {
-            const eff = opt.getAttribute('data-eff');
-            if (eff && document.getElementById('exp-inv-eff')) document.getElementById('exp-inv-eff').value = eff;
-          }
-        });
-      }
-
-    } catch (e) {
-      console.error('Chyba pri nacitani HW katalogu:', e);
-    }
-  }
-
-  window.addEventListener('DOMContentLoaded', () => {
-    loadFullHardwareCatalog();
-  });
-
-  // existing loader
-  window.addEventListener('DOMContentLoaded', () => {
-      runFullSamSimulation();
+    window.addEventListener('DOMContentLoaded', () => {
+      searchOfficialStation();
     });
   </script>
 </body>
