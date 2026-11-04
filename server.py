@@ -40,6 +40,11 @@ from backend.core.retscreen_end_use_loads import calculate_detailed_end_use_load
 from backend.core.retx_parser_engine import RetxProjectPackage, export_new_retx_package
 from backend.core.retscreen_climate_stations import search_climate_stations
 from backend.core.retscreen_full_model_v2 import calculate_retscreen_v2_full_suite
+from backend.core.retscreen_hvac_renewables_tree import (
+    calculate_advanced_pv_with_tracking, calculate_wind_turbine_weibull,
+    calculate_solar_thermal_heating, calculate_bivalent_heat_pump
+)
+from backend.core.retscreen_dynamic_wbs_engine import calculate_dynamic_wbs_budget
 
 PORT = 8080
 FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "frontend")
@@ -426,6 +431,48 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retscreen/tree/pv-tracking":
+            kwp = float(payload.get("installed_capacity_kwp", 100.0))
+            ghi = float(payload.get("annual_ghi_kwh_m2", 1130.0))
+            tracking = payload.get("tracking_type", "FIXED")
+            tilt = float(payload.get("tilt_deg", 35.0))
+            res = calculate_advanced_pv_with_tracking(installed_capacity_kwp=kwp, annual_ghi_kwh_m2=ghi, tracking_type=tracking, tilt_deg=tilt)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/wind-weibull":
+            kw = float(payload.get("rated_capacity_kw", 2000.0))
+            hub = float(payload.get("hub_height_m", 105.0))
+            wind = float(payload.get("mean_wind_speed_10m_m_s", 4.2))
+            res = calculate_wind_turbine_weibull(rated_capacity_kw=kw, hub_height_m=hub, mean_wind_speed_10m_m_s=wind)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/solar-thermal":
+            area = float(payload.get("collector_area_m2", 60.0))
+            ctype = payload.get("collector_type", "EVACUATED_TUBE")
+            heat = float(payload.get("annual_heat_demand_mwh", 120.0))
+            res = calculate_solar_thermal_heating(collector_area_m2=area, collector_type=ctype, annual_heat_demand_mwh=heat)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/heat-pump-bivalent":
+            load = float(payload.get("design_heating_load_kw", 180.0))
+            biv = float(payload.get("bivalence_temperature_c", -5.0))
+            src = payload.get("source_type", "GROUND_SOURCE")
+            demand = float(payload.get("annual_heating_demand_mwh", 380.0))
+            res = calculate_bivalent_heat_pump(design_heating_load_kw=load, bivalence_temperature_c=biv, source_type=src, annual_heating_demand_mwh=demand)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/wbs-budget":
+            items = payload.get("items", None)
+            cont = float(payload.get("contingency_pct", 5.0))
+            vat = float(payload.get("vat_tax_pct", 21.0))
+            res = calculate_dynamic_wbs_budget(items=items, contingency_pct=cont, vat_tax_pct=vat)
+            self._send_json(res)
+            return
+
         elif parsed.path == "/api/retscreen/v2-full-model":
             res = calculate_retscreen_v2_full_suite(
                 facility_type=payload.get("facility_type", "Hospital"),
@@ -730,6 +777,48 @@ class SamServerHandler(BaseHTTPRequestHandler):
         elif parsed.path == "/api/retscreen/portfolio-rollup":
             fac_list = payload.get("facility_projects", None)
             res = aggregate_enterprise_portfolio(facility_projects=fac_list)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/pv-tracking":
+            kwp = float(payload.get("installed_capacity_kwp", 100.0))
+            ghi = float(payload.get("annual_ghi_kwh_m2", 1130.0))
+            tracking = payload.get("tracking_type", "FIXED")
+            tilt = float(payload.get("tilt_deg", 35.0))
+            res = calculate_advanced_pv_with_tracking(installed_capacity_kwp=kwp, annual_ghi_kwh_m2=ghi, tracking_type=tracking, tilt_deg=tilt)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/wind-weibull":
+            kw = float(payload.get("rated_capacity_kw", 2000.0))
+            hub = float(payload.get("hub_height_m", 105.0))
+            wind = float(payload.get("mean_wind_speed_10m_m_s", 4.2))
+            res = calculate_wind_turbine_weibull(rated_capacity_kw=kw, hub_height_m=hub, mean_wind_speed_10m_m_s=wind)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/solar-thermal":
+            area = float(payload.get("collector_area_m2", 60.0))
+            ctype = payload.get("collector_type", "EVACUATED_TUBE")
+            heat = float(payload.get("annual_heat_demand_mwh", 120.0))
+            res = calculate_solar_thermal_heating(collector_area_m2=area, collector_type=ctype, annual_heat_demand_mwh=heat)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/heat-pump-bivalent":
+            load = float(payload.get("design_heating_load_kw", 180.0))
+            biv = float(payload.get("bivalence_temperature_c", -5.0))
+            src = payload.get("source_type", "GROUND_SOURCE")
+            demand = float(payload.get("annual_heating_demand_mwh", 380.0))
+            res = calculate_bivalent_heat_pump(design_heating_load_kw=load, bivalence_temperature_c=biv, source_type=src, annual_heating_demand_mwh=demand)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/wbs-budget":
+            items = payload.get("items", None)
+            cont = float(payload.get("contingency_pct", 5.0))
+            vat = float(payload.get("vat_tax_pct", 21.0))
+            res = calculate_dynamic_wbs_budget(items=items, contingency_pct=cont, vat_tax_pct=vat)
             self._send_json(res)
             return
 
@@ -1069,6 +1158,48 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retscreen/tree/pv-tracking":
+            kwp = float(payload.get("installed_capacity_kwp", 100.0))
+            ghi = float(payload.get("annual_ghi_kwh_m2", 1130.0))
+            tracking = payload.get("tracking_type", "FIXED")
+            tilt = float(payload.get("tilt_deg", 35.0))
+            res = calculate_advanced_pv_with_tracking(installed_capacity_kwp=kwp, annual_ghi_kwh_m2=ghi, tracking_type=tracking, tilt_deg=tilt)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/wind-weibull":
+            kw = float(payload.get("rated_capacity_kw", 2000.0))
+            hub = float(payload.get("hub_height_m", 105.0))
+            wind = float(payload.get("mean_wind_speed_10m_m_s", 4.2))
+            res = calculate_wind_turbine_weibull(rated_capacity_kw=kw, hub_height_m=hub, mean_wind_speed_10m_m_s=wind)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/solar-thermal":
+            area = float(payload.get("collector_area_m2", 60.0))
+            ctype = payload.get("collector_type", "EVACUATED_TUBE")
+            heat = float(payload.get("annual_heat_demand_mwh", 120.0))
+            res = calculate_solar_thermal_heating(collector_area_m2=area, collector_type=ctype, annual_heat_demand_mwh=heat)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/heat-pump-bivalent":
+            load = float(payload.get("design_heating_load_kw", 180.0))
+            biv = float(payload.get("bivalence_temperature_c", -5.0))
+            src = payload.get("source_type", "GROUND_SOURCE")
+            demand = float(payload.get("annual_heating_demand_mwh", 380.0))
+            res = calculate_bivalent_heat_pump(design_heating_load_kw=load, bivalence_temperature_c=biv, source_type=src, annual_heating_demand_mwh=demand)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/wbs-budget":
+            items = payload.get("items", None)
+            cont = float(payload.get("contingency_pct", 5.0))
+            vat = float(payload.get("vat_tax_pct", 21.0))
+            res = calculate_dynamic_wbs_budget(items=items, contingency_pct=cont, vat_tax_pct=vat)
+            self._send_json(res)
+            return
+
         elif parsed.path == "/api/retscreen/v2-full-model":
             res = calculate_retscreen_v2_full_suite(
                 facility_type=payload.get("facility_type", "Hospital"),
@@ -1363,6 +1494,48 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retscreen/tree/pv-tracking":
+            kwp = float(payload.get("installed_capacity_kwp", 100.0))
+            ghi = float(payload.get("annual_ghi_kwh_m2", 1130.0))
+            tracking = payload.get("tracking_type", "FIXED")
+            tilt = float(payload.get("tilt_deg", 35.0))
+            res = calculate_advanced_pv_with_tracking(installed_capacity_kwp=kwp, annual_ghi_kwh_m2=ghi, tracking_type=tracking, tilt_deg=tilt)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/wind-weibull":
+            kw = float(payload.get("rated_capacity_kw", 2000.0))
+            hub = float(payload.get("hub_height_m", 105.0))
+            wind = float(payload.get("mean_wind_speed_10m_m_s", 4.2))
+            res = calculate_wind_turbine_weibull(rated_capacity_kw=kw, hub_height_m=hub, mean_wind_speed_10m_m_s=wind)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/solar-thermal":
+            area = float(payload.get("collector_area_m2", 60.0))
+            ctype = payload.get("collector_type", "EVACUATED_TUBE")
+            heat = float(payload.get("annual_heat_demand_mwh", 120.0))
+            res = calculate_solar_thermal_heating(collector_area_m2=area, collector_type=ctype, annual_heat_demand_mwh=heat)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/heat-pump-bivalent":
+            load = float(payload.get("design_heating_load_kw", 180.0))
+            biv = float(payload.get("bivalence_temperature_c", -5.0))
+            src = payload.get("source_type", "GROUND_SOURCE")
+            demand = float(payload.get("annual_heating_demand_mwh", 380.0))
+            res = calculate_bivalent_heat_pump(design_heating_load_kw=load, bivalence_temperature_c=biv, source_type=src, annual_heating_demand_mwh=demand)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/wbs-budget":
+            items = payload.get("items", None)
+            cont = float(payload.get("contingency_pct", 5.0))
+            vat = float(payload.get("vat_tax_pct", 21.0))
+            res = calculate_dynamic_wbs_budget(items=items, contingency_pct=cont, vat_tax_pct=vat)
+            self._send_json(res)
+            return
+
         elif parsed.path == "/api/retscreen/v2-full-model":
             res = calculate_retscreen_v2_full_suite(
                 facility_type=payload.get("facility_type", "Hospital"),
@@ -1653,6 +1826,48 @@ class SamServerHandler(BaseHTTPRequestHandler):
         elif parsed.path == "/api/retscreen/portfolio-rollup":
             fac_list = payload.get("facility_projects", None)
             res = aggregate_enterprise_portfolio(facility_projects=fac_list)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/pv-tracking":
+            kwp = float(payload.get("installed_capacity_kwp", 100.0))
+            ghi = float(payload.get("annual_ghi_kwh_m2", 1130.0))
+            tracking = payload.get("tracking_type", "FIXED")
+            tilt = float(payload.get("tilt_deg", 35.0))
+            res = calculate_advanced_pv_with_tracking(installed_capacity_kwp=kwp, annual_ghi_kwh_m2=ghi, tracking_type=tracking, tilt_deg=tilt)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/wind-weibull":
+            kw = float(payload.get("rated_capacity_kw", 2000.0))
+            hub = float(payload.get("hub_height_m", 105.0))
+            wind = float(payload.get("mean_wind_speed_10m_m_s", 4.2))
+            res = calculate_wind_turbine_weibull(rated_capacity_kw=kw, hub_height_m=hub, mean_wind_speed_10m_m_s=wind)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/solar-thermal":
+            area = float(payload.get("collector_area_m2", 60.0))
+            ctype = payload.get("collector_type", "EVACUATED_TUBE")
+            heat = float(payload.get("annual_heat_demand_mwh", 120.0))
+            res = calculate_solar_thermal_heating(collector_area_m2=area, collector_type=ctype, annual_heat_demand_mwh=heat)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/heat-pump-bivalent":
+            load = float(payload.get("design_heating_load_kw", 180.0))
+            biv = float(payload.get("bivalence_temperature_c", -5.0))
+            src = payload.get("source_type", "GROUND_SOURCE")
+            demand = float(payload.get("annual_heating_demand_mwh", 380.0))
+            res = calculate_bivalent_heat_pump(design_heating_load_kw=load, bivalence_temperature_c=biv, source_type=src, annual_heating_demand_mwh=demand)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/wbs-budget":
+            items = payload.get("items", None)
+            cont = float(payload.get("contingency_pct", 5.0))
+            vat = float(payload.get("vat_tax_pct", 21.0))
+            res = calculate_dynamic_wbs_budget(items=items, contingency_pct=cont, vat_tax_pct=vat)
             self._send_json(res)
             return
 
@@ -2000,6 +2215,48 @@ class SamServerHandler(BaseHTTPRequestHandler):
         elif parsed.path == "/api/retscreen/portfolio-rollup":
             fac_list = payload.get("facility_projects", None)
             res = aggregate_enterprise_portfolio(facility_projects=fac_list)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/pv-tracking":
+            kwp = float(payload.get("installed_capacity_kwp", 100.0))
+            ghi = float(payload.get("annual_ghi_kwh_m2", 1130.0))
+            tracking = payload.get("tracking_type", "FIXED")
+            tilt = float(payload.get("tilt_deg", 35.0))
+            res = calculate_advanced_pv_with_tracking(installed_capacity_kwp=kwp, annual_ghi_kwh_m2=ghi, tracking_type=tracking, tilt_deg=tilt)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/wind-weibull":
+            kw = float(payload.get("rated_capacity_kw", 2000.0))
+            hub = float(payload.get("hub_height_m", 105.0))
+            wind = float(payload.get("mean_wind_speed_10m_m_s", 4.2))
+            res = calculate_wind_turbine_weibull(rated_capacity_kw=kw, hub_height_m=hub, mean_wind_speed_10m_m_s=wind)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/solar-thermal":
+            area = float(payload.get("collector_area_m2", 60.0))
+            ctype = payload.get("collector_type", "EVACUATED_TUBE")
+            heat = float(payload.get("annual_heat_demand_mwh", 120.0))
+            res = calculate_solar_thermal_heating(collector_area_m2=area, collector_type=ctype, annual_heat_demand_mwh=heat)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/heat-pump-bivalent":
+            load = float(payload.get("design_heating_load_kw", 180.0))
+            biv = float(payload.get("bivalence_temperature_c", -5.0))
+            src = payload.get("source_type", "GROUND_SOURCE")
+            demand = float(payload.get("annual_heating_demand_mwh", 380.0))
+            res = calculate_bivalent_heat_pump(design_heating_load_kw=load, bivalence_temperature_c=biv, source_type=src, annual_heating_demand_mwh=demand)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/wbs-budget":
+            items = payload.get("items", None)
+            cont = float(payload.get("contingency_pct", 5.0))
+            vat = float(payload.get("vat_tax_pct", 21.0))
+            res = calculate_dynamic_wbs_budget(items=items, contingency_pct=cont, vat_tax_pct=vat)
             self._send_json(res)
             return
 
@@ -2366,6 +2623,48 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retscreen/tree/pv-tracking":
+            kwp = float(payload.get("installed_capacity_kwp", 100.0))
+            ghi = float(payload.get("annual_ghi_kwh_m2", 1130.0))
+            tracking = payload.get("tracking_type", "FIXED")
+            tilt = float(payload.get("tilt_deg", 35.0))
+            res = calculate_advanced_pv_with_tracking(installed_capacity_kwp=kwp, annual_ghi_kwh_m2=ghi, tracking_type=tracking, tilt_deg=tilt)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/wind-weibull":
+            kw = float(payload.get("rated_capacity_kw", 2000.0))
+            hub = float(payload.get("hub_height_m", 105.0))
+            wind = float(payload.get("mean_wind_speed_10m_m_s", 4.2))
+            res = calculate_wind_turbine_weibull(rated_capacity_kw=kw, hub_height_m=hub, mean_wind_speed_10m_m_s=wind)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/solar-thermal":
+            area = float(payload.get("collector_area_m2", 60.0))
+            ctype = payload.get("collector_type", "EVACUATED_TUBE")
+            heat = float(payload.get("annual_heat_demand_mwh", 120.0))
+            res = calculate_solar_thermal_heating(collector_area_m2=area, collector_type=ctype, annual_heat_demand_mwh=heat)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/heat-pump-bivalent":
+            load = float(payload.get("design_heating_load_kw", 180.0))
+            biv = float(payload.get("bivalence_temperature_c", -5.0))
+            src = payload.get("source_type", "GROUND_SOURCE")
+            demand = float(payload.get("annual_heating_demand_mwh", 380.0))
+            res = calculate_bivalent_heat_pump(design_heating_load_kw=load, bivalence_temperature_c=biv, source_type=src, annual_heating_demand_mwh=demand)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/wbs-budget":
+            items = payload.get("items", None)
+            cont = float(payload.get("contingency_pct", 5.0))
+            vat = float(payload.get("vat_tax_pct", 21.0))
+            res = calculate_dynamic_wbs_budget(items=items, contingency_pct=cont, vat_tax_pct=vat)
+            self._send_json(res)
+            return
+
         elif parsed.path == "/api/retscreen/v2-full-model":
             res = calculate_retscreen_v2_full_suite(
                 facility_type=payload.get("facility_type", "Hospital"),
@@ -2709,6 +3008,48 @@ class SamServerHandler(BaseHTTPRequestHandler):
         elif parsed.path == "/api/retscreen/portfolio-rollup":
             fac_list = payload.get("facility_projects", None)
             res = aggregate_enterprise_portfolio(facility_projects=fac_list)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/pv-tracking":
+            kwp = float(payload.get("installed_capacity_kwp", 100.0))
+            ghi = float(payload.get("annual_ghi_kwh_m2", 1130.0))
+            tracking = payload.get("tracking_type", "FIXED")
+            tilt = float(payload.get("tilt_deg", 35.0))
+            res = calculate_advanced_pv_with_tracking(installed_capacity_kwp=kwp, annual_ghi_kwh_m2=ghi, tracking_type=tracking, tilt_deg=tilt)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/wind-weibull":
+            kw = float(payload.get("rated_capacity_kw", 2000.0))
+            hub = float(payload.get("hub_height_m", 105.0))
+            wind = float(payload.get("mean_wind_speed_10m_m_s", 4.2))
+            res = calculate_wind_turbine_weibull(rated_capacity_kw=kw, hub_height_m=hub, mean_wind_speed_10m_m_s=wind)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/solar-thermal":
+            area = float(payload.get("collector_area_m2", 60.0))
+            ctype = payload.get("collector_type", "EVACUATED_TUBE")
+            heat = float(payload.get("annual_heat_demand_mwh", 120.0))
+            res = calculate_solar_thermal_heating(collector_area_m2=area, collector_type=ctype, annual_heat_demand_mwh=heat)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/tree/heat-pump-bivalent":
+            load = float(payload.get("design_heating_load_kw", 180.0))
+            biv = float(payload.get("bivalence_temperature_c", -5.0))
+            src = payload.get("source_type", "GROUND_SOURCE")
+            demand = float(payload.get("annual_heating_demand_mwh", 380.0))
+            res = calculate_bivalent_heat_pump(design_heating_load_kw=load, bivalence_temperature_c=biv, source_type=src, annual_heating_demand_mwh=demand)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/wbs-budget":
+            items = payload.get("items", None)
+            cont = float(payload.get("contingency_pct", 5.0))
+            vat = float(payload.get("vat_tax_pct", 21.0))
+            res = calculate_dynamic_wbs_budget(items=items, contingency_pct=cont, vat_tax_pct=vat)
             self._send_json(res)
             return
 
