@@ -1,0 +1,95 @@
+<UserControl x:Class="AuraEnergy.RETScreen.Wpf.CzechGridArbitrageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             Background="White">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="16">
+            <!-- Header Group -->
+            <Border Background="#E8F5E9" BorderBrush="#81C784" BorderThickness="1" CornerRadius="3" Padding="12" Margin="0,0,0,14">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="Česká Energetická Soustava: PNE 33 3430-1, OTE Spot &amp; ČEPS SVR" FontSize="15" FontWeight="Bold" Foreground="#1B5E20" />
+                        <TextBlock Text="Posouzení zpětných vlivů na síť (PCC), 15minutová spotová arbitráž a podpůrné služby výkonové rovnováhy" Foreground="#555" FontSize="11" Margin="0,2,0,0" />
+                    </StackPanel>
+                    <Button Grid.Column="1" Content="Export CAD / BIM (DXF &amp; IFC)" Background="#2E7D32" Foreground="White" FontWeight="Bold" Padding="12,6" Click="BtnExportCad_Click" />
+                </Grid>
+            </Border>
+
+            <!-- Cards Grid -->
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Left Column: PNE 33 3430-1 & Grid Compliance -->
+                <Border Grid.Column="0" Background="#FAFAFA" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="3" Padding="12" Margin="0,0,8,0">
+                    <StackPanel>
+                        <TextBlock Text="1. Posouzení připojitelnosti dle PNE 33 3430-1" FontWeight="Bold" Foreground="#003366" Margin="0,0,0,8" />
+                        
+                        <TextBlock Text="Distribuční soustava (PDS):" Margin="0,0,0,2" />
+                        <ComboBox SelectedIndex="0" Margin="0,0,0,8">
+                            <ComboBoxItem Content="ČEZ Distribuce, a.s. (22 kV vn)" />
+                            <ComboBoxItem Content="EG.D, a.s. (22 kV vn)" />
+                            <ComboBoxItem Content="PREdistribuce, a.s. (22 kV vn)" />
+                        </ComboBox>
+
+                        <TextBlock Text="Zkratový výkon v předávacím místě Sk'' (MVA):" Margin="0,0,0,2" />
+                        <TextBox Text="150 MVA" Background="#FFF2CC" BorderBrush="#F59E0B" FontWeight="Bold" Padding="4,2" Margin="0,0,0,8" />
+
+                        <TextBlock Text="Zpětné vlivy - Změna napětí dU (%):" Margin="0,0,0,2" />
+                        <TextBox Text="1.42 % (Limit dle PNE je &lt; 2.0 %)" Background="#D9E1F2" BorderBrush="#005A9E" FontWeight="Bold" Padding="4,2" IsReadOnly="True" Margin="0,0,8,0" />
+
+                        <Border Background="#E8F5E9" Padding="6" CornerRadius="3" Margin="0,6,0,0">
+                            <TextBlock Text="STATUS: PŘIPOJITELNÉ BEZ OMEZENÍ VÝKONU (VYHOVUJE)" Foreground="#2E7D32" FontWeight="Bold" FontSize="11" />
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Right Column: OTE Spot Arbitrage & CEPS SVR -->
+                <Border Grid.Column="1" Background="#FAFAFA" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="3" Padding="12" Margin="8,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="2. OTE Spotová Arbitráž a SVR (ČEPS)" FontWeight="Bold" Foreground="#003366" Margin="0,0,0,8" />
+
+                        <TextBlock Text="Režim řízení baterie (BESS EMS):" Margin="0,0,0,2" />
+                        <ComboBox SelectedIndex="0" Margin="0,0,0,8">
+                            <ComboBoxItem Content="Spotová arbitráž OTE + FCR / aFRR" />
+                            <ComboBoxItem Content="Peak-shaving (Snižování rezervované kapacity)" />
+                            <ComboBoxItem Content="Čistá maximalizace vlastní spotřeby FVE" />
+                        </ComboBox>
+
+                        <TextBlock Text="Průměrný roční spread OTE (Kč/MWh):" Margin="0,0,0,2" />
+                        <TextBox Text="2 150 Kč / MWh" Background="#FFF2CC" BorderBrush="#F59E0B" FontWeight="Bold" Padding="4,2" Margin="0,0,0,8" />
+
+                        <TextBlock Text="Roční dodatečný výnos z arbitráže a SVR:" Margin="0,0,0,2" />
+                        <TextBox Text="428 500 Kč / rok" Background="#D9E1F2" BorderBrush="#005A9E" FontWeight="Bold" Padding="4,2" IsReadOnly="True" Margin="0,0,8,0" />
+
+                        <Border Background="#E3F2FD" Padding="6" CornerRadius="3" Margin="0,6,0,0">
+                            <TextBlock Text="AGREGACE FLEXIBILITY: PŘIPRAVENO PRO ČEPS TRH SVR" Foreground="#0277BD" FontWeight="Bold" FontSize="11" />
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- NIS2 Cybersecurity Checklist Banner -->
+            <Border Background="#FFFDE7" BorderBrush="#FFF59D" BorderThickness="1" CornerRadius="3" Padding="12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="Kybernetická bezpečnost energetického areálu (NIS2 &amp; Zákon o KB)" FontWeight="Bold" Foreground="#F57F17" />
+                        <TextBlock Text="Řízení rizik řídicích systémů SCADA, šifrování Modbus TCP/TLS a segmentace technologické sítě dle ISO 27001" Foreground="#666" FontSize="11" />
+                    </StackPanel>
+                    <Button Grid.Column="1" Content="Generovat NIS2 Certifikát" Background="#FBC02D" Foreground="#333" FontWeight="Bold" Padding="10,4" Click="BtnNis2_Click" />
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

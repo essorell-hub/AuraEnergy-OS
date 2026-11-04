@@ -177,6 +177,17 @@
                     </fluent:Button>
                 </fluent:RibbonGroupBox>
             </fluent:RibbonTabItem>
+
+            <!-- TAB 7: ČESKÉ ROZŠÍŘENÍ (NADRÁMEC ORIGINÁLU RETSCREEN) -->
+            <fluent:RibbonTabItem Header="7. ČEPS &amp; PNE Síť (AuraEnergy+)">
+                <fluent:RibbonGroupBox Header="Česká legislativa a sítě">
+                    <fluent:Button Header="PNE 33 3430-1 &amp; SVR" Click="BtnShowGridArbitrage_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="TransmissionTower" Width="32" Height="32" Foreground="#2E7D32" />
+                        </fluent:Button.LargeIcon>
+                    </fluent:Button>
+                </fluent:RibbonGroupBox>
+            </fluent:RibbonTabItem>
         </fluent:Ribbon>
 
         <!-- ================= MAIN WORKSPACE (TREEVIEW + DYNAMIC VIEW SWITCHER + CHARTS) ================= -->
@@ -204,6 +215,7 @@
                             <TreeViewItem Header="Navržená energetická soustava" IsExpanded="True">
                                 <TreeViewItem x:Name="itemPv" Header="FVE Elektrárna (monoSi 250 kWp)" />
                                 <TreeViewItem x:Name="itemHp" Header="Tepelné čerpadlo (Země-Voda 120 kWt)" />
+                                <TreeViewItem x:Name="itemGrid" Header="Připojení k síti PNE &amp; Arbitráž OTE" />
                                 <TreeViewItem Header="BESS Bateriové úložiště (300 kWh)" />
                             </TreeViewItem>
                             <TreeViewItem x:Name="itemWbs" Header="Položkový rozpočet (WBS CAPEX)" />
@@ -264,8 +276,14 @@
                     <!-- VIEW 2: FVE SUBSYSTÉM -->
                     <local:PvSystemView x:Name="viewPv" Visibility="Collapsed" />
 
-                    <!-- VIEW 3: WBS ROZPOČET -->
+                    <!-- VIEW 3: TEPELNÉ ČERPADLO SUBSYSTÉM -->
+                    <local:HeatPumpView x:Name="viewHp" Visibility="Collapsed" />
+
+                    <!-- VIEW 4: WBS ROZPOČET -->
                     <local:CostWbsView x:Name="viewWbs" Visibility="Collapsed" />
+
+                    <!-- VIEW 5: PNE 33 3430-1 & ARBITRÁŽ (AURA+) -->
+                    <local:CzechGridArbitrageView x:Name="viewGridArbitrage" Visibility="Collapsed" />
                 </Grid>
 
                 <!-- DOLE: NATIVNÍ GRAF KUMULATIVNÍCH TOKŮ A TORNADO GRAF (LiveCharts) -->

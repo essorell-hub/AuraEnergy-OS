@@ -57,3 +57,7 @@ d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\CostWbsView.
 d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\ProductBrowserDialog.g.cs
 d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\PvSystemView.g.cs
 d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\GeneratedInternalTypeHelper.g.cs
+d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\CzechGridArbitrageView.baml
+d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\HeatPumpView.baml
+d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\CzechGridArbitrageView.g.cs
+d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\HeatPumpView.g.cs

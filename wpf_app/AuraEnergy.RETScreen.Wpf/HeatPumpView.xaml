@@ -1,0 +1,89 @@
+<UserControl x:Class="AuraEnergy.RETScreen.Wpf.HeatPumpView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             Background="White">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="16">
+            <!-- Header Group -->
+            <Border Background="#FFEBEE" BorderBrush="#EF9A9A" BorderThickness="1" CornerRadius="3" Padding="12" Margin="0,0,0,14">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="Průmyslová a areálová tepelná čerpadla (Země-Voda / Vzduch-Voda)" FontSize="15" FontWeight="Bold" Foreground="#B71C1C" />
+                        <TextBlock Text="Modelace bivalentního bodu, topného faktoru SCOP dle EN 14825 a náhrady zemního plynu" Foreground="#555" FontSize="11" Margin="0,2,0,0" />
+                    </StackPanel>
+                    <Button Grid.Column="1" Content="Zvolit čerpadlo z 3 288 modelů" Background="#C62828" Foreground="White" FontWeight="Bold" Padding="12,6" Click="BtnBrowseHp_Click" />
+                </Grid>
+            </Border>
+
+            <!-- Parameters Grid -->
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Left Column -->
+                <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                    <TextBlock Text="Model tepelného čerpadla:" FontWeight="Bold" Margin="0,0,0,4" />
+                    <TextBox x:Name="txtHpModel" Text="NIBE F1345-60 kW (Země-Voda)" Background="#FFF2CC" BorderBrush="#F59E0B" FontWeight="Bold" Padding="6,4" IsReadOnly="True" Margin="0,0,0,10" />
+
+                    <TextBlock Text="Počet kaskádních jednotek (ks):" FontWeight="Bold" Margin="0,0,0,4" />
+                    <TextBox x:Name="txtHpCount" Text="2" Background="#FFF2CC" BorderBrush="#F59E0B" FontWeight="Bold" Padding="6,4" TextChanged="TxtHpParam_TextChanged" Margin="0,0,0,10" />
+
+                    <TextBlock Text="Celkový topný výkon soustavy (kWt):" FontWeight="Bold" Margin="0,0,0,4" />
+                    <TextBox x:Name="txtHpCapacity" Text="120.0 kWt" Background="#D9E1F2" BorderBrush="#005A9E" FontWeight="Bold" Padding="6,4" IsReadOnly="True" Margin="0,0,0,10" />
+                </StackPanel>
+
+                <!-- Right Column -->
+                <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                    <TextBlock Text="Bivalentní teplota (°C):" FontWeight="Bold" Margin="0,0,0,4" />
+                    <TextBox x:Name="txtBivalentTemp" Text="-5.0 °C" Background="#FFF2CC" BorderBrush="#F59E0B" FontWeight="Bold" Padding="6,4" TextChanged="TxtHpParam_TextChanged" Margin="0,0,0,10" />
+
+                    <TextBlock Text="Sezónní topný faktor SCOP (EN 14825):" FontWeight="Bold" Margin="0,0,0,4" />
+                    <TextBox x:Name="txtScop" Text="4.1" Background="#FFF2CC" BorderBrush="#F59E0B" FontWeight="Bold" Padding="6,4" TextChanged="TxtHpParam_TextChanged" Margin="0,0,0,10" />
+
+                    <TextBlock Text="Záložní bivalentní zdroj:" FontWeight="Bold" Margin="0,0,0,4" />
+                    <ComboBox x:Name="cmbBackup" SelectedIndex="0" Padding="6,4" Margin="0,0,0,10">
+                        <ComboBoxItem Content="Kondenzační plynový kotel (Zemní plyn)" />
+                        <ComboBoxItem Content="Elektrokotel (Přímootopný záložní dotop)" />
+                        <ComboBoxItem Content="Horkovodní výměník CZT" />
+                    </ComboBox>
+                </StackPanel>
+            </Grid>
+
+            <!-- Energy & Gas Savings Output Summary -->
+            <Border Background="#F9FAFB" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="3" Padding="14">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Roční dodávka tepla z TČ:" Foreground="#6B7280" FontSize="11" />
+                        <TextBlock x:Name="txtHeatSupply" Text="348 000 kWh/rok" FontSize="18" FontWeight="Bold" Foreground="#B71C1C" Margin="0,4,0,0" />
+                        <TextBlock Text="Pokrytí potřeby tepla: 82.5 %" FontSize="10" Foreground="#9CA3AF" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="Úspora zemního plynu:" Foreground="#6B7280" FontSize="11" />
+                        <TextBlock x:Name="txtGasSavings" Text="38 600 m³ / rok" FontSize="18" FontWeight="Bold" Foreground="#107C10" Margin="0,4,0,0" />
+                        <TextBlock Text="Úspora nákladů na plyn: 849 000 Kč/r" FontSize="10" Foreground="#9CA3AF" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Redukce emisí CO₂ z plynu:" Foreground="#6B7280" FontSize="11" />
+                        <TextBlock x:Name="txtGhgSaved" Text="78.0 t CO₂ / rok" FontSize="18" FontWeight="Bold" Foreground="#059669" Margin="0,4,0,0" />
+                        <TextBlock Text="Ekvivalent: 17 vyřazených aut" FontSize="10" Foreground="#9CA3AF" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

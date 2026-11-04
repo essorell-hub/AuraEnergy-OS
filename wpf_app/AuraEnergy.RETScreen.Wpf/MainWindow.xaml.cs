@@ -123,25 +123,61 @@ namespace AuraEnergy.RETScreen.Wpf
                 txtViewTitle.Text = header;
 
                 // Dynamické přepínání kontejnerů formulářů
-                if (viewClimate != null && viewPv != null && viewWbs != null)
+                if (viewClimate != null && viewPv != null && viewHp != null && viewWbs != null && viewGridArbitrage != null)
                 {
                     viewClimate.Visibility = Visibility.Collapsed;
                     viewPv.Visibility = Visibility.Collapsed;
+                    viewHp.Visibility = Visibility.Collapsed;
                     viewWbs.Visibility = Visibility.Collapsed;
+                    viewGridArbitrage.Visibility = Visibility.Collapsed;
 
                     if (header.Contains("FVE") || header.Contains("Fotovoltaika"))
                     {
                         viewPv.Visibility = Visibility.Visible;
                     }
+                    else if (header.Contains("čerpadlo") || header.Contains("TČ") || header.Contains("Heat Pump"))
+                    {
+                        viewHp.Visibility = Visibility.Visible;
+                    }
                     else if (header.Contains("WBS") || header.Contains("rozpočet") || header.Contains("Rozpočet"))
                     {
                         viewWbs.Visibility = Visibility.Visible;
+                    }
+                    else if (header.Contains("PNE") || header.Contains("Arbitráž") || header.Contains("SVR") || header.Contains("síti"))
+                    {
+                        viewGridArbitrage.Visibility = Visibility.Visible;
                     }
                     else
                     {
                         viewClimate.Visibility = Visibility.Visible;
                     }
                 }
+            }
+        }
+
+        private void BtnShowGridArbitrage_Click(object sender, RoutedEventArgs e)
+        {
+            if (viewClimate != null && viewPv != null && viewHp != null && viewWbs != null && viewGridArbitrage != null)
+            {
+                viewClimate.Visibility = Visibility.Collapsed;
+                viewPv.Visibility = Visibility.Collapsed;
+                viewHp.Visibility = Visibility.Collapsed;
+                viewWbs.Visibility = Visibility.Collapsed;
+                viewGridArbitrage.Visibility = Visibility.Visible;
+                txtViewTitle.Text = "Připojení k síti PNE 33 3430-1 & Arbitráž OTE / ČEPS";
+            }
+        }
+
+        private void BtnAddHp_Click(object sender, RoutedEventArgs e)
+        {
+            if (viewClimate != null && viewPv != null && viewHp != null && viewWbs != null && viewGridArbitrage != null)
+            {
+                viewClimate.Visibility = Visibility.Collapsed;
+                viewPv.Visibility = Visibility.Collapsed;
+                viewHp.Visibility = Visibility.Visible;
+                viewWbs.Visibility = Visibility.Collapsed;
+                viewGridArbitrage.Visibility = Visibility.Collapsed;
+                txtViewTitle.Text = "Tepelné čerpadlo (Země-Voda 120 kWt)";
             }
         }
 
@@ -329,11 +365,6 @@ namespace AuraEnergy.RETScreen.Wpf
         private void BtnAddWind_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Větrná turbína:\nZvoleno: Vestas V90 2.0 MW (Hub 80m).\nVýpočet křivky Weibull: Odhad 4 120 MWh/rok.", "OZE - Větrná Energetika", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private void BtnAddHp_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Tepelné čerpadlo:\nZvoleno: NIBE F1345 120 kWt (Země-Voda).\nBivalentní bod: -5 °C | Sezónní SCOP: 4.1.", "HVAC - Tepelná Čerpadla", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void BtnAddSolarThermal_Click(object sender, RoutedEventArgs e)

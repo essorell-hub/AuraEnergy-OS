@@ -10,11 +10,11 @@ none
 false
 TRACE;RELEASE;NET;NET8_0;NETCOREAPP
 d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\App.xaml
-4762580232
+6-1479773250
 
-8-958895020
+10-1859741351
 2232080664617
-CostWbsView.xaml;MainWindow.xaml;ProductBrowserDialog.xaml;PvSystemView.xaml;
+CostWbsView.xaml;CzechGridArbitrageView.xaml;HeatPumpView.xaml;MainWindow.xaml;ProductBrowserDialog.xaml;PvSystemView.xaml;
 
 False
 
