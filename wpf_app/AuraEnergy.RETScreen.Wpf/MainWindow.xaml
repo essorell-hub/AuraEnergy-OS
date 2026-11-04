@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fluent="urn:fluent-ribbon"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
         xmlns:local="clr-namespace:AuraEnergy.RETScreen.Wpf"
         mc:Ignorable="d"
@@ -34,8 +35,16 @@
                             <StackPanel Margin="20">
                                 <TextBlock Text="AuraEnergy RETScreen Expert Desktop" FontSize="20" FontWeight="Bold" Foreground="#003366" />
                                 <TextBlock Text="Nativní Windows .NET 8 WPF edice s podporou .retx balíčků a 10 187 certifikovaných produktů." Margin="0,5,0,20" />
-                                <fluent:Button x:Name="btnOpenRetx" Header="Otevřít oficiální RETScreen soubor (.retx)" Click="BtnOpenRetx_Click" Width="320" HorizontalAlignment="Left" />
-                                <fluent:Button x:Name="btnSaveRetx" Header="Uložit jako RETScreen projekt (.retx)" Click="BtnSaveRetx_Click" Width="320" HorizontalAlignment="Left" Margin="0,10,0,0" />
+                                <fluent:Button x:Name="btnOpenRetx" Header="Otevřít oficiální RETScreen soubor (.retx)" Click="BtnOpenRetx_Click" Width="320" HorizontalAlignment="Left">
+                                    <fluent:Button.Icon>
+                                        <iconPacks:PackIconMaterial Kind="FolderOpen" Width="20" Height="20" Foreground="#003366" />
+                                    </fluent:Button.Icon>
+                                </fluent:Button>
+                                <fluent:Button x:Name="btnSaveRetx" Header="Uložit jako RETScreen projekt (.retx)" Click="BtnSaveRetx_Click" Width="320" HorizontalAlignment="Left" Margin="0,10,0,0">
+                                    <fluent:Button.Icon>
+                                        <iconPacks:PackIconMaterial Kind="ContentSave" Width="20" Height="20" Foreground="#003366" />
+                                    </fluent:Button.Icon>
+                                </fluent:Button>
                             </StackPanel>
                         </fluent:BackstageTabItem>
                     </fluent:BackstageTabControl>
@@ -45,65 +54,144 @@
             <!-- TAB 1: FACILITY (LOKALITA) -->
             <fluent:RibbonTabItem Header="1. Lokalita (Facility)">
                 <fluent:RibbonGroupBox Header="Správa areálu">
-                    <fluent:Button Header="Nový Areál"  />
-                    <fluent:Button x:Name="btnSave" Header="Uložit" Click="BtnSave_Click" />
+                    <fluent:Button Header="Nový Areál" Click="BtnNewFacility_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="Domain" Width="32" Height="32" Foreground="#005A9E" />
+                        </fluent:Button.LargeIcon>
+                    </fluent:Button>
+                    <fluent:Button x:Name="btnSave" Header="Uložit" Click="BtnSave_Click">
+                        <fluent:Button.Icon>
+                            <iconPacks:PackIconMaterial Kind="ContentSave" Width="16" Height="16" Foreground="#107C10" />
+                        </fluent:Button.Icon>
+                    </fluent:Button>
                 </fluent:RibbonGroupBox>
                 <fluent:RibbonGroupBox Header="Klimatická data NASA">
-                    <fluent:Button Header="Vyhledat Stanici" Click="BtnSearchStation_Click" />
-                    <fluent:Button Header="Stáhnout NASA POWER" Click="BtnNasaPower_Click" />
+                    <fluent:Button Header="Vyhledat Stanici" Click="BtnSearchStation_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="MapMarkerRadius" Width="32" Height="32" Foreground="#D83B01" />
+                        </fluent:Button.LargeIcon>
+                    </fluent:Button>
+                    <fluent:Button Header="Stáhnout NASA POWER" Click="BtnNasaPower_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="SatelliteVariant" Width="32" Height="32" Foreground="#0078D4" />
+                        </fluent:Button.LargeIcon>
+                    </fluent:Button>
                 </fluent:RibbonGroupBox>
             </fluent:RibbonTabItem>
 
             <!-- TAB 2: ENERGY (ENERGETICKÝ MODEL) -->
             <fluent:RibbonTabItem Header="2. Energie (Energy Model)">
                 <fluent:RibbonGroupBox Header="Přidat OZE Subsystém">
-                    <fluent:Button Header="Fotovoltaika (FVE)" Click="BtnAddPv_Click" />
-                    <fluent:Button Header="Větrná turbína" Click="BtnAddWind_Click" />
-                    <fluent:Button Header="Tepelné čerpadlo" Click="BtnAddHp_Click" />
-                    <fluent:Button Header="Solární ohřev TUV" Click="BtnAddSolarThermal_Click" />
+                    <fluent:Button Header="Fotovoltaika (FVE)" Click="BtnAddPv_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="SolarPower" Width="32" Height="32" Foreground="#FF8C00" />
+                        </fluent:Button.LargeIcon>
+                    </fluent:Button>
+                    <fluent:Button Header="Větrná turbína" Click="BtnAddWind_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="WindTurbine" Width="32" Height="32" Foreground="#00B294" />
+                        </fluent:Button.LargeIcon>
+                    </fluent:Button>
+                    <fluent:Button Header="Tepelné čerpadlo" Click="BtnAddHp_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="HeatPump" Width="32" Height="32" Foreground="#E81123" />
+                        </fluent:Button.LargeIcon>
+                    </fluent:Button>
+                    <fluent:Button Header="Solární ohřev TUV" Click="BtnAddSolarThermal_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="WaterBoiler" Width="32" Height="32" Foreground="#B146C2" />
+                        </fluent:Button.LargeIcon>
+                    </fluent:Button>
                 </fluent:RibbonGroupBox>
                 <fluent:RibbonGroupBox Header="Energetické audity">
-                    <fluent:Button Header="Osvětlení &amp; LED" />
-                    <fluent:Button Header="Zateplení obálky" />
+                    <fluent:Button Header="Osvětlení &amp; LED" Click="BtnAuditLighting_Click">
+                        <fluent:Button.Icon>
+                            <iconPacks:PackIconMaterial Kind="LightbulbOn" Width="16" Height="16" Foreground="#FFBA08" />
+                        </fluent:Button.Icon>
+                    </fluent:Button>
+                    <fluent:Button Header="Zateplení obálky" Click="BtnAuditEnvelope_Click">
+                        <fluent:Button.Icon>
+                            <iconPacks:PackIconMaterial Kind="HomeThermometer" Width="16" Height="16" Foreground="#005A9E" />
+                        </fluent:Button.Icon>
+                    </fluent:Button>
                 </fluent:RibbonGroupBox>
             </fluent:RibbonTabItem>
 
-            <!-- TAB 3: COST (NÁKLADY &amp; ROZPOČET WBS) -->
+            <!-- TAB 3: COST (NÁKLADY & ROZPOČET WBS) -->
             <fluent:RibbonTabItem Header="3. Náklady (Cost WBS)">
                 <fluent:RibbonGroupBox Header="Položkový rozpočet">
-                    <fluent:Button Header="Přidat WBS položku" Click="BtnAddWbsItem_Click" />
-                    <fluent:Button Header="Přepočet DPH a rezerv" Click="BtnRecalcWbs_Click" />
+                    <fluent:Button Header="Přidat WBS položku" Click="BtnAddWbsItem_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="PlaylistPlus" Width="32" Height="32" Foreground="#0078D4" />
+                        </fluent:Button.LargeIcon>
+                    </fluent:Button>
+                    <fluent:Button Header="Přepočet DPH a rezerv" Click="BtnRecalcWbs_Click">
+                        <fluent:Button.Icon>
+                            <iconPacks:PackIconMaterial Kind="Calculator" Width="16" Height="16" Foreground="#107C10" />
+                        </fluent:Button.Icon>
+                    </fluent:Button>
                 </fluent:RibbonGroupBox>
                 <fluent:RibbonGroupBox Header="Dotace &amp; Podpora">
-                    <fluent:Button Header="Uplatnit NZÚ / OP TAK" />
+                    <fluent:Button Header="Uplatnit NZÚ / OP TAK" Click="BtnGrants_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="Handshake" Width="32" Height="32" Foreground="#107C10" />
+                        </fluent:Button.LargeIcon>
+                    </fluent:Button>
                 </fluent:RibbonGroupBox>
             </fluent:RibbonTabItem>
 
             <!-- TAB 4: EMISSION (EMISE GHG) -->
             <fluent:RibbonTabItem Header="4. Emise (GHG Analysis)">
                 <fluent:RibbonGroupBox Header="Kalkulace emisí">
-                    <fluent:Button Header="Emisní faktor sítě ČR" />
-                    <fluent:Button Header="Ekologické ekvivalenty" />
+                    <fluent:Button Header="Emisní faktor sítě ČR" Click="BtnGridEmission_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="Factory" Width="32" Height="32" Foreground="#7A7574" />
+                        </fluent:Button.LargeIcon>
+                    </fluent:Button>
+                    <fluent:Button Header="Ekologické ekvivalenty" Click="BtnGhgEquiv_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="Tree" Width="32" Height="32" Foreground="#107C10" />
+                        </fluent:Button.LargeIcon>
+                    </fluent:Button>
                 </fluent:RibbonGroupBox>
             </fluent:RibbonTabItem>
 
-            <!-- TAB 5: FINANCIAL (FINANČNÍ ANALÝZA &amp; RIZIKO) -->
+            <!-- TAB 5: FINANCIAL (FINANČNÍ ANALÝZA & RIZIKO) -->
             <fluent:RibbonTabItem Header="5. Finance &amp; Riziko (Financial &amp; Risk)">
                 <fluent:RibbonGroupBox Header="Analýza návratnosti">
-                    <fluent:Button x:Name="btnCalculate" Header="Spustit finanční kalkulaci" Click="BtnCalculate_Click" />
-                    <fluent:Button Header="Export Manažerský PDF" Click="BtnExportPdf_Click" />
+                    <fluent:Button x:Name="btnCalculate" Header="Přepočítat model (IRR / NPV)" Click="BtnCalculate_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="CashMultiple" Width="32" Height="32" Foreground="#107C10" />
+                        </fluent:Button.LargeIcon>
+                    </fluent:Button>
+                    <fluent:Button Header="Export Manažerský PDF" Click="BtnExportPdf_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="FilePdfBox" Width="32" Height="32" Foreground="#D83B01" />
+                        </fluent:Button.LargeIcon>
+                    </fluent:Button>
                 </fluent:RibbonGroupBox>
                 <fluent:RibbonGroupBox Header="Analýza rizik">
-                    <fluent:Button Header="Tornado Chart (±20 %)" Click="BtnTornado_Click" />
-                    <fluent:Button Header="Monte Carlo Simulace" />
+                    <fluent:Button Header="Tornado Chart (±20 %)" Click="BtnTornado_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="WeatherTornado" Width="32" Height="32" Foreground="#E81123" />
+                        </fluent:Button.LargeIcon>
+                    </fluent:Button>
                 </fluent:RibbonGroupBox>
             </fluent:RibbonTabItem>
 
-            <!-- TAB 6: BENCHMARK &amp; TOOLS -->
+            <!-- TAB 6: BENCHMARK & TOOLS -->
             <fluent:RibbonTabItem Header="6. Benchmark &amp; VEA">
                 <fluent:RibbonGroupBox Header="Hodnocení EUI">
-                    <fluent:Button Header="5-Star Rating" />
-                    <fluent:Button Header="Dekarbonizace 2030" />
+                    <fluent:Button Header="5-Star Rating" Click="BtnStarRating_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="StarCircle" Width="32" Height="32" Foreground="#FFBA08" />
+                        </fluent:Button.LargeIcon>
+                    </fluent:Button>
+                    <fluent:Button Header="Dekarbonizace 2030" Click="BtnDecarb2030_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="Target" Width="32" Height="32" Foreground="#0078D4" />
+                        </fluent:Button.LargeIcon>
+                    </fluent:Button>
                 </fluent:RibbonGroupBox>
             </fluent:RibbonTabItem>
         </fluent:Ribbon>

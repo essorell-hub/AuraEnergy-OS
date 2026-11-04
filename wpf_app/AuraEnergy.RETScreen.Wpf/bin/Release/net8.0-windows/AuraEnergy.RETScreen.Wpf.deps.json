@@ -10,6 +10,7 @@
         "dependencies": {
           "Fluent.Ribbon": "11.0.2",
           "LiveChartsCore.SkiaSharpView.WPF": "2.0.5",
+          "MahApps.Metro.IconPacks.Material": "6.2.1",
           "System.Data.SQLite.Core": "1.0.119"
         },
         "runtime": {
@@ -111,6 +112,28 @@
           "lib/net8.0-windows7.0/LiveChartsCore.SkiaSharpView.WPF.dll": {
             "assemblyVersion": "2.0.5.0",
             "fileVersion": "2.0.5.0"
+          }
+        }
+      },
+      "MahApps.Metro.IconPacks.Core/6.2.1": {
+        "dependencies": {
+          "System.Text.Json": "8.0.5"
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/MahApps.Metro.IconPacks.Core.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.2.1.0"
+          }
+        }
+      },
+      "MahApps.Metro.IconPacks.Material/6.2.1": {
+        "dependencies": {
+          "MahApps.Metro.IconPacks.Core": "6.2.1"
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/MahApps.Metro.IconPacks.Material.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.2.1.0"
           }
         }
       },
@@ -317,6 +340,20 @@
       "sha512": "sha512-CffAGQ6VjBAfmrLJ0/dUGNR9hZDhEfw4Z9JSTUVjc+vRQBYI+i/AmJuN2BMGI1pDI2n9y1cLSk5vAnuuF8V/qw==",
       "path": "livechartscore.skiasharpview.wpf/2.0.5",
       "hashPath": "livechartscore.skiasharpview.wpf.2.0.5.nupkg.sha512"
+    },
+    "MahApps.Metro.IconPacks.Core/6.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ySAyax37C045Ef1ufN33yQjn3qPM1MuQLgKdxZKYUAl2uZaIrn9wCeBNvfG46QPNRvBFLR6gVKTs6O3o81LNhQ==",
+      "path": "mahapps.metro.iconpacks.core/6.2.1",
+      "hashPath": "mahapps.metro.iconpacks.core.6.2.1.nupkg.sha512"
+    },
+    "MahApps.Metro.IconPacks.Material/6.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-DcNQIsJLAmuzlpXdD2hQtMV8IzLRHsxFBn9+nHDLAsYs8duTBTycpNpQitkzuNYH0o+sgIbefCSp3jDUu9hIiQ==",
+      "path": "mahapps.metro.iconpacks.material/6.2.1",
+      "hashPath": "mahapps.metro.iconpacks.material.6.2.1.nupkg.sha512"
     },
     "Microsoft.Xaml.Behaviors.Wpf/1.1.135": {
       "type": "package",

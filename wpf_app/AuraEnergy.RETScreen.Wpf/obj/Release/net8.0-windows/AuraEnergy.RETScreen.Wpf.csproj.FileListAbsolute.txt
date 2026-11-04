@@ -48,3 +48,5 @@ d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\refint\AuraE
 d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\AuraEnergy.RETScreen.Wpf.pdb
 d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\AuraEnergy.RETScreen.Wpf.genruntimeconfig.cache
 d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\obj\Release\net8.0-windows\ref\AuraEnergy.RETScreen.Wpf.dll
+d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\bin\Release\net8.0-windows\MahApps.Metro.IconPacks.Core.dll
+d:\REST\wpf_app\AuraEnergy.RETScreen.Wpf\bin\Release\net8.0-windows\MahApps.Metro.IconPacks.Material.dll

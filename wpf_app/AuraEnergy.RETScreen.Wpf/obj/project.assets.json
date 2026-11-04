@@ -149,6 +149,44 @@
           "Microsoft.WindowsDesktop.App.WPF"
         ]
       },
+      "MahApps.Metro.IconPacks.Core/6.2.1": {
+        "type": "package",
+        "dependencies": {
+          "System.Text.Json": "8.0.5"
+        },
+        "compile": {
+          "lib/net8.0-windows7.0/MahApps.Metro.IconPacks.Core.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/MahApps.Metro.IconPacks.Core.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WPF"
+        ]
+      },
+      "MahApps.Metro.IconPacks.Material/6.2.1": {
+        "type": "package",
+        "dependencies": {
+          "MahApps.Metro.IconPacks.Core": "6.2.1"
+        },
+        "compile": {
+          "lib/net8.0-windows7.0/MahApps.Metro.IconPacks.Material.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/MahApps.Metro.IconPacks.Material.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WPF"
+        ]
+      },
       "Microsoft.Xaml.Behaviors.Wpf/1.1.135": {
         "type": "package",
         "compile": {
@@ -542,6 +580,46 @@
         "livechartscore.skiasharpview.wpf.nuspec"
       ]
     },
+    "MahApps.Metro.IconPacks.Core/6.2.1": {
+      "sha512": "ySAyax37C045Ef1ufN33yQjn3qPM1MuQLgKdxZKYUAl2uZaIrn9wCeBNvfG46QPNRvBFLR6gVKTs6O3o81LNhQ==",
+      "type": "package",
+      "path": "mahapps.metro.iconpacks.core/6.2.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net462/MahApps.Metro.IconPacks.Core.dll",
+        "lib/net462/MahApps.Metro.IconPacks.Core.xml",
+        "lib/net47/MahApps.Metro.IconPacks.Core.dll",
+        "lib/net47/MahApps.Metro.IconPacks.Core.xml",
+        "lib/net6.0-windows7.0/MahApps.Metro.IconPacks.Core.dll",
+        "lib/net6.0-windows7.0/MahApps.Metro.IconPacks.Core.xml",
+        "lib/net8.0-windows7.0/MahApps.Metro.IconPacks.Core.dll",
+        "lib/net8.0-windows7.0/MahApps.Metro.IconPacks.Core.xml",
+        "logo_small.png",
+        "mahapps.metro.iconpacks.core.6.2.1.nupkg.sha512",
+        "mahapps.metro.iconpacks.core.nuspec"
+      ]
+    },
+    "MahApps.Metro.IconPacks.Material/6.2.1": {
+      "sha512": "DcNQIsJLAmuzlpXdD2hQtMV8IzLRHsxFBn9+nHDLAsYs8duTBTycpNpQitkzuNYH0o+sgIbefCSp3jDUu9hIiQ==",
+      "type": "package",
+      "path": "mahapps.metro.iconpacks.material/6.2.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net462/MahApps.Metro.IconPacks.Material.dll",
+        "lib/net462/MahApps.Metro.IconPacks.Material.xml",
+        "lib/net47/MahApps.Metro.IconPacks.Material.dll",
+        "lib/net47/MahApps.Metro.IconPacks.Material.xml",
+        "lib/net6.0-windows7.0/MahApps.Metro.IconPacks.Material.dll",
+        "lib/net6.0-windows7.0/MahApps.Metro.IconPacks.Material.xml",
+        "lib/net8.0-windows7.0/MahApps.Metro.IconPacks.Material.dll",
+        "lib/net8.0-windows7.0/MahApps.Metro.IconPacks.Material.xml",
+        "logo_small.png",
+        "mahapps.metro.iconpacks.material.6.2.1.nupkg.sha512",
+        "mahapps.metro.iconpacks.material.nuspec"
+      ]
+    },
     "Microsoft.Xaml.Behaviors.Wpf/1.1.135": {
       "sha512": "r8qBEXmQfORso2+MVHnt8PSH4761zJ0SIxgQTSEDVLU97EN2FZdG6/ZCYUPhQy+OrPKgnpYBCAs3PS6Bs7wRsg==",
       "type": "package",
@@ -878,6 +956,7 @@
     "net8.0-windows7.0": [
       "Fluent.Ribbon >= 11.0.2",
       "LiveChartsCore.SkiaSharpView.WPF >= 2.0.5",
+      "MahApps.Metro.IconPacks.Material >= 6.2.1",
       "System.Data.SQLite.Core >= 1.0.119"
     ]
   },
@@ -930,6 +1009,10 @@
           "LiveChartsCore.SkiaSharpView.WPF": {
             "target": "Package",
             "version": "[2.0.5, )"
+          },
+          "MahApps.Metro.IconPacks.Material": {
+            "target": "Package",
+            "version": "[6.2.1, )"
           },
           "System.Data.SQLite.Core": {
             "target": "Package",

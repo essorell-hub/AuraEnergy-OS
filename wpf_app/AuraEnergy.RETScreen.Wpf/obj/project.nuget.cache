@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "UE+RywuHRvQ=",
+  "dgSpecHash": "MStJU0ZJfLc=",
   "success": true,
   "projectFilePath": "d:\\REST\\wpf_app\\AuraEnergy.RETScreen.Wpf\\AuraEnergy.RETScreen.Wpf.csproj",
   "expectedPackageFiles": [
@@ -12,6 +12,8 @@
     "C:\\Users\\Martin\\.nuget\\packages\\livechartscore\\2.0.5\\livechartscore.2.0.5.nupkg.sha512",
     "C:\\Users\\Martin\\.nuget\\packages\\livechartscore.skiasharpview\\2.0.5\\livechartscore.skiasharpview.2.0.5.nupkg.sha512",
     "C:\\Users\\Martin\\.nuget\\packages\\livechartscore.skiasharpview.wpf\\2.0.5\\livechartscore.skiasharpview.wpf.2.0.5.nupkg.sha512",
+    "C:\\Users\\Martin\\.nuget\\packages\\mahapps.metro.iconpacks.core\\6.2.1\\mahapps.metro.iconpacks.core.6.2.1.nupkg.sha512",
+    "C:\\Users\\Martin\\.nuget\\packages\\mahapps.metro.iconpacks.material\\6.2.1\\mahapps.metro.iconpacks.material.6.2.1.nupkg.sha512",
     "C:\\Users\\Martin\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.135\\microsoft.xaml.behaviors.wpf.1.1.135.nupkg.sha512",
     "C:\\Users\\Martin\\.nuget\\packages\\opentk\\3.3.1\\opentk.3.3.1.nupkg.sha512",
     "C:\\Users\\Martin\\.nuget\\packages\\opentk.glwpfcontrol\\3.3.0\\opentk.glwpfcontrol.3.3.0.nupkg.sha512",
