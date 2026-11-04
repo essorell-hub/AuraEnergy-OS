@@ -39,6 +39,7 @@ from backend.core.nasa_gis_location_engine import fetch_nasa_power_climate_data,
 from backend.core.retscreen_end_use_loads import calculate_detailed_end_use_loads, generate_cumulative_cash_flow_series
 from backend.core.retx_parser_engine import RetxProjectPackage, export_new_retx_package
 from backend.core.retscreen_climate_stations import search_climate_stations
+from backend.core.retscreen_full_model_v2 import calculate_retscreen_v2_full_suite
 
 PORT = 8080
 FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "frontend")
@@ -425,6 +426,23 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retscreen/v2-full-model":
+            res = calculate_retscreen_v2_full_suite(
+                facility_type=payload.get("facility_type", "Hospital"),
+                floor_area_m2=float(payload.get("floor_area_m2", 8500.0)),
+                occupancy_count=int(payload.get("occupancy_count", 280)),
+                electricity_rate_eur_kwh=float(payload.get("electricity_rate_eur_kwh", 0.242)),
+                natural_gas_rate_eur_m3=float(payload.get("natural_gas_rate_eur_m3", 0.487)),
+                proposed_pv_capacity_kwp=float(payload.get("proposed_pv_capacity_kwp", 250.0)),
+                cost_heating_system_eur=float(payload.get("cost_heating_system_eur", 115668.0)),
+                cost_ventilation_vzt_eur=float(payload.get("cost_ventilation_vzt_eur", 489000.0)),
+                inflation_rate_pct=float(payload.get("inflation_rate_pct", 2.0)),
+                discount_rate_pct=float(payload.get("discount_rate_pct", 3.0)),
+                tax_rate_pct=float(payload.get("tax_rate_pct", 30.0))
+            )
+            self._send_json(res)
+            return
+
         elif parsed.path == "/api/retx/open-file":
             filepath = payload.get("filepath")
             if not filepath or not os.path.exists(filepath):
@@ -712,6 +730,23 @@ class SamServerHandler(BaseHTTPRequestHandler):
         elif parsed.path == "/api/retscreen/portfolio-rollup":
             fac_list = payload.get("facility_projects", None)
             res = aggregate_enterprise_portfolio(facility_projects=fac_list)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/v2-full-model":
+            res = calculate_retscreen_v2_full_suite(
+                facility_type=payload.get("facility_type", "Hospital"),
+                floor_area_m2=float(payload.get("floor_area_m2", 8500.0)),
+                occupancy_count=int(payload.get("occupancy_count", 280)),
+                electricity_rate_eur_kwh=float(payload.get("electricity_rate_eur_kwh", 0.242)),
+                natural_gas_rate_eur_m3=float(payload.get("natural_gas_rate_eur_m3", 0.487)),
+                proposed_pv_capacity_kwp=float(payload.get("proposed_pv_capacity_kwp", 250.0)),
+                cost_heating_system_eur=float(payload.get("cost_heating_system_eur", 115668.0)),
+                cost_ventilation_vzt_eur=float(payload.get("cost_ventilation_vzt_eur", 489000.0)),
+                inflation_rate_pct=float(payload.get("inflation_rate_pct", 2.0)),
+                discount_rate_pct=float(payload.get("discount_rate_pct", 3.0)),
+                tax_rate_pct=float(payload.get("tax_rate_pct", 30.0))
+            )
             self._send_json(res)
             return
 
@@ -1034,6 +1069,23 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retscreen/v2-full-model":
+            res = calculate_retscreen_v2_full_suite(
+                facility_type=payload.get("facility_type", "Hospital"),
+                floor_area_m2=float(payload.get("floor_area_m2", 8500.0)),
+                occupancy_count=int(payload.get("occupancy_count", 280)),
+                electricity_rate_eur_kwh=float(payload.get("electricity_rate_eur_kwh", 0.242)),
+                natural_gas_rate_eur_m3=float(payload.get("natural_gas_rate_eur_m3", 0.487)),
+                proposed_pv_capacity_kwp=float(payload.get("proposed_pv_capacity_kwp", 250.0)),
+                cost_heating_system_eur=float(payload.get("cost_heating_system_eur", 115668.0)),
+                cost_ventilation_vzt_eur=float(payload.get("cost_ventilation_vzt_eur", 489000.0)),
+                inflation_rate_pct=float(payload.get("inflation_rate_pct", 2.0)),
+                discount_rate_pct=float(payload.get("discount_rate_pct", 3.0)),
+                tax_rate_pct=float(payload.get("tax_rate_pct", 30.0))
+            )
+            self._send_json(res)
+            return
+
         elif parsed.path == "/api/retx/open-file":
             filepath = payload.get("filepath")
             if not filepath or not os.path.exists(filepath):
@@ -1311,6 +1363,23 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retscreen/v2-full-model":
+            res = calculate_retscreen_v2_full_suite(
+                facility_type=payload.get("facility_type", "Hospital"),
+                floor_area_m2=float(payload.get("floor_area_m2", 8500.0)),
+                occupancy_count=int(payload.get("occupancy_count", 280)),
+                electricity_rate_eur_kwh=float(payload.get("electricity_rate_eur_kwh", 0.242)),
+                natural_gas_rate_eur_m3=float(payload.get("natural_gas_rate_eur_m3", 0.487)),
+                proposed_pv_capacity_kwp=float(payload.get("proposed_pv_capacity_kwp", 250.0)),
+                cost_heating_system_eur=float(payload.get("cost_heating_system_eur", 115668.0)),
+                cost_ventilation_vzt_eur=float(payload.get("cost_ventilation_vzt_eur", 489000.0)),
+                inflation_rate_pct=float(payload.get("inflation_rate_pct", 2.0)),
+                discount_rate_pct=float(payload.get("discount_rate_pct", 3.0)),
+                tax_rate_pct=float(payload.get("tax_rate_pct", 30.0))
+            )
+            self._send_json(res)
+            return
+
         elif parsed.path == "/api/retx/open-file":
             filepath = payload.get("filepath")
             if not filepath or not os.path.exists(filepath):
@@ -1584,6 +1653,23 @@ class SamServerHandler(BaseHTTPRequestHandler):
         elif parsed.path == "/api/retscreen/portfolio-rollup":
             fac_list = payload.get("facility_projects", None)
             res = aggregate_enterprise_portfolio(facility_projects=fac_list)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/v2-full-model":
+            res = calculate_retscreen_v2_full_suite(
+                facility_type=payload.get("facility_type", "Hospital"),
+                floor_area_m2=float(payload.get("floor_area_m2", 8500.0)),
+                occupancy_count=int(payload.get("occupancy_count", 280)),
+                electricity_rate_eur_kwh=float(payload.get("electricity_rate_eur_kwh", 0.242)),
+                natural_gas_rate_eur_m3=float(payload.get("natural_gas_rate_eur_m3", 0.487)),
+                proposed_pv_capacity_kwp=float(payload.get("proposed_pv_capacity_kwp", 250.0)),
+                cost_heating_system_eur=float(payload.get("cost_heating_system_eur", 115668.0)),
+                cost_ventilation_vzt_eur=float(payload.get("cost_ventilation_vzt_eur", 489000.0)),
+                inflation_rate_pct=float(payload.get("inflation_rate_pct", 2.0)),
+                discount_rate_pct=float(payload.get("discount_rate_pct", 3.0)),
+                tax_rate_pct=float(payload.get("tax_rate_pct", 30.0))
+            )
             self._send_json(res)
             return
 
@@ -1914,6 +2000,23 @@ class SamServerHandler(BaseHTTPRequestHandler):
         elif parsed.path == "/api/retscreen/portfolio-rollup":
             fac_list = payload.get("facility_projects", None)
             res = aggregate_enterprise_portfolio(facility_projects=fac_list)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/v2-full-model":
+            res = calculate_retscreen_v2_full_suite(
+                facility_type=payload.get("facility_type", "Hospital"),
+                floor_area_m2=float(payload.get("floor_area_m2", 8500.0)),
+                occupancy_count=int(payload.get("occupancy_count", 280)),
+                electricity_rate_eur_kwh=float(payload.get("electricity_rate_eur_kwh", 0.242)),
+                natural_gas_rate_eur_m3=float(payload.get("natural_gas_rate_eur_m3", 0.487)),
+                proposed_pv_capacity_kwp=float(payload.get("proposed_pv_capacity_kwp", 250.0)),
+                cost_heating_system_eur=float(payload.get("cost_heating_system_eur", 115668.0)),
+                cost_ventilation_vzt_eur=float(payload.get("cost_ventilation_vzt_eur", 489000.0)),
+                inflation_rate_pct=float(payload.get("inflation_rate_pct", 2.0)),
+                discount_rate_pct=float(payload.get("discount_rate_pct", 3.0)),
+                tax_rate_pct=float(payload.get("tax_rate_pct", 30.0))
+            )
             self._send_json(res)
             return
 
@@ -2263,6 +2366,23 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retscreen/v2-full-model":
+            res = calculate_retscreen_v2_full_suite(
+                facility_type=payload.get("facility_type", "Hospital"),
+                floor_area_m2=float(payload.get("floor_area_m2", 8500.0)),
+                occupancy_count=int(payload.get("occupancy_count", 280)),
+                electricity_rate_eur_kwh=float(payload.get("electricity_rate_eur_kwh", 0.242)),
+                natural_gas_rate_eur_m3=float(payload.get("natural_gas_rate_eur_m3", 0.487)),
+                proposed_pv_capacity_kwp=float(payload.get("proposed_pv_capacity_kwp", 250.0)),
+                cost_heating_system_eur=float(payload.get("cost_heating_system_eur", 115668.0)),
+                cost_ventilation_vzt_eur=float(payload.get("cost_ventilation_vzt_eur", 489000.0)),
+                inflation_rate_pct=float(payload.get("inflation_rate_pct", 2.0)),
+                discount_rate_pct=float(payload.get("discount_rate_pct", 3.0)),
+                tax_rate_pct=float(payload.get("tax_rate_pct", 30.0))
+            )
+            self._send_json(res)
+            return
+
         elif parsed.path == "/api/retx/open-file":
             filepath = payload.get("filepath")
             if not filepath or not os.path.exists(filepath):
@@ -2589,6 +2709,23 @@ class SamServerHandler(BaseHTTPRequestHandler):
         elif parsed.path == "/api/retscreen/portfolio-rollup":
             fac_list = payload.get("facility_projects", None)
             res = aggregate_enterprise_portfolio(facility_projects=fac_list)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/v2-full-model":
+            res = calculate_retscreen_v2_full_suite(
+                facility_type=payload.get("facility_type", "Hospital"),
+                floor_area_m2=float(payload.get("floor_area_m2", 8500.0)),
+                occupancy_count=int(payload.get("occupancy_count", 280)),
+                electricity_rate_eur_kwh=float(payload.get("electricity_rate_eur_kwh", 0.242)),
+                natural_gas_rate_eur_m3=float(payload.get("natural_gas_rate_eur_m3", 0.487)),
+                proposed_pv_capacity_kwp=float(payload.get("proposed_pv_capacity_kwp", 250.0)),
+                cost_heating_system_eur=float(payload.get("cost_heating_system_eur", 115668.0)),
+                cost_ventilation_vzt_eur=float(payload.get("cost_ventilation_vzt_eur", 489000.0)),
+                inflation_rate_pct=float(payload.get("inflation_rate_pct", 2.0)),
+                discount_rate_pct=float(payload.get("discount_rate_pct", 3.0)),
+                tax_rate_pct=float(payload.get("tax_rate_pct", 30.0))
+            )
             self._send_json(res)
             return
 

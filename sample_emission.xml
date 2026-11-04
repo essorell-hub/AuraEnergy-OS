@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<EmissionAnalysisHub c:Assembly.Version="9.1.0.53" xmlns="http://schemas.retscreen.net/dotret/v5/emission" xmlns:c="http://schemas.retscreen.net/dotret/v5/core" cuid="4642" ActiveLevel="1" GHGTotalBaseCase="2632.5790262077535" GHGTotalProposedCase="526.76620965752954" GHGTotalSaved="0.79990488246943925" SNotes="false">
+  <EmissionAnalysisHub.Level1>
+    <emission cuid="4643" level="1" tonCO2ToCH4="28" tonCO2ToN2O="265" IsGraphDisplayed="true" IsEquivalenceDisplayed="true" ConsumptionUnit="Energy.MegaWattHour" EmissionUnit="1" compItem="0" GHGReductionRevenueLabel="1" reductionCreditRate="300" reductionDuration="40" CarbonOffSetAmount="526.76620965752954" CarbonOffSetCost="12" CarbonOffSetTotalCosts="6321.1945158903545">
+      <emission.BaseCase>
+        <FuelSystem cuid="4647" RefrigUnit="0">
+          <FuelSystem.Fuels>
+            <c:XList seed="542589909" absCount="506">
+              <c:XEntry key="5LN4H">
+                <systemFuel cuid="11345" fuel="72489813-8d47-47ed-842f-196b893df952" mix="0.33467031833666749" co2="51.911589008363208" ch4="0" n2o="0" />
+              </c:XEntry>
+              <c:XEntry key="fWyuY">
+                <systemFuel cuid="11346" fuel="69714fbd-584a-46ae-8926-8e3c65dc7b86" mix="0.66532968166333251" co2="49.56170333" ch4="0.000967067" n2o="0.000914794" />
+              </c:XEntry>
+            </c:XList>
+          </FuelSystem.Fuels>
+          <FuelSystem.Refrigerants>
+            <c:XList seed="542589910" absCount="0" />
+          </FuelSystem.Refrigerants>
+        </FuelSystem>
+      </emission.BaseCase>
+      <emission.ProposedCase>
+        <proposedFuelSystem cuid="4648" eeLosses="0.07" PreviousLocation="c4bc0b8f-d7e3-4bb3-82c6-cad8774fbe15" PreviousCountry="35" PreviousRegion="38" RefrigUnit="0">
+          <proposedFuelSystem.Fuels>
+            <c:XList seed="542589912" absCount="1020">
+              <c:XEntry key="xo4Wp">
+                <systemFuel cuid="11347" fuel="72489813-8d47-47ed-842f-196b893df952" mix="0.40148509632005519" co2="51.911589008363208" ch4="0" n2o="0" />
+              </c:XEntry>
+              <c:XEntry key="hHoNB">
+                <systemFuel cuid="66130" fuel="9ed69f5b-da94-4d73-8a32-29ff8f4f51f2" mix="0.36193875967921008" co2="0" ch4="0" n2o="0" />
+              </c:XEntry>
+              <c:XEntry key="3dmOX">
+                <systemFuel cuid="11348" fuel="69714fbd-584a-46ae-8926-8e3c65dc7b86" mix="0.11067723772459317" co2="49.56170333" ch4="0.000967067" n2o="0.000914794" />
+              </c:XEntry>
+              <c:XEntry key="rDNCQ">
+                <systemFuel cuid="23102" fuel="92e8633a-315e-49e2-a570-d7ede6aff971" mix="0.049682221433664873" co2="0" ch4="0" n2o="0" />
+              </c:XEntry>
+              <c:XEntry key="cNjma">
+                <systemFuel cuid="47945" fuel="92e8633a-315e-49e2-a570-d7ede6aff971" mix="0.07621668484247672" co2="0" ch4="0" n2o="0" />
+              </c:XEntry>
+            </c:XList>
+          </proposedFuelSystem.Fuels>
+          <proposedFuelSystem.Refrigerants>
+            <c:XList seed="542589913" absCount="0" />
+          </proposedFuelSystem.Refrigerants>
+        </proposedFuelSystem>
+      </emission.ProposedCase>
+      <emission.RegionElectricity>
+        <RegionBasedElectricity cuid="4644" country="c4bc0b8f-d7e3-4bb3-82c6-cad8774fbe15" fuel="0" grossEmissionFactor="0.1738" losses="0.07" grossUnit="0" />
+      </emission.RegionElectricity>
+      <emission.ElectricityMix>
+        <ElectricityMix cuid="4645" emissionUnit="0" hasChange="false" changeyear="3" changepercent="0">
+          <ElectricityMix.fuels>
+            <c:XList seed="542589908" absCount="1">
+              <c:XEntry key="HaPNz">
+                <ElectricityFuel cuid="4646" fuel="69714fbd-584a-46ae-8926-8e3c65dc7b86" mix="1" co2="49.56170333" ch4="0.000967067" n2o="0.000914794" eff="0.4078559" losses="0.07" />
+              </c:XEntry>
+            </c:XList>
+          </ElectricityMix.fuels>
+        </ElectricityMix>
+      </emission.ElectricityMix>
+    </emission>
+  </EmissionAnalysisHub.Level1>
+  <EmissionAnalysisHub.Level2>
+    <emission cuid="4650" level="2" tonCO2ToCH4="28" tonCO2ToN2O="265" IsGraphDisplayed="true" IsEquivalenceDisplayed="true" ConsumptionUnit="Energy.KiloWattHour" EmissionUnit="1" compItem="0" GHGReductionRevenueLabel="1" reductionCreditRate="300" reductionDuration="40" CarbonOffSetAmount="526.76620965752954" CarbonOffSetCost="12" CarbonOffSetTotalCosts="6321.1945158903545">
+      <emission.BaseCase>
+        <FuelSystem cuid="4654" RefrigUnit="0">
+          <FuelSystem.Fuels>
+            <c:XList seed="542589916" absCount="14">
+              <c:XEntry key="LvhKT">
+                <systemFuel cuid="31092" fuel="72489813-8d47-47ed-842f-196b893df952" mix="0.33467031833666749" co2="130.66417359238784" ch4="0.0025495695642684386" n2o="0.0024117573446052675" />
+              </c:XEntry>
+              <c:XEntry key="dGU4A">
+                <systemFuel cuid="31093" fuel="69714fbd-584a-46ae-8926-8e3c65dc7b86" mix="0.66532968166333251" co2="49.56170333" ch4="0.000967067" n2o="0.000914794" />
+              </c:XEntry>
+            </c:XList>
+          </FuelSystem.Fuels>
+          <FuelSystem.Refrigerants>
+            <c:XList seed="542589917" absCount="0" />
+          </FuelSystem.Refrigerants>
+        </FuelSystem>
+      </emission.BaseCase>
+      <emission.ProposedCase>
+        <proposedFuelSystem cuid="4655" PreviousLocation="00000000-0000-0000-0000-000000000000" PreviousCountry="0" PreviousRegion="0" RefrigUnit="0">
+          <proposedFuelSystem.Fuels>
+            <c:XList seed="542589919" absCount="25">
+              <c:XEntry key="1s1tf">
+                <systemFuel cuid="31094" fuel="72489813-8d47-47ed-842f-196b893df952" mix="0.763182680167063" co2="130.66417359238784" ch4="0.0025495695642684386" n2o="0.0024117573446052675" />
+              </c:XEntry>
+              <c:XEntry key="F8oZX">
+                <systemFuel cuid="31095" fuel="69714fbd-584a-46ae-8926-8e3c65dc7b86" mix="0.11067723772459317" co2="49.56170333" ch4="0.000967067" n2o="0.000914794" />
+              </c:XEntry>
+              <c:XEntry key="E4BiZ">
+                <systemFuel cuid="31096" fuel="92e8633a-315e-49e2-a570-d7ede6aff971" mix="0.049923397265867135" co2="0" ch4="0" n2o="0" />
+              </c:XEntry>
+              <c:XEntry key="7rqMS">
+                <systemFuel cuid="47953" fuel="92e8633a-315e-49e2-a570-d7ede6aff971" mix="0.07621668484247672" co2="0" ch4="0" n2o="0" />
+              </c:XEntry>
+            </c:XList>
+          </proposedFuelSystem.Fuels>
+          <proposedFuelSystem.Refrigerants>
+            <c:XList seed="542589920" absCount="0" />
+          </proposedFuelSystem.Refrigerants>
+        </proposedFuelSystem>
+      </emission.ProposedCase>
+      <emission.RegionElectricity>
+        <RegionBasedElectricity cuid="4651" country="00000000-0000-0000-0000-000000000000" fuel="0" grossUnit="0" />
+      </emission.RegionElectricity>
+      <emission.ElectricityMix>
+        <ElectricityMix cuid="4652" emissionUnit="1" hasChange="false" changeyear="3" changepercent="0">
+          <ElectricityMix.fuels>
+            <c:XList seed="542589915" absCount="1">
+              <c:XEntry key="IOVc1">
+                <ElectricityFuel cuid="4653" fuel="69714fbd-584a-46ae-8926-8e3c65dc7b86" mix="1" co2="49.56170333" ch4="0.000967067" n2o="0.000914794" eff="0.4078559" losses="0.07" />
+              </c:XEntry>
+            </c:XList>
+          </ElectricityMix.fuels>
+        </ElectricityMix>
+      </emission.ElectricityMix>
+    </emission>
+  </EmissionAnalysisHub.Level2>
+  <EmissionAnalysisHub.Level3>
+    <emission cuid="4657" level="3" tonCO2ToCH4="28" tonCO2ToN2O="265" IsGraphDisplayed="true" IsEquivalenceDisplayed="true" ConsumptionUnit="Energy.KiloWattHour" EmissionUnit="1" compItem="0" GHGReductionRevenueLabel="1" reductionCreditRate="300" reductionDuration="40" CarbonOffSetAmount="526.76620965752954" CarbonOffSetCost="12" CarbonOffSetTotalCosts="6321.1945158903545">
+      <emission.BaseCase>
+        <FuelSystem cuid="4661" RefrigUnit="0">
+          <FuelSystem.Fuels>
+            <c:XList seed="542589923" absCount="0" />
+          </FuelSystem.Fuels>
+          <FuelSystem.Refrigerants>
+            <c:XList seed="542589924" absCount="0" />
+          </FuelSystem.Refrigerants>
+        </FuelSystem>
+      </emission.BaseCase>
+      <emission.ProposedCase>
+        <proposedFuelSystem cuid="4662" PreviousLocation="00000000-0000-0000-0000-000000000000" PreviousCountry="0" PreviousRegion="0" RefrigUnit="0">
+          <proposedFuelSystem.Fuels>
+            <c:XList seed="542589926" absCount="0" />
+          </proposedFuelSystem.Fuels>
+          <proposedFuelSystem.Refrigerants>
+            <c:XList seed="542589927" absCount="0" />
+          </proposedFuelSystem.Refrigerants>
+        </proposedFuelSystem>
+      </emission.ProposedCase>
+      <emission.RegionElectricity>
+        <RegionBasedElectricity cuid="4658" country="00000000-0000-0000-0000-000000000000" fuel="0" grossUnit="0" />
+      </emission.RegionElectricity>
+      <emission.ElectricityMix>
+        <ElectricityMix cuid="4659" emissionUnit="1" hasChange="false" changeyear="3" changepercent="0">
+          <ElectricityMix.fuels>
+            <c:XList seed="542589922" absCount="1">
+              <c:XEntry key="w3m78">
+                <ElectricityFuel cuid="4660" fuel="69714fbd-584a-46ae-8926-8e3c65dc7b86" mix="1" co2="49.56170333" ch4="0.000967067" n2o="0.000914794" eff="0.4078559" losses="0.07" />
+              </c:XEntry>
+            </c:XList>
+          </ElectricityMix.fuels>
+        </ElectricityMix>
+      </emission.ElectricityMix>
+    </emission>
+  </EmissionAnalysisHub.Level3>
+</EmissionAnalysisHub>

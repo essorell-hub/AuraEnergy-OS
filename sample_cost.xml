@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Cost c:Assembly.Version="9.1.0.53" xmlns="http://schemas.retscreen.net/dotret/v5/cost" xmlns:c="http://schemas.retscreen.net/dotret/v5/core" cuid="4667" SNotes="false" hasNotes="false" SecondCurrencyId="2" SecondCurrencyRate="1" hasCostAlocation="false" hasActualCost="false" hasSecondCurency="false" ActiveLevel="2">
+  <Cost.Level1>
+    <Analysis cuid="4668">
+      <Analysis.Initial>
+        <Initial cuid="4669" Level="1" Total="2242741">
+          <Initial.Sections>
+            <c:XList seed="542589929" absCount="2">
+              <c:XEntry key="DdlwP">
+                <Section cuid="4670" IsOptional="false" Id="38333e70-cb3a-426c-8201-8b890733ce41" Name="{{IncrementalInitialCosts}}" Total="2242741" HelpTopic="IncrementalInitialCosts" CanAddUserDefined="false">
+                  <Section.Lines>
+                    <c:XList seed="542589930" absCount="1">
+                      <c:XEntry key="kmQWQ">
+                        <Line cuid="4782" Id="38333e70-cb3a-426c-8201-8b890733ce41" Editables="76" Hiddens="12" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="true" Label="{{IncrementalInitialCosts}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="2242741" Amount="2242741">
+                          <Line.Breakdown>
+                            <c:XList seed="542592120" absCount="13">
+                              <c:XEntry key="2u6vg">
+                                <Section cuid="12205" IsOptional="false" Id="00000000-0000-0000-0000-000000000000" Name="{{HeatingSystem}}" HelpTopic="IncrementalInitialCosts" CanAddUserDefined="false">
+                                  <Section.Lines>
+                                    <c:XList seed="542592121" absCount="3">
+                                      <c:XEntry key="pj6Iz">
+                                        <Line cuid="12206" Id="0d941537-2d0c-4001-afa1-f56bf2b62125" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{SpaceHeating}}" IsCredit="false" UnitType="0" Quantity="1" />
+                                      </c:XEntry>
+                                      <c:XEntry key="gT1MT">
+                                        <Line cuid="12207" Id="02b02bee-5816-40d6-94d1-edc4590febbd" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Kitchen}} - {{Equipment}}" IsCredit="false" UnitType="0" Quantity="1" />
+                                      </c:XEntry>
+                                      <c:XEntry key="6S4bL">
+                                        <Line cuid="12208" Id="2e0af1bd-d1b9-47d1-a646-cf475ece8dd9" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{DomesticHotWater}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="115668" Amount="115668" />
+                                      </c:XEntry>
+                                    </c:XList>
+                                  </Section.Lines>
+                                </Section>
+                              </c:XEntry>
+                              <c:XEntry key="1tNKX">
+                                <Section cuid="12209" IsOptional="false" Id="00000000-0000-0000-0000-000000000000" Name="{{CoolingSystem}}" HelpTopic="IncrementalInitialCosts" CanAddUserDefined="false">
+                                  <Section.Lines>
+                                    <c:XList seed="542592122" absCount="3">
+                                      <c:XEntry key="bGVYv">
+                                        <Line cuid="12210" Id="9e1172ca-5bbb-418e-a936-ae070af88063" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Chiller}} - {{AirConditioning}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="0" Amount="0" />
+                                      </c:XEntry>
+                                      <c:XEntry key="OVw2b">
+                                        <Line cuid="12211" Id="2eb75ddd-14ea-4e9a-a507-3b4d1b58fc09" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Cooler}} - {{WalkIn}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="0" Amount="0" />
+                                      </c:XEntry>
+                                      <c:XEntry key="KeMjs">
+                                        <Line cuid="12212" Id="2f1aefd8-f812-44ac-ae7c-273af6b21ab6" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Freezer}} - {{WalkIn}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="0" Amount="0" />
+                                      </c:XEntry>
+                                    </c:XList>
+                                  </Section.Lines>
+                                </Section>
+                              </c:XEntry>
+                              <c:XEntry key="rgpUI">
+                                <Section cuid="12213" IsOptional="false" Id="00000000-0000-0000-0000-000000000000" Name="{{BuildingEnvelope}}" HelpTopic="IncrementalInitialCosts" CanAddUserDefined="false">
+                                  <Section.Lines>
+                                    <c:XList seed="542592123" absCount="1">
+                                      <c:XEntry key="lSBI3">
+                                        <Line cuid="12214" Id="b521088d-17ce-4595-b862-6ba87bd74a44" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Hospital}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="10100" Amount="10100" />
+                                      </c:XEntry>
+                                    </c:XList>
+                                  </Section.Lines>
+                                </Section>
+                              </c:XEntry>
+                              <c:XEntry key="oGYer">
+                                <Section cuid="12215" IsOptional="false" Id="00000000-0000-0000-0000-000000000000" Name="{{Ventilation}}" HelpTopic="IncrementalInitialCosts" CanAddUserDefined="false">
+                                  <Section.Lines>
+                                    <c:XList seed="542592124" absCount="17">
+                                      <c:XEntry key="Jl65q">
+                                        <Line cuid="12216" Id="6c2097e5-85fc-47b0-80e0-8c0d910a4a9f" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Office}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="25200" Amount="25200" />
+                                      </c:XEntry>
+                                      <c:XEntry key="AunSk">
+                                        <Line cuid="12217" Id="e0d3e086-b7c7-45db-905a-29edf1054ea8" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Cafeteria}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="14400" Amount="14400" />
+                                      </c:XEntry>
+                                      <c:XEntry key="3e9os">
+                                        <Line cuid="12218" Id="53847a1c-9df4-409f-a6ba-db3ecbb3eb05" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{PatientRoom}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="177435" Amount="177435" />
+                                      </c:XEntry>
+                                      <c:XEntry key="yQqt3">
+                                        <Line cuid="12219" Id="9115bce8-40f1-4b86-b85c-1a725c65cee3" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{ExamRoom}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="22500" Amount="22500" />
+                                      </c:XEntry>
+                                      <c:XEntry key="fbWrA">
+                                        <Line cuid="12220" Id="7f593921-3917-440a-8360-1676887e6aeb" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{OperatingRoom}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="249435" Amount="249435" />
+                                      </c:XEntry>
+                                      <c:XEntry key="dTjkb">
+                                        <Line cuid="12221" Id="b3f40a24-4a43-4f4c-b944-a0d6ff4558f0" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{PhysicalTherapy}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="45000" Amount="45000" />
+                                      </c:XEntry>
+                                      <c:XEntry key="TjydT">
+                                        <Line cuid="12222" Id="83cb7118-e28e-4aed-b77d-6a050ddab12d" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Triage}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="12500" Amount="12500" />
+                                      </c:XEntry>
+                                      <c:XEntry key="NoKGh">
+                                        <Line cuid="12223" Id="44190b64-f8d9-4ddf-a5d6-9ab4ee06e604" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Trauma}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="4500" Amount="4500" />
+                                      </c:XEntry>
+                                      <c:XEntry key="CBSbF">
+                                        <Line cuid="12224" Id="480f243b-1ef7-4949-891e-f5072a11421f" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Laboratory}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="40500" Amount="40500" />
+                                      </c:XEntry>
+                                      <c:XEntry key="iaUYy">
+                                        <Line cuid="12225" Id="b9858aa4-d498-42fa-b56a-480786a54d1b" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{MedicalImaging}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="40500" Amount="40500" />
+                                      </c:XEntry>
+                                      <c:XEntry key="h1vpZ">
+                                        <Line cuid="12226" Id="09641e67-6095-47c0-a5ef-034de2688da4" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{IntensiveCare}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="54000" Amount="54000" />
+                                      </c:XEntry>
+                                      <c:XEntry key="Ki8qO">
+                                        <Line cuid="12227" Id="a2efbe09-4803-43c5-8de2-e5b7376c1000" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{NurseStation}} - {{PatientRoom}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="177435" Amount="177435" />
+                                      </c:XEntry>
+                                      <c:XEntry key="ZdsAB">
+                                        <Line cuid="12228" Id="a2767e2e-85ba-4111-9e37-82a2883a9c21" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{NurseStation}} - {{IntensiveCare}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="48000" Amount="48000" />
+                                      </c:XEntry>
+                                      <c:XEntry key="R7kga">
+                                        <Line cuid="12229" Id="47ea22ba-efe2-49bb-b33f-73295f2423a6" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{NurseStation}} - {{OperatingRoom}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="72000" Amount="72000" />
+                                      </c:XEntry>
+                                      <c:XEntry key="5cHUI">
+                                        <Line cuid="12230" Id="f4ba9d6b-cd4a-455b-b864-00418a1a9647" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{NurseStation}} - {{Trauma}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="96000" Amount="96000" />
+                                      </c:XEntry>
+                                      <c:XEntry key="qvX4H">
+                                        <Line cuid="12231" Id="0ec45492-aad8-4f82-8ed2-55003e9afd19" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Lobby}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="54000" Amount="54000" />
+                                      </c:XEntry>
+                                      <c:XEntry key="vJtVN">
+                                        <Line cuid="12232" Id="a5e126c2-7363-45e0-b70d-9716a40210cf" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Kitchen}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="48000" Amount="48000" />
+                                      </c:XEntry>
+                                    </c:XList>
+                                  </Section.Lines>
+                                </Section>
+                              </c:XEntry>
+                              <c:XEntry key="xkZDe">
+                                <Section cuid="12233" IsOptional="false" Id="00000000-0000-0000-0000-000000000000" Name="{{Lights}}" HelpTopic="IncrementalInitialCosts" CanAddUserDefined="false">
+                                  <Section.Lines>
+                                    <c:XList seed="542592125" absCount="28">
+                                      <c:XEntry key="dV8B5">
+                                        <Line cuid="12234" Id="fa9ce681-ef78-48c7-9be7-08ab051732f4" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Office}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="16420" Amount="16420" />
+                                      </c:XEntry>
+                                      <c:XEntry key="II5iB">
+                                        <Line cuid="12235" Id="f186f7c0-53b7-48b4-9e13-12a0889e6b2f" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Cafeteria}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="8700" Amount="8700" />
+                                      </c:XEntry>
+                                      <c:XEntry key="BNxPv">
+                                        <Line cuid="12236" Id="4c867228-5f0f-4f1a-b517-f1950a8c8c6b" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{PatientRoom}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="23200" Amount="23200" />
+                                      </c:XEntry>
+                                      <c:XEntry key="Eci4T">
+                                        <Line cuid="12237" Id="f5dcfba7-90f5-48a8-8786-c086161b41eb" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{ExamRoom}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="3712" Amount="3712" />
+                                      </c:XEntry>
+                                      <c:XEntry key="hLq1E">
+                                        <Line cuid="12238" Id="da2d06b0-9ebf-4d9b-a3d3-2d3ba72ff446" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{OperatingRoom}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="20880" Amount="20880" />
+                                      </c:XEntry>
+                                      <c:XEntry key="roWIs">
+                                        <Line cuid="12239" Id="a35eb3b2-3d90-4486-bfcb-ee054ba7f16a" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{OperatingRoom}} - {{TaskLighting}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="72200" Amount="72200" />
+                                      </c:XEntry>
+                                      <c:XEntry key="KW1xm">
+                                        <Line cuid="12240" Id="53390150-48d3-4efc-bb04-6e74fbf1a4f5" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{PhysicalTherapy}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="6960" Amount="6960" />
+                                      </c:XEntry>
+                                      <c:XEntry key="f4ET1">
+                                        <Line cuid="12241" Id="475f729e-3f00-40bd-8998-a3eacc5438e7" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Triage}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="1856" Amount="1856" />
+                                      </c:XEntry>
+                                      <c:XEntry key="tDmdk">
+                                        <Line cuid="12242" Id="12e840e5-e9b2-44da-b964-4dd23c796da6" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Trauma}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="1856" Amount="1856" />
+                                      </c:XEntry>
+                                      <c:XEntry key="umDXz">
+                                        <Line cuid="12243" Id="3bf5d797-eb6f-493e-90de-86999de5d62f" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Laboratory}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="13920" Amount="13920" />
+                                      </c:XEntry>
+                                      <c:XEntry key="HqjRu">
+                                        <Line cuid="12244" Id="f72c20df-0c3f-43a6-ab10-cccbfe6228ef" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{MedicalImaging}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="12180" Amount="12180" />
+                                      </c:XEntry>
+                                      <c:XEntry key="86QUW">
+                                        <Line cuid="12245" Id="5b953dfd-a54f-40a0-8269-8119de55fd3e" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{IntensiveCare}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="17400" Amount="17400" />
+                                      </c:XEntry>
+                                      <c:XEntry key="2aoft">
+                                        <Line cuid="12246" Id="f06f47cf-b50c-4863-b4d8-7b1e1ea7119e" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{NurseStation}} - {{PatientRoom}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="26100" Amount="26100" />
+                                      </c:XEntry>
+                                      <c:XEntry key="b1JOi">
+                                        <Line cuid="12247" Id="b5537836-b3b8-4f12-a373-52d9f13a98cb" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{NurseStation}} - {{IntensiveCare}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="7830" Amount="7830" />
+                                      </c:XEntry>
+                                      <c:XEntry key="6rdof">
+                                        <Line cuid="12248" Id="d8f2f779-7610-4a32-b6e1-f5d4f2de9fdd" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{NurseStation}} - {{OperatingRoom}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="10440" Amount="10440" />
+                                      </c:XEntry>
+                                      <c:XEntry key="CHXj4">
+                                        <Line cuid="12249" Id="54405656-6966-4d62-9e6a-6f21ecf654c5" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{NurseStation}} - {{Trauma}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="12180" Amount="12180" />
+                                      </c:XEntry>
+                                      <c:XEntry key="OfBpV">
+                                        <Line cuid="12250" Id="ff3f9631-8bc4-452e-9a8c-fd10496bb570" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Lobby}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="10440" Amount="10440" />
+                                      </c:XEntry>
+                                      <c:XEntry key="wxpa8">
+                                        <Line cuid="12251" Id="b2872c4e-f229-42b1-a17b-e125e0f8abdc" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Kitchen}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="19140" Amount="19140" />
+                                      </c:XEntry>
+                                      <c:XEntry key="WUtLg">
+                                        <Line cuid="12252" Id="2ee60bb9-78b6-490f-830d-32b390cd9a9f" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Kitchen}} - {{Freezer}}/{{Cooler}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="304" Amount="304" />
+                                      </c:XEntry>
+                                      <c:XEntry key="nXvQI">
+                                        <Line cuid="12253" Id="4d701e16-a821-4520-b500-8b10e6760589" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Corridor}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="36540" Amount="36540" />
+                                      </c:XEntry>
+                                      <c:XEntry key="7srbG">
+                                        <Line cuid="12254" Id="7da68e87-ded2-4abb-9835-e4a6fdbe892f" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Washroom}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="19140" Amount="19140" />
+                                      </c:XEntry>
+                                      <c:XEntry key="oSgKH">
+                                        <Line cuid="12255" Id="e6bfe3b2-9c0f-4122-bfe0-66454d62f8cd" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{UtilityRoom}}/{{Storage}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="6300" Amount="6300" />
+                                      </c:XEntry>
+                                      <c:XEntry key="gAAhw">
+                                        <Line cuid="12256" Id="3524fedf-467f-43f4-98a3-d7e590e0b219" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Sign}} - {{Exit}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="575" Amount="575" />
+                                      </c:XEntry>
+                                      <c:XEntry key="yJMVN">
+                                        <Line cuid="12257" Id="34e03190-d84b-4533-a215-21ea35491ed9" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{ParkingGarage}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="35050" Amount="35050" />
+                                      </c:XEntry>
+                                      <c:XEntry key="e3Nyq">
+                                        <Line cuid="12258" Id="222f5159-50fd-417e-92be-4b0d7ec7f8a2" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Exterior}} - {{Sign}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="850" Amount="850" />
+                                      </c:XEntry>
+                                      <c:XEntry key="iQZWA">
+                                        <Line cuid="12259" Id="794a0d7a-1882-4966-8cda-e10012138b2d" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Exterior}} - {{Facade}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="4250" Amount="4250" />
+                                      </c:XEntry>
+                                      <c:XEntry key="VPV6y">
+                                        <Line cuid="12260" Id="87569dcc-d99a-448d-b452-8b2eeeec251f" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Exterior}} - {{Doors}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="8500" Amount="8500" />
+                                      </c:XEntry>
+                                      <c:XEntry key="MgOJd">
+                                        <Line cuid="12261" Id="36aaefea-af58-4405-bcb6-19bc870be2fb" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Exterior}} - {{Canopy}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="2125" Amount="2125" />
+                                      </c:XEntry>
+                                    </c:XList>
+                                  </Section.Lines>
+                                </Section>
+                              </c:XEntry>
+                              <c:XEntry key="piIHP">
+                                <Section cuid="12262" IsOptional="false" Id="00000000-0000-0000-0000-000000000000" Name="{{ElectricalEquipment}}" HelpTopic="IncrementalInitialCosts" CanAddUserDefined="false">
+                                  <Section.Lines>
+                                    <c:XList seed="542592126" absCount="11">
+                                      <c:XEntry key="WJB68">
+                                        <Line cuid="12263" Id="689d2700-9a20-4ff9-9e77-401728e4479a" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Office}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="0" Amount="0" />
+                                      </c:XEntry>
+                                      <c:XEntry key="ufQxX">
+                                        <Line cuid="12264" Id="52365bc2-40ea-4de9-8630-7a8899e62d68" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Cafeteria}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="40" Amount="40" />
+                                      </c:XEntry>
+                                      <c:XEntry key="6NskZ">
+                                        <Line cuid="12265" Id="7be74fc6-c712-49b1-9f38-23067add8100" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{PatientRoom}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="0" Amount="0" />
+                                      </c:XEntry>
+                                      <c:XEntry key="OeuiL">
+                                        <Line cuid="12266" Id="e4ba9035-a418-4aba-8348-45031ae924e3" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{ServerRoom}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="0" Amount="0" />
+                                      </c:XEntry>
+                                      <c:XEntry key="ezb4I">
+                                        <Line cuid="12267" Id="d5ff3d81-a245-45e5-b3a2-e3ff5dfdf74d" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Laboratory}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="17600" Amount="17600" />
+                                      </c:XEntry>
+                                      <c:XEntry key="v7GWE">
+                                        <Line cuid="12268" Id="d6711fca-ebd1-44cf-ba1a-7948cc13ebf7" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{MedicalEquipment}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="0" Amount="0" />
+                                      </c:XEntry>
+                                      <c:XEntry key="EIqY9">
+                                        <Line cuid="12269" Id="96495d03-79f5-4382-8822-6d5789d5774b" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{MedicalImaging}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="0" Amount="0" />
+                                      </c:XEntry>
+                                      <c:XEntry key="CZ9ps">
+                                        <Line cuid="12270" Id="d2e4ba59-e662-42d3-ba82-efed429e94fb" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Kitchen}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="68700" Amount="68700" />
+                                      </c:XEntry>
+                                      <c:XEntry key="mnLgy">
+                                        <Line cuid="12271" Id="8c7e5a77-86a4-4032-a443-6079764951be" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Kitchen}} - {{Refrigeration}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="40350" Amount="40350" />
+                                      </c:XEntry>
+                                      <c:XEntry key="kjgFa">
+                                        <Line cuid="12272" Id="6c014c27-c145-4a50-baa4-378862c6ca05" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{VendingMachine}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="32000" Amount="32000" />
+                                      </c:XEntry>
+                                      <c:XEntry key="goZtg">
+                                        <Line cuid="12273" Id="b1a68eed-e927-4fdd-8b79-878af11d8fd3" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{ParkingGarage}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="0" Amount="0" />
+                                      </c:XEntry>
+                                    </c:XList>
+                                  </Section.Lines>
+                                </Section>
+                              </c:XEntry>
+                              <c:XEntry key="6nR73">
+                                <Section cuid="12274" IsOptional="false" Id="00000000-0000-0000-0000-000000000000" Name="{{HotWater}}" HelpTopic="IncrementalInitialCosts" CanAddUserDefined="false">
+                                  <Section.Lines>
+                                    <c:XList seed="542592128" absCount="4">
+                                      <c:XEntry key="GAwLa">
+                                        <Line cuid="12275" Id="e655111f-4f06-4219-be89-9d81efbef098" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{PatientRoom}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="298000" Amount="298000" />
+                                      </c:XEntry>
+                                      <c:XEntry key="UdQfW">
+                                        <Line cuid="12276" Id="98e71285-d99d-4842-b97f-465033d30911" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Cleaning}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="0" Amount="0" />
+                                      </c:XEntry>
+                                      <c:XEntry key="ZzMeN">
+                                        <Line cuid="12277" Id="584c1832-84ad-46fa-9d1f-d1abc19f684c" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Kitchen}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="210" Amount="210" />
+                                      </c:XEntry>
+                                      <c:XEntry key="tVDtl">
+                                        <Line cuid="12278" Id="04fdca49-2cc9-47b0-8787-835537543c6f" Editables="0" Hiddens="22" HelpTopic="IncrementalInitialCosts" IsUserDefined="false" IsBreakdownExpandable="false" Label="{{Washroom}}" IsCredit="false" UnitType="0" Quantity="1" UnitCost="1400" Amount="1400" />
+                                      </c:XEntry>
+                                    </c:XList>
+                                  </Section.Lines>
+                                </Section>
+                              </c:XEntry>
+                              <c:XEntry key="aKoFd">
+                                <Section cuid="12279" IsOptional="false" Id="00000000-0000-0000-0000-000000000000" Name="{{Pumps}}" HelpTopic="IncrementalInitialCosts" CanAddUserDefined="false">
+                                  <Section.Lines>
+                                    <c:XList seed="542592129" absCount="3">
+                                      <c:XEntry key="Y21KZ">
+                                        <Line cuid="12280" Id="63a9f907-1151-44c2-965a-a9711a8310a3" Editables="0" Hidd
