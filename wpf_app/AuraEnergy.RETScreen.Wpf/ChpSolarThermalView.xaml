@@ -1,0 +1,114 @@
+<UserControl x:Class="AuraEnergy.RETScreen.Wpf.ChpSolarThermalView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             Background="White">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="16">
+            <!-- Header Group -->
+            <Border Background="#FFF3E0" BorderBrush="#FFB74D" BorderThickness="1" CornerRadius="3" Padding="12" Margin="0,0,0,14">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="Kogenerace CHP (Kombinovaná Výroba Elektřiny a Tepla) &amp; Solární Termika" FontSize="15" FontWeight="Bold" Foreground="#E65100" />
+                        <TextBlock Text="Vysokoúčinná kogenerace dle zákona č. 165/2012 Sb. a solární kolektory ČSN EN 12975" Foreground="#555" FontSize="11" Margin="0,2,0,0" />
+                    </StackPanel>
+                    <Button Grid.Column="1" Content="Certifikace Účinnosti CHP" Background="#EF6C00" Foreground="White" FontWeight="Bold" Padding="12,6" Click="BtnChpCert_Click" />
+                </Grid>
+            </Border>
+
+            <!-- 2 Columns: CHP vs Solar Thermal -->
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Left Column: Kogenerační jednotka CHP -->
+                <Border Grid.Column="0" Background="#FAFAFA" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="3" Padding="12" Margin="0,0,8,0">
+                    <StackPanel>
+                        <TextBlock Text="1. Kogenerační Jednotka (CHP Plynový Motor)" FontWeight="Bold" Foreground="#003366" Margin="0,0,0,8" />
+
+                        <TextBlock Text="Palivo / Primární energie:" Margin="0,0,0,2" />
+                        <ComboBox SelectedIndex="0" Margin="0,0,0,8">
+                            <ComboBoxItem Content="Zemní plyn (Tranzitní síť)" />
+                            <ComboBoxItem Content="Bioplyn (BPS fermentace)" />
+                            <ComboBoxItem Content="Vodíková směs (H₂ blend 20 %)" />
+                        </ComboBox>
+
+                        <TextBlock Text="Elektrický výkon jednotky (kWe):" Margin="0,0,0,2" />
+                        <TextBox x:Name="txtChpEl" Text="200 kWe" Background="#FFF2CC" BorderBrush="#F59E0B" FontWeight="Bold" Padding="4,2" TextChanged="TxtChp_TextChanged" Margin="0,0,0,8" />
+
+                        <TextBlock Text="Tepelný výkon jednotky (kWt):" Margin="0,0,0,2" />
+                        <TextBox x:Name="txtChpTh" Text="260 kWt" Background="#D9E1F2" BorderBrush="#005A9E" FontWeight="Bold" Padding="4,2" IsReadOnly="True" Margin="0,0,0,8" />
+
+                        <TextBlock Text="Roční provozní hodiny (h/rok):" Margin="0,0,0,2" />
+                        <TextBox Text="6 500 h/rok" Background="#FFF2CC" BorderBrush="#F59E0B" FontWeight="Bold" Padding="4,2" Margin="0,0,0,8" />
+
+                        <Border Background="#E8F5E9" Padding="6" CornerRadius="3">
+                            <TextBlock Text="BONUS: NÁROK NA PROVOZNÍ PODPORU KVET (OTE POZE)" Foreground="#1B5E20" FontWeight="Bold" FontSize="10" />
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Right Column: Solární Termický Ohřev TUV -->
+                <Border Grid.Column="1" Background="#FAFAFA" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="3" Padding="12" Margin="8,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="2. Solární Termický Ohřev TV (EN 12975)" FontWeight="Bold" Foreground="#003366" Margin="0,0,0,8" />
+
+                        <TextBlock Text="Typ kolektorů:" Margin="0,0,0,2" />
+                        <ComboBox SelectedIndex="1" Margin="0,0,0,8">
+                            <ComboBoxItem Content="Ploché selektivní kolektory (Eta0 = 0.81)" />
+                            <ComboBoxItem Content="Vakuové trubicové s Heat Pipe (Eta0 = 0.84, a1 = 1.3)" />
+                        </ComboBox>
+
+                        <TextBlock Text="Apertura kolektorového pole (m²):" Margin="0,0,0,2" />
+                        <TextBox x:Name="txtStArea" Text="60 m²" Background="#FFF2CC" BorderBrush="#F59E0B" FontWeight="Bold" Padding="4,2" TextChanged="TxtSt_TextChanged" Margin="0,0,0,8" />
+
+                        <TextBlock Text="Objem solárního zásobníku teplé vody (litrů):" Margin="0,0,0,2" />
+                        <TextBox Text="3 500 litrů" Background="#FFF2CC" BorderBrush="#F59E0B" FontWeight="Bold" Padding="4,2" Margin="0,0,0,8" />
+
+                        <TextBlock Text="Roční solární zisk pole do TV:" Margin="0,0,0,2" />
+                        <TextBox x:Name="txtStYield" Text="34 200 kWh / rok" Background="#D9E1F2" BorderBrush="#005A9E" FontWeight="Bold" Padding="4,2" IsReadOnly="True" Margin="0,0,0,8" />
+
+                        <Border Background="#FFFDE7" Padding="6" CornerRadius="3">
+                            <TextBlock Text="SOLÁRNÍ POKRÝVÁNÍ TV: 68.5 % LETNÍCH NÁKLADŮ ELIMINOVÁNO" Foreground="#F57F17" FontWeight="Bold" FontSize="10" />
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Bottom KPI Banner -->
+            <Border Background="#F1F8E9" BorderBrush="#C8E6C9" BorderThickness="1" CornerRadius="3" Padding="14">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Výroba elektřiny z CHP:" Foreground="#555" FontSize="11" />
+                        <TextBlock x:Name="txtChpElYield" Text="1 300 MWh / rok" FontSize="18" FontWeight="Bold" Foreground="#003366" Margin="0,4,0,0" />
+                        <TextBlock Text="Úspora nákupu silové elektřiny" FontSize="10" Foreground="#888" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="Dodávka tepla (CHP + Termika):" Foreground="#555" FontSize="11" />
+                        <TextBlock Text="1 724 MWh / rok" FontSize="18" FontWeight="Bold" Foreground="#E65100" Margin="0,4,0,0" />
+                        <TextBlock Text="Náhrada 188 000 m³ zemního plynu" FontSize="10" Foreground="#888" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Celková roční úspora areálu:" Foreground="#555" FontSize="11" />
+                        <TextBlock Text="4 850 000 Kč / rok" FontSize="18" FontWeight="Bold" Foreground="#2E7D32" Margin="0,4,0,0" />
+                        <TextBlock Text="Doba návratnosti investice: 3.4 roku" FontSize="10" Foreground="#888" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

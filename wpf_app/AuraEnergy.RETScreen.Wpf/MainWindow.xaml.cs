@@ -123,7 +123,7 @@ namespace AuraEnergy.RETScreen.Wpf
                 txtViewTitle.Text = header;
 
                 // Dynamické přepínání kontejnerů formulářů
-                if (viewClimate != null && viewPv != null && viewHp != null && viewWbs != null && viewGridArbitrage != null && viewHydrogen != null)
+                if (viewClimate != null && viewPv != null && viewHp != null && viewWbs != null && viewGridArbitrage != null && viewHydrogen != null && viewChp != null && viewEsg != null)
                 {
                     viewClimate.Visibility = Visibility.Collapsed;
                     viewPv.Visibility = Visibility.Collapsed;
@@ -131,8 +131,18 @@ namespace AuraEnergy.RETScreen.Wpf
                     viewWbs.Visibility = Visibility.Collapsed;
                     viewGridArbitrage.Visibility = Visibility.Collapsed;
                     viewHydrogen.Visibility = Visibility.Collapsed;
+                    viewChp.Visibility = Visibility.Collapsed;
+                    viewEsg.Visibility = Visibility.Collapsed;
 
-                    if (header.Contains("FVE") || header.Contains("Fotovoltaika"))
+                    if (header.Contains("Kogenerace") || header.Contains("CHP") || header.Contains("Termika") || header.Contains("solární"))
+                    {
+                        viewChp.Visibility = Visibility.Visible;
+                    }
+                    else if (header.Contains("ESG") || header.Contains("CSRD") || header.Contains("Emobilit") || header.Contains("E-mobilit"))
+                    {
+                        viewEsg.Visibility = Visibility.Visible;
+                    }
+                    else if (header.Contains("FVE") || header.Contains("Fotovoltaika"))
                     {
                         viewPv.Visibility = Visibility.Visible;
                     }
@@ -157,6 +167,48 @@ namespace AuraEnergy.RETScreen.Wpf
                         viewClimate.Visibility = Visibility.Visible;
                     }
                 }
+            }
+        }
+
+        private void BtnShowChp_Click(object sender, RoutedEventArgs e)
+        {
+            if (viewClimate != null && viewPv != null && viewHp != null && viewWbs != null && viewGridArbitrage != null && viewHydrogen != null && viewChp != null && viewEsg != null)
+            {
+                viewClimate.Visibility = Visibility.Collapsed;
+                viewPv.Visibility = Visibility.Collapsed;
+                viewHp.Visibility = Visibility.Collapsed;
+                viewWbs.Visibility = Visibility.Collapsed;
+                viewGridArbitrage.Visibility = Visibility.Collapsed;
+                viewHydrogen.Visibility = Visibility.Collapsed;
+                viewEsg.Visibility = Visibility.Collapsed;
+                viewChp.Visibility = Visibility.Visible;
+                txtViewTitle.Text = "Kogenerace (CHP) & Solární termika";
+            }
+        }
+
+        private void BtnAddChp_Click(object sender, RoutedEventArgs e)
+        {
+            BtnShowChp_Click(sender, e);
+        }
+
+        private void BtnAddSolarThermal_Click(object sender, RoutedEventArgs e)
+        {
+            BtnShowChp_Click(sender, e);
+        }
+
+        private void BtnShowEsg_Click(object sender, RoutedEventArgs e)
+        {
+            if (viewClimate != null && viewPv != null && viewHp != null && viewWbs != null && viewGridArbitrage != null && viewHydrogen != null && viewChp != null && viewEsg != null)
+            {
+                viewClimate.Visibility = Visibility.Collapsed;
+                viewPv.Visibility = Visibility.Collapsed;
+                viewHp.Visibility = Visibility.Collapsed;
+                viewWbs.Visibility = Visibility.Collapsed;
+                viewGridArbitrage.Visibility = Visibility.Collapsed;
+                viewHydrogen.Visibility = Visibility.Collapsed;
+                viewChp.Visibility = Visibility.Collapsed;
+                viewEsg.Visibility = Visibility.Visible;
+                txtViewTitle.Text = "ESG CSRD Audit & E-Mobility (Smart EV)";
             }
         }
 
@@ -384,11 +436,6 @@ namespace AuraEnergy.RETScreen.Wpf
         private void BtnAddWind_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Větrná turbína:\nZvoleno: Vestas V90 2.0 MW (Hub 80m).\nVýpočet křivky Weibull: Odhad 4 120 MWh/rok.", "OZE - Větrná Energetika", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private void BtnAddSolarThermal_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Solární termický ohřev TV:\nZvoleno: 50 m² vakuových kolektorů dle EN 12975.\nSolární podíl TV: 62.5 %.", "HVAC - Termika", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void BtnAuditLighting_Click(object sender, RoutedEventArgs e)

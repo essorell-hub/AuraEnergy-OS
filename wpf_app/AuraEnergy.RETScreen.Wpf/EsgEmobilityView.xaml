@@ -1,0 +1,91 @@
+<UserControl x:Class="AuraEnergy.RETScreen.Wpf.EsgEmobilityView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             Background="White">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="16">
+            <!-- Header Group -->
+            <Border Background="#EDE7F6" BorderBrush="#D1C4E9" BorderThickness="1" CornerRadius="3" Padding="12" Margin="0,0,0,14">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="Firemní E-Mobility (Chytré Nabíjení EV) &amp; ESG / CSRD Uhlíkový Audit" FontSize="15" FontWeight="Bold" Foreground="#4A148C" />
+                        <TextBlock Text="Řízení nabíjení vozového parku dle solární křivky a automatické generování reportu Scope 1, 2, 3 pro banky" Foreground="#555" FontSize="11" Margin="0,2,0,0" />
+                    </StackPanel>
+                    <Button Grid.Column="1" Content="Generovat CSRD ESG Report" Background="#6A1B9A" Foreground="White" FontWeight="Bold" Padding="12,6" Click="BtnEsgReport_Click" />
+                </Grid>
+            </Border>
+
+            <!-- 2 Columns: EV Fleet vs ESG Reporting -->
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Left Column: E-Mobility Fleet Management -->
+                <Border Grid.Column="0" Background="#FAFAFA" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="3" Padding="12" Margin="0,0,8,0">
+                    <StackPanel>
+                        <TextBlock Text="1. Firemní E-Mobility a Wallboxy (Smart EV Charging)" FontWeight="Bold" Foreground="#003366" Margin="0,0,0,8" />
+
+                        <TextBlock Text="Počet nabíjecích bodů (Wallbox 22 kW AC):" Margin="0,0,0,2" />
+                        <TextBox Text="12 nabíjecích stanic" Background="#FFF2CC" BorderBrush="#F59E0B" FontWeight="Bold" Padding="4,2" Margin="0,0,0,8" />
+
+                        <TextBlock Text="Režim dynamického řízení zátěže (DLM):" Margin="0,0,0,2" />
+                        <ComboBox SelectedIndex="0" Margin="0,0,0,8">
+                            <ComboBoxItem Content="Solární optimum (Pouze solární nadvýroba FVE)" />
+                            <ComboBoxItem Content="Dynamické spotové ceny OTE (Hlídání záporných cen)" />
+                            <ComboBoxItem Content="Prioritní rychlé nabíjení manažerských vozů" />
+                        </ComboBox>
+
+                        <TextBlock Text="Roční spotřeba nabíjení flotily (MWh):" Margin="0,0,0,2" />
+                        <TextBox Text="86.4 MWh / rok (Pokryto z FVE ze 72 %)" Background="#D9E1F2" BorderBrush="#005A9E" FontWeight="Bold" Padding="4,2" IsReadOnly="True" Margin="0,0,0,8" />
+
+                        <Border Background="#E8F5E9" Padding="6" CornerRadius="3">
+                            <TextBlock Text="ÚSPORA POHONNÝCH HMOT: -34 000 LITRŮ NAFTY ROČNĚ" Foreground="#1B5E20" FontWeight="Bold" FontSize="10" />
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Right Column: ESG Scope 1, 2, 3 Audit -->
+                <Border Grid.Column="1" Background="#FAFAFA" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="3" Padding="12" Margin="8,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="2. ESG &amp; CSRD Dekarbonizace (Směrnice EU 2022/2464)" FontWeight="Bold" Foreground="#003366" Margin="0,0,0,8" />
+
+                        <TextBlock Text="Scope 1 (Přímé emise - plyn a firemní auta):" Margin="0,0,0,2" />
+                        <TextBox Text="Pokles o 54 % (-142 t CO₂eq / rok)" Background="#D9E1F2" BorderBrush="#005A9E" FontWeight="Bold" Padding="4,2" IsReadOnly="True" Margin="0,0,0,8" />
+
+                        <TextBlock Text="Scope 2 (Nepřímé emise z elektřiny):" Margin="0,0,0,2" />
+                        <TextBox Text="Pokles o 68 % (-210 t CO₂eq / rok)" Background="#D9E1F2" BorderBrush="#005A9E" FontWeight="Bold" Padding="4,2" IsReadOnly="True" Margin="0,0,0,8" />
+
+                        <TextBlock Text="Bankovní Taxonomie EU (Green Asset Ratio):" Margin="0,0,0,2" />
+                        <TextBox Text="92.4 % Shoda s klimatickými cíli (Zelený úvěr s bonifikací -0.4 % p.a.)" Background="#D9E1F2" BorderBrush="#005A9E" FontWeight="Bold" Padding="4,2" IsReadOnly="True" Margin="0,0,0,8" />
+
+                        <Border Background="#EDE7F6" Padding="6" CornerRadius="3">
+                            <TextBlock Text="AUDIT: PŘIPRAVENO PRO NEFINANČNÍ REPORTING Komerční banky / ČSOB / ČS" Foreground="#4A148C" FontWeight="Bold" FontSize="10" />
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Bottom Action: Generování žádosti o připojení PDS -->
+            <Border Background="#E8EAF6" BorderBrush="#C5CAE9" BorderThickness="1" CornerRadius="3" Padding="12">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="Automatický Generátor Žádosti o Připojení FVE/BESS (ČEZ / EG.D / PRE)" FontWeight="Bold" Foreground="#1A237E" />
+                        <TextBlock Text="Vytvoření oficiálního PDF dokumentu s technickými přílohami, certifikáty střídačů dle RfG a výpočtem PNE 33 3430-1" Foreground="#666" FontSize="11" />
+                    </StackPanel>
+                    <Button Grid.Column="1" Content="Generovat Žádost pro Distributora" Background="#283593" Foreground="White" FontWeight="Bold" Padding="10,4" Click="BtnPdsForm_Click" />
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

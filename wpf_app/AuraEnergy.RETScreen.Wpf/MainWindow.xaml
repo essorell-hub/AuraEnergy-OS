@@ -8,8 +8,8 @@
         xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
         xmlns:local="clr-namespace:AuraEnergy.RETScreen.Wpf"
         mc:Ignorable="d"
-        Title="AuraEnergy RETScreen® Expert Suite 2026 - Clean Energy Decision Support"
-        Height="900" Width="1440"
+        Title="AuraEnergy RETScreen® Expert Suite 2026 - Clean Energy Decision Support [FULL VERSION 1.0]"
+        Height="920" Width="1460"
         WindowStartupLocation="CenterScreen">
 
     <Grid Background="#F4F5F7">
@@ -33,8 +33,8 @@
                     <fluent:BackstageTabControl>
                         <fluent:BackstageTabItem Header="Informace o projektu">
                             <StackPanel Margin="20">
-                                <TextBlock Text="AuraEnergy RETScreen Expert Desktop" FontSize="20" FontWeight="Bold" Foreground="#003366" />
-                                <TextBlock Text="Nativní Windows .NET 8 WPF edice s podporou .retx balíčků a 10 187 certifikovaných produktů." Margin="0,5,0,20" />
+                                <TextBlock Text="AuraEnergy RETScreen Expert Desktop [FULL VERSION]" FontSize="20" FontWeight="Bold" Foreground="#003366" />
+                                <TextBlock Text="Nativní Windows .NET 8 WPF edice s podporou .retx balíčků, 10 187 certifikovaných produktů, ESG a PNE sítí." Margin="0,5,0,20" />
                                 <fluent:Button x:Name="btnOpenRetx" Header="Otevřít oficiální RETScreen soubor (.retx)" Click="BtnOpenRetx_Click" Width="320" HorizontalAlignment="Left">
                                     <fluent:Button.Icon>
                                         <iconPacks:PackIconMaterial Kind="FolderOpen" Width="20" Height="20" Foreground="#003366" />
@@ -87,14 +87,14 @@
                             <iconPacks:PackIconMaterial Kind="SolarPower" Width="32" Height="32" Foreground="#FF8C00" />
                         </fluent:Button.LargeIcon>
                     </fluent:Button>
-                    <fluent:Button Header="Větrná turbína" Click="BtnAddWind_Click">
-                        <fluent:Button.LargeIcon>
-                            <iconPacks:PackIconMaterial Kind="WindTurbine" Width="32" Height="32" Foreground="#00B294" />
-                        </fluent:Button.LargeIcon>
-                    </fluent:Button>
                     <fluent:Button Header="Tepelné čerpadlo" Click="BtnAddHp_Click">
                         <fluent:Button.LargeIcon>
                             <iconPacks:PackIconMaterial Kind="HeatPump" Width="32" Height="32" Foreground="#E81123" />
+                        </fluent:Button.LargeIcon>
+                    </fluent:Button>
+                    <fluent:Button Header="Kogenerace CHP" Click="BtnAddChp_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="EngineOutline" Width="32" Height="32" Foreground="#E65100" />
                         </fluent:Button.LargeIcon>
                     </fluent:Button>
                     <fluent:Button Header="Solární ohřev TUV" Click="BtnAddSolarThermal_Click">
@@ -178,8 +178,8 @@
                 </fluent:RibbonGroupBox>
             </fluent:RibbonTabItem>
 
-            <!-- TAB 7: ČESKÉ ROZŠÍŘENÍ (NADRÁMEC ORIGINÁLU RETSCREEN) -->
-            <fluent:RibbonTabItem Header="7. ČEPS &amp; PNE Síť (AuraEnergy+)">
+            <!-- TAB 7: ČESKÉ ROZŠÍŘENÍ (AURA+) -->
+            <fluent:RibbonTabItem Header="7. ČEPS, PNE &amp; Vodík (AuraEnergy+)">
                 <fluent:RibbonGroupBox Header="Česká legislativa a sítě">
                     <fluent:Button Header="PNE 33 3430-1 &amp; SVR" Click="BtnShowGridArbitrage_Click">
                         <fluent:Button.LargeIcon>
@@ -189,6 +189,11 @@
                     <fluent:Button Header="Vodík &amp; Agri-PV" Click="BtnShowHydrogen_Click">
                         <fluent:Button.LargeIcon>
                             <iconPacks:PackIconMaterial Kind="Molecule" Width="32" Height="32" Foreground="#004D40" />
+                        </fluent:Button.LargeIcon>
+                    </fluent:Button>
+                    <fluent:Button Header="E-Mobility &amp; ESG" Click="BtnShowEsg_Click">
+                        <fluent:Button.LargeIcon>
+                            <iconPacks:PackIconMaterial Kind="CarElectric" Width="32" Height="32" Foreground="#4A148C" />
                         </fluent:Button.LargeIcon>
                     </fluent:Button>
                 </fluent:RibbonGroupBox>
@@ -220,7 +225,9 @@
                             <TreeViewItem Header="Navržená energetická soustava" IsExpanded="True">
                                 <TreeViewItem x:Name="itemPv" Header="FVE Elektrárna (monoSi 250 kWp)" />
                                 <TreeViewItem x:Name="itemHp" Header="Tepelné čerpadlo (Země-Voda 120 kWt)" />
+                                <TreeViewItem x:Name="itemChp" Header="Kogenerace CHP &amp; Solární termika" />
                                 <TreeViewItem x:Name="itemHydrogen" Header="Zelený vodík &amp; Agrofotovoltaika" />
+                                <TreeViewItem x:Name="itemEsg" Header="Firemní E-Mobility &amp; ESG Audit" />
                                 <TreeViewItem x:Name="itemGrid" Header="Připojení k síti PNE &amp; Arbitráž OTE" />
                                 <TreeViewItem Header="BESS Bateriové úložiště (300 kWh)" />
                             </TreeViewItem>
@@ -285,14 +292,20 @@
                     <!-- VIEW 3: TEPELNÉ ČERPADLO SUBSYSTÉM -->
                     <local:HeatPumpView x:Name="viewHp" Visibility="Collapsed" />
 
-                    <!-- VIEW 4: WBS ROZPOČET -->
+                    <!-- VIEW 4: KOGENERACE CHP & TERMICKÝ OHŘEV -->
+                    <local:ChpSolarThermalView x:Name="viewChp" Visibility="Collapsed" />
+
+                    <!-- VIEW 5: WBS ROZPOČET -->
                     <local:CostWbsView x:Name="viewWbs" Visibility="Collapsed" />
 
-                    <!-- VIEW 5: PNE 33 3430-1 & ARBITRÁŽ (AURA+) -->
+                    <!-- VIEW 6: PNE 33 3430-1 & ARBITRÁŽ (AURA+) -->
                     <local:CzechGridArbitrageView x:Name="viewGridArbitrage" Visibility="Collapsed" />
 
-                    <!-- VIEW 6: VODÍK & AGRI-PV -->
+                    <!-- VIEW 7: VODÍK & AGRI-PV -->
                     <local:HydrogenAgriPvView x:Name="viewHydrogen" Visibility="Collapsed" />
+
+                    <!-- VIEW 8: E-MOBILITY & ESG AUDIT -->
+                    <local:EsgEmobilityView x:Name="viewEsg" Visibility="Collapsed" />
                 </Grid>
 
                 <!-- DOLE: NATIVNÍ GRAF KUMULATIVNÍCH TOKŮ A TORNADO GRAF (LiveCharts) -->
@@ -332,7 +345,7 @@
                 <TextBlock Text="Certifikovaná databáze: 10 187 komponent | 11 242 meteorologických stanic NASA POWER" Foreground="#E0E0E0" FontSize="10" />
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">
-                <TextBlock Text="AuraEnergy OS v2.0 - 1:1 Nativní C# WPF Replika" Foreground="#81C784" FontWeight="Bold" FontSize="10" Margin="0,0,10,0" />
+                <TextBlock Text="AuraEnergy OS v2.0 - 1:1 Nativní C# WPF Replika [FULL EDITION]" Foreground="#81C784" FontWeight="Bold" FontSize="10" Margin="0,0,10,0" />
             </StatusBarItem>
         </StatusBar>
 
