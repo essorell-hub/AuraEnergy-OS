@@ -45,6 +45,7 @@ from backend.core.retscreen_hvac_renewables_tree import (
     calculate_solar_thermal_heating, calculate_bivalent_heat_pump
 )
 from backend.core.retscreen_dynamic_wbs_engine import calculate_dynamic_wbs_budget
+from backend.core.retscreen_pdf_report import generate_retscreen_pdf_report
 
 PORT = 8080
 FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "frontend")
@@ -567,6 +568,21 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retscreen/export-executive-pdf":
+            try:
+                pdf_bytes = generate_retscreen_pdf_report(payload)
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/pdf')
+                self.send_header('Content-Disposition', 'attachment; filename="RETScreen_Executive_Summary.pdf"')
+                self.send_header('Content-Length', str(len(pdf_bytes)))
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                self.wfile.write(pdf_bytes)
+                return
+            except Exception as e:
+                self._send_json({"error": str(e)}, status=500)
+                return
+
         elif parsed.path == "/api/mv/ipmvp-c-verify":
             dates = payload.get("baseline_dates", [])
             base_e = payload.get("baseline_energy_kwh", [])
@@ -915,6 +931,21 @@ class SamServerHandler(BaseHTTPRequestHandler):
             res = geocode_address_location(query=q)
             self._send_json(res)
             return
+
+        elif parsed.path == "/api/retscreen/export-executive-pdf":
+            try:
+                pdf_bytes = generate_retscreen_pdf_report(payload)
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/pdf')
+                self.send_header('Content-Disposition', 'attachment; filename="RETScreen_Executive_Summary.pdf"')
+                self.send_header('Content-Length', str(len(pdf_bytes)))
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                self.wfile.write(pdf_bytes)
+                return
+            except Exception as e:
+                self._send_json({"error": str(e)}, status=500)
+                return
 
         elif parsed.path == "/api/projects/save":
             save_res = save_project(payload)
@@ -1294,6 +1325,21 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retscreen/export-executive-pdf":
+            try:
+                pdf_bytes = generate_retscreen_pdf_report(payload)
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/pdf')
+                self.send_header('Content-Disposition', 'attachment; filename="RETScreen_Executive_Summary.pdf"')
+                self.send_header('Content-Length', str(len(pdf_bytes)))
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                self.wfile.write(pdf_bytes)
+                return
+            except Exception as e:
+                self._send_json({"error": str(e)}, status=500)
+                return
+
         elif parsed.path == "/api/vpp/day-ahead-mpc":
             cap_kwh = float(payload.get("battery_capacity_kwh", 100.0))
             power_kw = float(payload.get("battery_power_kw", 50.0))
@@ -1630,6 +1676,21 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retscreen/export-executive-pdf":
+            try:
+                pdf_bytes = generate_retscreen_pdf_report(payload)
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/pdf')
+                self.send_header('Content-Disposition', 'attachment; filename="RETScreen_Executive_Summary.pdf"')
+                self.send_header('Content-Length', str(len(pdf_bytes)))
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                self.wfile.write(pdf_bytes)
+                return
+            except Exception as e:
+                self._send_json({"error": str(e)}, status=500)
+                return
+
         elif parsed.path == "/api/vpp/ceps-ancillary":
             flex_kw = float(payload.get("available_flexibility_kw", 100.0))
             srv = payload.get("service_type", "aFRR")
@@ -1964,6 +2025,21 @@ class SamServerHandler(BaseHTTPRequestHandler):
             res = geocode_address_location(query=q)
             self._send_json(res)
             return
+
+        elif parsed.path == "/api/retscreen/export-executive-pdf":
+            try:
+                pdf_bytes = generate_retscreen_pdf_report(payload)
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/pdf')
+                self.send_header('Content-Disposition', 'attachment; filename="RETScreen_Executive_Summary.pdf"')
+                self.send_header('Content-Length', str(len(pdf_bytes)))
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                self.wfile.write(pdf_bytes)
+                return
+            except Exception as e:
+                self._send_json({"error": str(e)}, status=500)
+                return
 
         elif parsed.path == "/api/auth/login":
             email = payload.get("email", "")
@@ -2353,6 +2429,21 @@ class SamServerHandler(BaseHTTPRequestHandler):
             res = geocode_address_location(query=q)
             self._send_json(res)
             return
+
+        elif parsed.path == "/api/retscreen/export-executive-pdf":
+            try:
+                pdf_bytes = generate_retscreen_pdf_report(payload)
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/pdf')
+                self.send_header('Content-Disposition', 'attachment; filename="RETScreen_Executive_Summary.pdf"')
+                self.send_header('Content-Length', str(len(pdf_bytes)))
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                self.wfile.write(pdf_bytes)
+                return
+            except Exception as e:
+                self._send_json({"error": str(e)}, status=500)
+                return
 
         elif parsed.path == "/api/gis/shading-analysis":
             tilt = float(payload.get("tilt_deg", 35.0))
@@ -2759,6 +2850,21 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retscreen/export-executive-pdf":
+            try:
+                pdf_bytes = generate_retscreen_pdf_report(payload)
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/pdf')
+                self.send_header('Content-Disposition', 'attachment; filename="RETScreen_Executive_Summary.pdf"')
+                self.send_header('Content-Length', str(len(pdf_bytes)))
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                self.wfile.write(pdf_bytes)
+                return
+            except Exception as e:
+                self._send_json({"error": str(e)}, status=500)
+                return
+
         elif parsed.path == "/api/cad/generate-sld":
             pv_kwp = float(payload.get("pv_capacity_kwp", 100.0))
             mod_count = int(payload.get("modules_count", round(pv_kwp * 1000.0 / 580.0)))
@@ -3146,6 +3252,21 @@ class SamServerHandler(BaseHTTPRequestHandler):
             res = geocode_address_location(query=q)
             self._send_json(res)
             return
+
+        elif parsed.path == "/api/retscreen/export-executive-pdf":
+            try:
+                pdf_bytes = generate_retscreen_pdf_report(payload)
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/pdf')
+                self.send_header('Content-Disposition', 'attachment; filename="RETScreen_Executive_Summary.pdf"')
+                self.send_header('Content-Length', str(len(pdf_bytes)))
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                self.wfile.write(pdf_bytes)
+                return
+            except Exception as e:
+                self._send_json({"error": str(e)}, status=500)
+                return
 
         self.send_error(404, "API endpoint not found")
 
