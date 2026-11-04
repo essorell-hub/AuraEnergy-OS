@@ -33,6 +33,7 @@ from backend.core.sector_coupling_h2_p2h import simulate_green_hydrogen_producti
 from backend.core.intraday_svr_aggregator import simulate_ceps_svr_revenue, simulate_intraday_imbalance_mitigation
 from backend.core.bim_cable_routing_engine import optimize_cables_and_generate_boq, generate_ifc_bim_stub
 from backend.core.nis2_cybersecurity_engine import evaluate_nis2_cybersecurity_posture
+from backend.core.retscreen_full_engine import calculate_retscreen_complete_feasibility
 
 PORT = 8080
 FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "frontend")
@@ -326,6 +327,75 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retscreen/full-feasibility":
+            ftype = payload.get("facility_type", "Commercial - Office")
+            area = float(payload.get("facility_gross_floor_area_m2", 4500.0))
+            hours = float(payload.get("annual_operating_hours", 3200.0))
+            loc = payload.get("climate_location", "Praha, CZ (50.08°N, 14.43°E)")
+            cdd = float(payload.get("cooling_degree_days", 180.0))
+            hdd = float(payload.get("heating_degree_days", 3100.0))
+
+            b_elec_rate = float(payload.get("base_electricity_rate_eur_kwh", 0.165))
+            b_heat_rate = float(payload.get("base_heating_fuel_rate_eur_kwh", 0.085))
+            b_elec_mwh = float(payload.get("base_annual_electricity_mwh", 650.0))
+            b_heat_mwh = float(payload.get("base_annual_heating_mwh", 420.0))
+
+            pv_gen = float(payload.get("proposed_pv_generation_mwh", 125.0))
+            pv_self = float(payload.get("proposed_pv_self_consumption_pct", 75.0))
+            export_tariff = float(payload.get("proposed_surplus_export_tariff_eur_kwh", 0.055))
+            ee_save = float(payload.get("proposed_energy_efficiency_savings_pct", 18.0))
+
+            c_feas = float(payload.get("cost_feasibility_study_eur", 3500.0))
+            c_dev = float(payload.get("cost_development_permits_eur", 4500.0))
+            c_eng = float(payload.get("cost_engineering_design_eur", 5800.0))
+            c_equip = float(payload.get("cost_equipment_pv_bess_eur", 65000.0))
+            c_bos = float(payload.get("cost_balance_of_system_eur", 12000.0))
+            c_inst = float(payload.get("cost_installation_labor_eur", 11500.0))
+            c_cont = float(payload.get("cost_contingency_reserve_eur", 4000.0))
+            om_fixed = float(payload.get("annual_om_fixed_eur", 1200.0))
+
+            infl = float(payload.get("inflation_rate_pct", 2.5))
+            disc = float(payload.get("discount_rate_pct", 6.0))
+            debt_rat = float(payload.get("debt_ratio_pct", 70.0))
+            debt_int = float(payload.get("debt_interest_rate_pct", 5.2))
+            debt_t = int(payload.get("debt_term_years", 15))
+            tax_r = float(payload.get("income_tax_rate_pct", 21.0))
+            depr_y = int(payload.get("depreciation_years", 10))
+
+            res = calculate_retscreen_complete_feasibility(
+                facility_type=ftype,
+                facility_gross_floor_area_m2=area,
+                annual_operating_hours=hours,
+                climate_location=loc,
+                cooling_degree_days=cdd,
+                heating_degree_days=hdd,
+                base_electricity_rate_eur_kwh=b_elec_rate,
+                base_heating_fuel_rate_eur_kwh=b_heat_rate,
+                base_annual_electricity_mwh=b_elec_mwh,
+                base_annual_heating_mwh=b_heat_mwh,
+                proposed_pv_generation_mwh=pv_gen,
+                proposed_pv_self_consumption_pct=pv_self,
+                proposed_surplus_export_tariff_eur_kwh=export_tariff,
+                proposed_energy_efficiency_savings_pct=ee_save,
+                cost_feasibility_study_eur=c_feas,
+                cost_development_permits_eur=c_dev,
+                cost_engineering_design_eur=c_eng,
+                cost_equipment_pv_bess_eur=c_equip,
+                cost_balance_of_system_eur=c_bos,
+                cost_installation_labor_eur=c_inst,
+                cost_contingency_reserve_eur=c_cont,
+                annual_om_fixed_eur=om_fixed,
+                inflation_rate_pct=infl,
+                discount_rate_pct=disc,
+                debt_ratio_pct=debt_rat,
+                debt_interest_rate_pct=debt_int,
+                debt_term_years=debt_t,
+                income_tax_rate_pct=tax_r,
+                depreciation_years=depr_y
+            )
+            self._send_json(res)
+            return
+
         elif parsed.path == "/api/mv/ipmvp-c-verify":
             dates = payload.get("baseline_dates", [])
             base_e = payload.get("baseline_energy_kwh", [])
@@ -443,6 +513,75 @@ class SamServerHandler(BaseHTTPRequestHandler):
             fw = bool(payload.get("firmware_up_to_date", True))
             ot = bool(payload.get("air_gapped_ot_network", True))
             res = evaluate_nis2_cybersecurity_posture(scada_protocol=proto, mfa_enabled=mfa, firmware_up_to_date=fw, air_gapped_ot_network=ot)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/full-feasibility":
+            ftype = payload.get("facility_type", "Commercial - Office")
+            area = float(payload.get("facility_gross_floor_area_m2", 4500.0))
+            hours = float(payload.get("annual_operating_hours", 3200.0))
+            loc = payload.get("climate_location", "Praha, CZ (50.08°N, 14.43°E)")
+            cdd = float(payload.get("cooling_degree_days", 180.0))
+            hdd = float(payload.get("heating_degree_days", 3100.0))
+
+            b_elec_rate = float(payload.get("base_electricity_rate_eur_kwh", 0.165))
+            b_heat_rate = float(payload.get("base_heating_fuel_rate_eur_kwh", 0.085))
+            b_elec_mwh = float(payload.get("base_annual_electricity_mwh", 650.0))
+            b_heat_mwh = float(payload.get("base_annual_heating_mwh", 420.0))
+
+            pv_gen = float(payload.get("proposed_pv_generation_mwh", 125.0))
+            pv_self = float(payload.get("proposed_pv_self_consumption_pct", 75.0))
+            export_tariff = float(payload.get("proposed_surplus_export_tariff_eur_kwh", 0.055))
+            ee_save = float(payload.get("proposed_energy_efficiency_savings_pct", 18.0))
+
+            c_feas = float(payload.get("cost_feasibility_study_eur", 3500.0))
+            c_dev = float(payload.get("cost_development_permits_eur", 4500.0))
+            c_eng = float(payload.get("cost_engineering_design_eur", 5800.0))
+            c_equip = float(payload.get("cost_equipment_pv_bess_eur", 65000.0))
+            c_bos = float(payload.get("cost_balance_of_system_eur", 12000.0))
+            c_inst = float(payload.get("cost_installation_labor_eur", 11500.0))
+            c_cont = float(payload.get("cost_contingency_reserve_eur", 4000.0))
+            om_fixed = float(payload.get("annual_om_fixed_eur", 1200.0))
+
+            infl = float(payload.get("inflation_rate_pct", 2.5))
+            disc = float(payload.get("discount_rate_pct", 6.0))
+            debt_rat = float(payload.get("debt_ratio_pct", 70.0))
+            debt_int = float(payload.get("debt_interest_rate_pct", 5.2))
+            debt_t = int(payload.get("debt_term_years", 15))
+            tax_r = float(payload.get("income_tax_rate_pct", 21.0))
+            depr_y = int(payload.get("depreciation_years", 10))
+
+            res = calculate_retscreen_complete_feasibility(
+                facility_type=ftype,
+                facility_gross_floor_area_m2=area,
+                annual_operating_hours=hours,
+                climate_location=loc,
+                cooling_degree_days=cdd,
+                heating_degree_days=hdd,
+                base_electricity_rate_eur_kwh=b_elec_rate,
+                base_heating_fuel_rate_eur_kwh=b_heat_rate,
+                base_annual_electricity_mwh=b_elec_mwh,
+                base_annual_heating_mwh=b_heat_mwh,
+                proposed_pv_generation_mwh=pv_gen,
+                proposed_pv_self_consumption_pct=pv_self,
+                proposed_surplus_export_tariff_eur_kwh=export_tariff,
+                proposed_energy_efficiency_savings_pct=ee_save,
+                cost_feasibility_study_eur=c_feas,
+                cost_development_permits_eur=c_dev,
+                cost_engineering_design_eur=c_eng,
+                cost_equipment_pv_bess_eur=c_equip,
+                cost_balance_of_system_eur=c_bos,
+                cost_installation_labor_eur=c_inst,
+                cost_contingency_reserve_eur=c_cont,
+                annual_om_fixed_eur=om_fixed,
+                inflation_rate_pct=infl,
+                discount_rate_pct=disc,
+                debt_ratio_pct=debt_rat,
+                debt_interest_rate_pct=debt_int,
+                debt_term_years=debt_t,
+                income_tax_rate_pct=tax_r,
+                depreciation_years=depr_y
+            )
             self._send_json(res)
             return
 
@@ -595,6 +734,75 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retscreen/full-feasibility":
+            ftype = payload.get("facility_type", "Commercial - Office")
+            area = float(payload.get("facility_gross_floor_area_m2", 4500.0))
+            hours = float(payload.get("annual_operating_hours", 3200.0))
+            loc = payload.get("climate_location", "Praha, CZ (50.08°N, 14.43°E)")
+            cdd = float(payload.get("cooling_degree_days", 180.0))
+            hdd = float(payload.get("heating_degree_days", 3100.0))
+
+            b_elec_rate = float(payload.get("base_electricity_rate_eur_kwh", 0.165))
+            b_heat_rate = float(payload.get("base_heating_fuel_rate_eur_kwh", 0.085))
+            b_elec_mwh = float(payload.get("base_annual_electricity_mwh", 650.0))
+            b_heat_mwh = float(payload.get("base_annual_heating_mwh", 420.0))
+
+            pv_gen = float(payload.get("proposed_pv_generation_mwh", 125.0))
+            pv_self = float(payload.get("proposed_pv_self_consumption_pct", 75.0))
+            export_tariff = float(payload.get("proposed_surplus_export_tariff_eur_kwh", 0.055))
+            ee_save = float(payload.get("proposed_energy_efficiency_savings_pct", 18.0))
+
+            c_feas = float(payload.get("cost_feasibility_study_eur", 3500.0))
+            c_dev = float(payload.get("cost_development_permits_eur", 4500.0))
+            c_eng = float(payload.get("cost_engineering_design_eur", 5800.0))
+            c_equip = float(payload.get("cost_equipment_pv_bess_eur", 65000.0))
+            c_bos = float(payload.get("cost_balance_of_system_eur", 12000.0))
+            c_inst = float(payload.get("cost_installation_labor_eur", 11500.0))
+            c_cont = float(payload.get("cost_contingency_reserve_eur", 4000.0))
+            om_fixed = float(payload.get("annual_om_fixed_eur", 1200.0))
+
+            infl = float(payload.get("inflation_rate_pct", 2.5))
+            disc = float(payload.get("discount_rate_pct", 6.0))
+            debt_rat = float(payload.get("debt_ratio_pct", 70.0))
+            debt_int = float(payload.get("debt_interest_rate_pct", 5.2))
+            debt_t = int(payload.get("debt_term_years", 15))
+            tax_r = float(payload.get("income_tax_rate_pct", 21.0))
+            depr_y = int(payload.get("depreciation_years", 10))
+
+            res = calculate_retscreen_complete_feasibility(
+                facility_type=ftype,
+                facility_gross_floor_area_m2=area,
+                annual_operating_hours=hours,
+                climate_location=loc,
+                cooling_degree_days=cdd,
+                heating_degree_days=hdd,
+                base_electricity_rate_eur_kwh=b_elec_rate,
+                base_heating_fuel_rate_eur_kwh=b_heat_rate,
+                base_annual_electricity_mwh=b_elec_mwh,
+                base_annual_heating_mwh=b_heat_mwh,
+                proposed_pv_generation_mwh=pv_gen,
+                proposed_pv_self_consumption_pct=pv_self,
+                proposed_surplus_export_tariff_eur_kwh=export_tariff,
+                proposed_energy_efficiency_savings_pct=ee_save,
+                cost_feasibility_study_eur=c_feas,
+                cost_development_permits_eur=c_dev,
+                cost_engineering_design_eur=c_eng,
+                cost_equipment_pv_bess_eur=c_equip,
+                cost_balance_of_system_eur=c_bos,
+                cost_installation_labor_eur=c_inst,
+                cost_contingency_reserve_eur=c_cont,
+                annual_om_fixed_eur=om_fixed,
+                inflation_rate_pct=infl,
+                discount_rate_pct=disc,
+                debt_ratio_pct=debt_rat,
+                debt_interest_rate_pct=debt_int,
+                debt_term_years=debt_t,
+                income_tax_rate_pct=tax_r,
+                depreciation_years=depr_y
+            )
+            self._send_json(res)
+            return
+
         elif parsed.path == "/api/vpp/day-ahead-mpc":
             cap_kwh = float(payload.get("battery_capacity_kwh", 100.0))
             power_kw = float(payload.get("battery_power_kw", 50.0))
@@ -702,6 +910,75 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retscreen/full-feasibility":
+            ftype = payload.get("facility_type", "Commercial - Office")
+            area = float(payload.get("facility_gross_floor_area_m2", 4500.0))
+            hours = float(payload.get("annual_operating_hours", 3200.0))
+            loc = payload.get("climate_location", "Praha, CZ (50.08°N, 14.43°E)")
+            cdd = float(payload.get("cooling_degree_days", 180.0))
+            hdd = float(payload.get("heating_degree_days", 3100.0))
+
+            b_elec_rate = float(payload.get("base_electricity_rate_eur_kwh", 0.165))
+            b_heat_rate = float(payload.get("base_heating_fuel_rate_eur_kwh", 0.085))
+            b_elec_mwh = float(payload.get("base_annual_electricity_mwh", 650.0))
+            b_heat_mwh = float(payload.get("base_annual_heating_mwh", 420.0))
+
+            pv_gen = float(payload.get("proposed_pv_generation_mwh", 125.0))
+            pv_self = float(payload.get("proposed_pv_self_consumption_pct", 75.0))
+            export_tariff = float(payload.get("proposed_surplus_export_tariff_eur_kwh", 0.055))
+            ee_save = float(payload.get("proposed_energy_efficiency_savings_pct", 18.0))
+
+            c_feas = float(payload.get("cost_feasibility_study_eur", 3500.0))
+            c_dev = float(payload.get("cost_development_permits_eur", 4500.0))
+            c_eng = float(payload.get("cost_engineering_design_eur", 5800.0))
+            c_equip = float(payload.get("cost_equipment_pv_bess_eur", 65000.0))
+            c_bos = float(payload.get("cost_balance_of_system_eur", 12000.0))
+            c_inst = float(payload.get("cost_installation_labor_eur", 11500.0))
+            c_cont = float(payload.get("cost_contingency_reserve_eur", 4000.0))
+            om_fixed = float(payload.get("annual_om_fixed_eur", 1200.0))
+
+            infl = float(payload.get("inflation_rate_pct", 2.5))
+            disc = float(payload.get("discount_rate_pct", 6.0))
+            debt_rat = float(payload.get("debt_ratio_pct", 70.0))
+            debt_int = float(payload.get("debt_interest_rate_pct", 5.2))
+            debt_t = int(payload.get("debt_term_years", 15))
+            tax_r = float(payload.get("income_tax_rate_pct", 21.0))
+            depr_y = int(payload.get("depreciation_years", 10))
+
+            res = calculate_retscreen_complete_feasibility(
+                facility_type=ftype,
+                facility_gross_floor_area_m2=area,
+                annual_operating_hours=hours,
+                climate_location=loc,
+                cooling_degree_days=cdd,
+                heating_degree_days=hdd,
+                base_electricity_rate_eur_kwh=b_elec_rate,
+                base_heating_fuel_rate_eur_kwh=b_heat_rate,
+                base_annual_electricity_mwh=b_elec_mwh,
+                base_annual_heating_mwh=b_heat_mwh,
+                proposed_pv_generation_mwh=pv_gen,
+                proposed_pv_self_consumption_pct=pv_self,
+                proposed_surplus_export_tariff_eur_kwh=export_tariff,
+                proposed_energy_efficiency_savings_pct=ee_save,
+                cost_feasibility_study_eur=c_feas,
+                cost_development_permits_eur=c_dev,
+                cost_engineering_design_eur=c_eng,
+                cost_equipment_pv_bess_eur=c_equip,
+                cost_balance_of_system_eur=c_bos,
+                cost_installation_labor_eur=c_inst,
+                cost_contingency_reserve_eur=c_cont,
+                annual_om_fixed_eur=om_fixed,
+                inflation_rate_pct=infl,
+                discount_rate_pct=disc,
+                debt_ratio_pct=debt_rat,
+                debt_interest_rate_pct=debt_int,
+                debt_term_years=debt_t,
+                income_tax_rate_pct=tax_r,
+                depreciation_years=depr_y
+            )
+            self._send_json(res)
+            return
+
         elif parsed.path == "/api/vpp/ceps-ancillary":
             flex_kw = float(payload.get("available_flexibility_kw", 100.0))
             srv = payload.get("service_type", "aFRR")
@@ -805,6 +1082,75 @@ class SamServerHandler(BaseHTTPRequestHandler):
             fw = bool(payload.get("firmware_up_to_date", True))
             ot = bool(payload.get("air_gapped_ot_network", True))
             res = evaluate_nis2_cybersecurity_posture(scada_protocol=proto, mfa_enabled=mfa, firmware_up_to_date=fw, air_gapped_ot_network=ot)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/full-feasibility":
+            ftype = payload.get("facility_type", "Commercial - Office")
+            area = float(payload.get("facility_gross_floor_area_m2", 4500.0))
+            hours = float(payload.get("annual_operating_hours", 3200.0))
+            loc = payload.get("climate_location", "Praha, CZ (50.08°N, 14.43°E)")
+            cdd = float(payload.get("cooling_degree_days", 180.0))
+            hdd = float(payload.get("heating_degree_days", 3100.0))
+
+            b_elec_rate = float(payload.get("base_electricity_rate_eur_kwh", 0.165))
+            b_heat_rate = float(payload.get("base_heating_fuel_rate_eur_kwh", 0.085))
+            b_elec_mwh = float(payload.get("base_annual_electricity_mwh", 650.0))
+            b_heat_mwh = float(payload.get("base_annual_heating_mwh", 420.0))
+
+            pv_gen = float(payload.get("proposed_pv_generation_mwh", 125.0))
+            pv_self = float(payload.get("proposed_pv_self_consumption_pct", 75.0))
+            export_tariff = float(payload.get("proposed_surplus_export_tariff_eur_kwh", 0.055))
+            ee_save = float(payload.get("proposed_energy_efficiency_savings_pct", 18.0))
+
+            c_feas = float(payload.get("cost_feasibility_study_eur", 3500.0))
+            c_dev = float(payload.get("cost_development_permits_eur", 4500.0))
+            c_eng = float(payload.get("cost_engineering_design_eur", 5800.0))
+            c_equip = float(payload.get("cost_equipment_pv_bess_eur", 65000.0))
+            c_bos = float(payload.get("cost_balance_of_system_eur", 12000.0))
+            c_inst = float(payload.get("cost_installation_labor_eur", 11500.0))
+            c_cont = float(payload.get("cost_contingency_reserve_eur", 4000.0))
+            om_fixed = float(payload.get("annual_om_fixed_eur", 1200.0))
+
+            infl = float(payload.get("inflation_rate_pct", 2.5))
+            disc = float(payload.get("discount_rate_pct", 6.0))
+            debt_rat = float(payload.get("debt_ratio_pct", 70.0))
+            debt_int = float(payload.get("debt_interest_rate_pct", 5.2))
+            debt_t = int(payload.get("debt_term_years", 15))
+            tax_r = float(payload.get("income_tax_rate_pct", 21.0))
+            depr_y = int(payload.get("depreciation_years", 10))
+
+            res = calculate_retscreen_complete_feasibility(
+                facility_type=ftype,
+                facility_gross_floor_area_m2=area,
+                annual_operating_hours=hours,
+                climate_location=loc,
+                cooling_degree_days=cdd,
+                heating_degree_days=hdd,
+                base_electricity_rate_eur_kwh=b_elec_rate,
+                base_heating_fuel_rate_eur_kwh=b_heat_rate,
+                base_annual_electricity_mwh=b_elec_mwh,
+                base_annual_heating_mwh=b_heat_mwh,
+                proposed_pv_generation_mwh=pv_gen,
+                proposed_pv_self_consumption_pct=pv_self,
+                proposed_surplus_export_tariff_eur_kwh=export_tariff,
+                proposed_energy_efficiency_savings_pct=ee_save,
+                cost_feasibility_study_eur=c_feas,
+                cost_development_permits_eur=c_dev,
+                cost_engineering_design_eur=c_eng,
+                cost_equipment_pv_bess_eur=c_equip,
+                cost_balance_of_system_eur=c_bos,
+                cost_installation_labor_eur=c_inst,
+                cost_contingency_reserve_eur=c_cont,
+                annual_om_fixed_eur=om_fixed,
+                inflation_rate_pct=infl,
+                discount_rate_pct=disc,
+                debt_ratio_pct=debt_rat,
+                debt_interest_rate_pct=debt_int,
+                debt_term_years=debt_t,
+                income_tax_rate_pct=tax_r,
+                depreciation_years=depr_y
+            )
             self._send_json(res)
             return
 
@@ -965,6 +1311,75 @@ class SamServerHandler(BaseHTTPRequestHandler):
             fw = bool(payload.get("firmware_up_to_date", True))
             ot = bool(payload.get("air_gapped_ot_network", True))
             res = evaluate_nis2_cybersecurity_posture(scada_protocol=proto, mfa_enabled=mfa, firmware_up_to_date=fw, air_gapped_ot_network=ot)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/full-feasibility":
+            ftype = payload.get("facility_type", "Commercial - Office")
+            area = float(payload.get("facility_gross_floor_area_m2", 4500.0))
+            hours = float(payload.get("annual_operating_hours", 3200.0))
+            loc = payload.get("climate_location", "Praha, CZ (50.08°N, 14.43°E)")
+            cdd = float(payload.get("cooling_degree_days", 180.0))
+            hdd = float(payload.get("heating_degree_days", 3100.0))
+
+            b_elec_rate = float(payload.get("base_electricity_rate_eur_kwh", 0.165))
+            b_heat_rate = float(payload.get("base_heating_fuel_rate_eur_kwh", 0.085))
+            b_elec_mwh = float(payload.get("base_annual_electricity_mwh", 650.0))
+            b_heat_mwh = float(payload.get("base_annual_heating_mwh", 420.0))
+
+            pv_gen = float(payload.get("proposed_pv_generation_mwh", 125.0))
+            pv_self = float(payload.get("proposed_pv_self_consumption_pct", 75.0))
+            export_tariff = float(payload.get("proposed_surplus_export_tariff_eur_kwh", 0.055))
+            ee_save = float(payload.get("proposed_energy_efficiency_savings_pct", 18.0))
+
+            c_feas = float(payload.get("cost_feasibility_study_eur", 3500.0))
+            c_dev = float(payload.get("cost_development_permits_eur", 4500.0))
+            c_eng = float(payload.get("cost_engineering_design_eur", 5800.0))
+            c_equip = float(payload.get("cost_equipment_pv_bess_eur", 65000.0))
+            c_bos = float(payload.get("cost_balance_of_system_eur", 12000.0))
+            c_inst = float(payload.get("cost_installation_labor_eur", 11500.0))
+            c_cont = float(payload.get("cost_contingency_reserve_eur", 4000.0))
+            om_fixed = float(payload.get("annual_om_fixed_eur", 1200.0))
+
+            infl = float(payload.get("inflation_rate_pct", 2.5))
+            disc = float(payload.get("discount_rate_pct", 6.0))
+            debt_rat = float(payload.get("debt_ratio_pct", 70.0))
+            debt_int = float(payload.get("debt_interest_rate_pct", 5.2))
+            debt_t = int(payload.get("debt_term_years", 15))
+            tax_r = float(payload.get("income_tax_rate_pct", 21.0))
+            depr_y = int(payload.get("depreciation_years", 10))
+
+            res = calculate_retscreen_complete_feasibility(
+                facility_type=ftype,
+                facility_gross_floor_area_m2=area,
+                annual_operating_hours=hours,
+                climate_location=loc,
+                cooling_degree_days=cdd,
+                heating_degree_days=hdd,
+                base_electricity_rate_eur_kwh=b_elec_rate,
+                base_heating_fuel_rate_eur_kwh=b_heat_rate,
+                base_annual_electricity_mwh=b_elec_mwh,
+                base_annual_heating_mwh=b_heat_mwh,
+                proposed_pv_generation_mwh=pv_gen,
+                proposed_pv_self_consumption_pct=pv_self,
+                proposed_surplus_export_tariff_eur_kwh=export_tariff,
+                proposed_energy_efficiency_savings_pct=ee_save,
+                cost_feasibility_study_eur=c_feas,
+                cost_development_permits_eur=c_dev,
+                cost_engineering_design_eur=c_eng,
+                cost_equipment_pv_bess_eur=c_equip,
+                cost_balance_of_system_eur=c_bos,
+                cost_installation_labor_eur=c_inst,
+                cost_contingency_reserve_eur=c_cont,
+                annual_om_fixed_eur=om_fixed,
+                inflation_rate_pct=infl,
+                discount_rate_pct=disc,
+                debt_ratio_pct=debt_rat,
+                debt_interest_rate_pct=debt_int,
+                debt_term_years=debt_t,
+                income_tax_rate_pct=tax_r,
+                depreciation_years=depr_y
+            )
             self._send_json(res)
             return
 
@@ -1144,6 +1559,75 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/retscreen/full-feasibility":
+            ftype = payload.get("facility_type", "Commercial - Office")
+            area = float(payload.get("facility_gross_floor_area_m2", 4500.0))
+            hours = float(payload.get("annual_operating_hours", 3200.0))
+            loc = payload.get("climate_location", "Praha, CZ (50.08°N, 14.43°E)")
+            cdd = float(payload.get("cooling_degree_days", 180.0))
+            hdd = float(payload.get("heating_degree_days", 3100.0))
+
+            b_elec_rate = float(payload.get("base_electricity_rate_eur_kwh", 0.165))
+            b_heat_rate = float(payload.get("base_heating_fuel_rate_eur_kwh", 0.085))
+            b_elec_mwh = float(payload.get("base_annual_electricity_mwh", 650.0))
+            b_heat_mwh = float(payload.get("base_annual_heating_mwh", 420.0))
+
+            pv_gen = float(payload.get("proposed_pv_generation_mwh", 125.0))
+            pv_self = float(payload.get("proposed_pv_self_consumption_pct", 75.0))
+            export_tariff = float(payload.get("proposed_surplus_export_tariff_eur_kwh", 0.055))
+            ee_save = float(payload.get("proposed_energy_efficiency_savings_pct", 18.0))
+
+            c_feas = float(payload.get("cost_feasibility_study_eur", 3500.0))
+            c_dev = float(payload.get("cost_development_permits_eur", 4500.0))
+            c_eng = float(payload.get("cost_engineering_design_eur", 5800.0))
+            c_equip = float(payload.get("cost_equipment_pv_bess_eur", 65000.0))
+            c_bos = float(payload.get("cost_balance_of_system_eur", 12000.0))
+            c_inst = float(payload.get("cost_installation_labor_eur", 11500.0))
+            c_cont = float(payload.get("cost_contingency_reserve_eur", 4000.0))
+            om_fixed = float(payload.get("annual_om_fixed_eur", 1200.0))
+
+            infl = float(payload.get("inflation_rate_pct", 2.5))
+            disc = float(payload.get("discount_rate_pct", 6.0))
+            debt_rat = float(payload.get("debt_ratio_pct", 70.0))
+            debt_int = float(payload.get("debt_interest_rate_pct", 5.2))
+            debt_t = int(payload.get("debt_term_years", 15))
+            tax_r = float(payload.get("income_tax_rate_pct", 21.0))
+            depr_y = int(payload.get("depreciation_years", 10))
+
+            res = calculate_retscreen_complete_feasibility(
+                facility_type=ftype,
+                facility_gross_floor_area_m2=area,
+                annual_operating_hours=hours,
+                climate_location=loc,
+                cooling_degree_days=cdd,
+                heating_degree_days=hdd,
+                base_electricity_rate_eur_kwh=b_elec_rate,
+                base_heating_fuel_rate_eur_kwh=b_heat_rate,
+                base_annual_electricity_mwh=b_elec_mwh,
+                base_annual_heating_mwh=b_heat_mwh,
+                proposed_pv_generation_mwh=pv_gen,
+                proposed_pv_self_consumption_pct=pv_self,
+                proposed_surplus_export_tariff_eur_kwh=export_tariff,
+                proposed_energy_efficiency_savings_pct=ee_save,
+                cost_feasibility_study_eur=c_feas,
+                cost_development_permits_eur=c_dev,
+                cost_engineering_design_eur=c_eng,
+                cost_equipment_pv_bess_eur=c_equip,
+                cost_balance_of_system_eur=c_bos,
+                cost_installation_labor_eur=c_inst,
+                cost_contingency_reserve_eur=c_cont,
+                annual_om_fixed_eur=om_fixed,
+                inflation_rate_pct=infl,
+                discount_rate_pct=disc,
+                debt_ratio_pct=debt_rat,
+                debt_interest_rate_pct=debt_int,
+                debt_term_years=debt_t,
+                income_tax_rate_pct=tax_r,
+                depreciation_years=depr_y
+            )
+            self._send_json(res)
+            return
+
         elif parsed.path == "/api/cad/generate-sld":
             pv_kwp = float(payload.get("pv_capacity_kwp", 100.0))
             mod_count = int(payload.get("modules_count", round(pv_kwp * 1000.0 / 580.0)))
@@ -1300,6 +1784,75 @@ class SamServerHandler(BaseHTTPRequestHandler):
             fw = bool(payload.get("firmware_up_to_date", True))
             ot = bool(payload.get("air_gapped_ot_network", True))
             res = evaluate_nis2_cybersecurity_posture(scada_protocol=proto, mfa_enabled=mfa, firmware_up_to_date=fw, air_gapped_ot_network=ot)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/retscreen/full-feasibility":
+            ftype = payload.get("facility_type", "Commercial - Office")
+            area = float(payload.get("facility_gross_floor_area_m2", 4500.0))
+            hours = float(payload.get("annual_operating_hours", 3200.0))
+            loc = payload.get("climate_location", "Praha, CZ (50.08°N, 14.43°E)")
+            cdd = float(payload.get("cooling_degree_days", 180.0))
+            hdd = float(payload.get("heating_degree_days", 3100.0))
+
+            b_elec_rate = float(payload.get("base_electricity_rate_eur_kwh", 0.165))
+            b_heat_rate = float(payload.get("base_heating_fuel_rate_eur_kwh", 0.085))
+            b_elec_mwh = float(payload.get("base_annual_electricity_mwh", 650.0))
+            b_heat_mwh = float(payload.get("base_annual_heating_mwh", 420.0))
+
+            pv_gen = float(payload.get("proposed_pv_generation_mwh", 125.0))
+            pv_self = float(payload.get("proposed_pv_self_consumption_pct", 75.0))
+            export_tariff = float(payload.get("proposed_surplus_export_tariff_eur_kwh", 0.055))
+            ee_save = float(payload.get("proposed_energy_efficiency_savings_pct", 18.0))
+
+            c_feas = float(payload.get("cost_feasibility_study_eur", 3500.0))
+            c_dev = float(payload.get("cost_development_permits_eur", 4500.0))
+            c_eng = float(payload.get("cost_engineering_design_eur", 5800.0))
+            c_equip = float(payload.get("cost_equipment_pv_bess_eur", 65000.0))
+            c_bos = float(payload.get("cost_balance_of_system_eur", 12000.0))
+            c_inst = float(payload.get("cost_installation_labor_eur", 11500.0))
+            c_cont = float(payload.get("cost_contingency_reserve_eur", 4000.0))
+            om_fixed = float(payload.get("annual_om_fixed_eur", 1200.0))
+
+            infl = float(payload.get("inflation_rate_pct", 2.5))
+            disc = float(payload.get("discount_rate_pct", 6.0))
+            debt_rat = float(payload.get("debt_ratio_pct", 70.0))
+            debt_int = float(payload.get("debt_interest_rate_pct", 5.2))
+            debt_t = int(payload.get("debt_term_years", 15))
+            tax_r = float(payload.get("income_tax_rate_pct", 21.0))
+            depr_y = int(payload.get("depreciation_years", 10))
+
+            res = calculate_retscreen_complete_feasibility(
+                facility_type=ftype,
+                facility_gross_floor_area_m2=area,
+                annual_operating_hours=hours,
+                climate_location=loc,
+                cooling_degree_days=cdd,
+                heating_degree_days=hdd,
+                base_electricity_rate_eur_kwh=b_elec_rate,
+                base_heating_fuel_rate_eur_kwh=b_heat_rate,
+                base_annual_electricity_mwh=b_elec_mwh,
+                base_annual_heating_mwh=b_heat_mwh,
+                proposed_pv_generation_mwh=pv_gen,
+                proposed_pv_self_consumption_pct=pv_self,
+                proposed_surplus_export_tariff_eur_kwh=export_tariff,
+                proposed_energy_efficiency_savings_pct=ee_save,
+                cost_feasibility_study_eur=c_feas,
+                cost_development_permits_eur=c_dev,
+                cost_engineering_design_eur=c_eng,
+                cost_equipment_pv_bess_eur=c_equip,
+                cost_balance_of_system_eur=c_bos,
+                cost_installation_labor_eur=c_inst,
+                cost_contingency_reserve_eur=c_cont,
+                annual_om_fixed_eur=om_fixed,
+                inflation_rate_pct=infl,
+                discount_rate_pct=disc,
+                debt_ratio_pct=debt_rat,
+                debt_interest_rate_pct=debt_int,
+                debt_term_years=debt_t,
+                income_tax_rate_pct=tax_r,
+                depreciation_years=depr_y
+            )
             self._send_json(res)
             return
 
