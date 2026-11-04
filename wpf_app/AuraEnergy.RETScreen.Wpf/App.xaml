@@ -1,0 +1,25 @@
+<Application x:Class="AuraEnergy.RETScreen.Wpf.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:AuraEnergy.RETScreen.Wpf"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Fluent;component/Themes/Generic.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Fluent;component/Themes/Themes/Light.Cobalt.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- RETScreen Classic Typography and Cell Styling -->
+            <SolidColorBrush x:Key="RetInputBrush" Color="#FFF2CC" />
+            <SolidColorBrush x:Key="RetOutputBrush" Color="#D9E1F2" />
+            <SolidColorBrush x:Key="RetBorderBrush" Color="#D4D4D4" />
+            <SolidColorBrush x:Key="RetHeaderBrush" Color="#003366" />
+
+            <Style TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
