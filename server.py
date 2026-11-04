@@ -35,6 +35,7 @@ from backend.core.bim_cable_routing_engine import optimize_cables_and_generate_b
 from backend.core.nis2_cybersecurity_engine import evaluate_nis2_cybersecurity_posture
 from backend.core.retscreen_full_engine import calculate_retscreen_complete_feasibility
 from backend.core.retscreen_suite_advanced import run_virtual_energy_analyzer, calculate_performance_cusum, aggregate_enterprise_portfolio
+from backend.core.nasa_gis_location_engine import fetch_nasa_power_climate_data, geocode_address_location
 
 PORT = 8080
 FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "frontend")
@@ -421,6 +422,20 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/climate/nasa-power":
+            lat = float(payload.get("latitude", 50.08))
+            lon = float(payload.get("longitude", 14.43))
+            elev = float(payload.get("elevation_m", 230.0))
+            res = fetch_nasa_power_climate_data(latitude=lat, longitude=lon, elevation_m=elev)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/climate/geocode-location":
+            q = payload.get("query", "Praha")
+            res = geocode_address_location(query=q)
+            self._send_json(res)
+            return
+
         elif parsed.path == "/api/mv/ipmvp-c-verify":
             dates = payload.get("baseline_dates", [])
             base_e = payload.get("baseline_energy_kwh", [])
@@ -631,6 +646,20 @@ class SamServerHandler(BaseHTTPRequestHandler):
         elif parsed.path == "/api/retscreen/portfolio-rollup":
             fac_list = payload.get("facility_projects", None)
             res = aggregate_enterprise_portfolio(facility_projects=fac_list)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/climate/nasa-power":
+            lat = float(payload.get("latitude", 50.08))
+            lon = float(payload.get("longitude", 14.43))
+            elev = float(payload.get("elevation_m", 230.0))
+            res = fetch_nasa_power_climate_data(latitude=lat, longitude=lon, elevation_m=elev)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/climate/geocode-location":
+            q = payload.get("query", "Praha")
+            res = geocode_address_location(query=q)
             self._send_json(res)
             return
 
@@ -876,6 +905,20 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/climate/nasa-power":
+            lat = float(payload.get("latitude", 50.08))
+            lon = float(payload.get("longitude", 14.43))
+            elev = float(payload.get("elevation_m", 230.0))
+            res = fetch_nasa_power_climate_data(latitude=lat, longitude=lon, elevation_m=elev)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/climate/geocode-location":
+            q = payload.get("query", "Praha")
+            res = geocode_address_location(query=q)
+            self._send_json(res)
+            return
+
         elif parsed.path == "/api/vpp/day-ahead-mpc":
             cap_kwh = float(payload.get("battery_capacity_kwh", 100.0))
             power_kw = float(payload.get("battery_power_kw", 50.0))
@@ -1076,6 +1119,20 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/climate/nasa-power":
+            lat = float(payload.get("latitude", 50.08))
+            lon = float(payload.get("longitude", 14.43))
+            elev = float(payload.get("elevation_m", 230.0))
+            res = fetch_nasa_power_climate_data(latitude=lat, longitude=lon, elevation_m=elev)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/climate/geocode-location":
+            q = payload.get("query", "Praha")
+            res = geocode_address_location(query=q)
+            self._send_json(res)
+            return
+
         elif parsed.path == "/api/vpp/ceps-ancillary":
             flex_kw = float(payload.get("available_flexibility_kw", 100.0))
             srv = payload.get("service_type", "aFRR")
@@ -1272,6 +1329,20 @@ class SamServerHandler(BaseHTTPRequestHandler):
         elif parsed.path == "/api/retscreen/portfolio-rollup":
             fac_list = payload.get("facility_projects", None)
             res = aggregate_enterprise_portfolio(facility_projects=fac_list)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/climate/nasa-power":
+            lat = float(payload.get("latitude", 50.08))
+            lon = float(payload.get("longitude", 14.43))
+            elev = float(payload.get("elevation_m", 230.0))
+            res = fetch_nasa_power_climate_data(latitude=lat, longitude=lon, elevation_m=elev)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/climate/geocode-location":
+            q = payload.get("query", "Praha")
+            res = geocode_address_location(query=q)
             self._send_json(res)
             return
 
@@ -1525,6 +1596,20 @@ class SamServerHandler(BaseHTTPRequestHandler):
         elif parsed.path == "/api/retscreen/portfolio-rollup":
             fac_list = payload.get("facility_projects", None)
             res = aggregate_enterprise_portfolio(facility_projects=fac_list)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/climate/nasa-power":
+            lat = float(payload.get("latitude", 50.08))
+            lon = float(payload.get("longitude", 14.43))
+            elev = float(payload.get("elevation_m", 230.0))
+            res = fetch_nasa_power_climate_data(latitude=lat, longitude=lon, elevation_m=elev)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/climate/geocode-location":
+            q = payload.get("query", "Praha")
+            res = geocode_address_location(query=q)
             self._send_json(res)
             return
 
@@ -1797,6 +1882,20 @@ class SamServerHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        elif parsed.path == "/api/climate/nasa-power":
+            lat = float(payload.get("latitude", 50.08))
+            lon = float(payload.get("longitude", 14.43))
+            elev = float(payload.get("elevation_m", 230.0))
+            res = fetch_nasa_power_climate_data(latitude=lat, longitude=lon, elevation_m=elev)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/climate/geocode-location":
+            q = payload.get("query", "Praha")
+            res = geocode_address_location(query=q)
+            self._send_json(res)
+            return
+
         elif parsed.path == "/api/cad/generate-sld":
             pv_kwp = float(payload.get("pv_capacity_kwp", 100.0))
             mod_count = int(payload.get("modules_count", round(pv_kwp * 1000.0 / 580.0)))
@@ -2046,6 +2145,20 @@ class SamServerHandler(BaseHTTPRequestHandler):
         elif parsed.path == "/api/retscreen/portfolio-rollup":
             fac_list = payload.get("facility_projects", None)
             res = aggregate_enterprise_portfolio(facility_projects=fac_list)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/climate/nasa-power":
+            lat = float(payload.get("latitude", 50.08))
+            lon = float(payload.get("longitude", 14.43))
+            elev = float(payload.get("elevation_m", 230.0))
+            res = fetch_nasa_power_climate_data(latitude=lat, longitude=lon, elevation_m=elev)
+            self._send_json(res)
+            return
+
+        elif parsed.path == "/api/climate/geocode-location":
+            q = payload.get("query", "Praha")
+            res = geocode_address_location(query=q)
             self._send_json(res)
             return
 
